@@ -105,3 +105,7 @@ img:not([alt]) {
     scroll-behavior: auto !important;
   }
 }
+
+h1 {
+  color: #A2231D;
+}

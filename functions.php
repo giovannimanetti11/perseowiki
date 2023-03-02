@@ -33,12 +33,20 @@ add_action( 'after_setup_theme', 'perseowiki_support' );
 function perseowiki_nav_menus() {
   
   // This theme uses wp_nav_menu() in one location.
-  
+
   register_nav_menus([
     'perseowiki-primary-menu' => esc_html__( 'Primary Menu', 'perseowiki' ),
   ]);
 }
 
 add_action( 'init', 'perseowiki_nav_menus' );
+
+function perseowiki_styles() {
+
+  wp_enqueue_style('perseowiki-style', get_template_directory_uri().'style.css');
+
+}
+
+add_action('wp_enqueue_scripts', 'perseowiki_styles')
 
 ?>
