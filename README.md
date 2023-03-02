@@ -1,0 +1,2 @@
+# perseowiki
+WordPress Wiki Theme
