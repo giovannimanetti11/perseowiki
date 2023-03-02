@@ -2,6 +2,8 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
+function perseowiki_support() {
+
   /**
    * Add support for core custom logo.
    *
