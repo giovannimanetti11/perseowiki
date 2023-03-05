@@ -29,7 +29,7 @@ $custom_logo_id = get_theme_mod( 'custom_logo' );
 $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 ?>
 
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light">
   <a class="navbar-brand" href="#">
     <?php if ( has_custom_logo() ) { 
         echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="logo d-inline-block align-top" alt="' . get_bloginfo( 'name' ) . '">';

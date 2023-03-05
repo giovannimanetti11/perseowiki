@@ -128,11 +128,45 @@ body {
 */
 
 h1 {
-  color: #57D6AB !important;
+  color: #fff !important;
   font-size: 25px !important;
-  margin-top: 10px !important;
 }
 
 .logo {
-  margin: 10px;
+  margin: 0 10px;
+}
+
+nav {
+  background: #071c2e;
+  height: 50px;
+  border-bottom: 1px solid #000;
+}
+
+nav ul {
+  list-style-type: none;
+  width: 50%;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 10px;
+  
+}
+
+nav ul a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 
+*
+*  HOMEPAGE HERO
+*
+*/
+
+.homepage-hero {
+  background: linear-gradient()
+}
+.search {
+  margin: 0 auto;
 }

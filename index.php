@@ -1,5 +1,10 @@
 <?php get_header(); ?>
 
-<?php get_search_form(); ?>
-
+<main>
+    <div class="homepage-hero">
+        <div class="search">
+             <?php get_search_form(); ?>
+        </div>
+    </div>
+</main>
 <?php get_footer();  ?>
