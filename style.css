@@ -106,6 +106,33 @@ img:not([alt]) {
   }
 }
 
+
+/* 
+*
+*  BODY
+*
+*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap');
+
+body {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+
+/* 
+*
+*  HEADER
+*
+*/
+
 h1 {
-  color: #A2231D;
+  color: #57D6AB !important;
+  font-size: 25px !important;
+  margin-top: 10px !important;
+}
+
+.logo {
+  margin: 10px;
 }

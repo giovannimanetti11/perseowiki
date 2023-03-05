@@ -24,3 +24,28 @@
 
 <body <?php body_class(); ?>>
 
+<?php
+$custom_logo_id = get_theme_mod( 'custom_logo' );
+$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+?>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <?php if ( has_custom_logo() ) { 
+        echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="logo d-inline-block align-top" alt="' . get_bloginfo( 'name' ) . '">';
+        echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
+    } else {
+        echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
+    }
+    ?>
+  </a>
+  <?php
+    wp_nav_menu(array(
+        'theme_location' => 'perseowiki-primary-menu',
+        'container' => false,
+        'items_wrap' => '<ul>%3$s</ul>'
+    ));
+    ?>
+    <button class="btn btn-outline-success" type="button">Subscribe</button>
+</nav>
+
