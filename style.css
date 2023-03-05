@@ -133,7 +133,7 @@ h1 {
 }
 
 .logo {
-  margin: 0 10px;
+  margin: 0 10px 0 20px;
 }
 
 nav {
@@ -146,6 +146,7 @@ nav ul {
   list-style-type: none;
   width: 50%;
   display: flex;
+  margin-bottom: 5px;
 }
 
 nav ul li {
@@ -163,9 +164,10 @@ nav ul a:hover {
 
 nav button {
   background: #963100 !important;
-  margin-top: -10px !important;
+  margin-top: -5px !important;
   color: #fff !important;
-  padding: 3 20px !important;
+  padding: 3px 30px !important;
+  font-size: 16px !important;
 }
 
 nav button:hover {
@@ -174,6 +176,15 @@ nav button:hover {
 
 nav span {
   color: #fff !important;
+  margin: 0 20px;
+}
+
+nav span i {
+  margin: 0 5px;
+}
+
+.align-right {
+  text-align: right;
 }
 
 /* 
@@ -196,4 +207,21 @@ nav span {
 .searchform {
   margin: 0 auto;
   padding-top: 50px;
+}
+
+/* 
+*
+*  FOOTER
+*
+*/
+
+footer {
+  background: #0e3457;
+  height: 200px;
+  text-align: center;
+  color: #fff;
+}
+
+.footerBottom {
+  margin-top: 100px !important;
 }
