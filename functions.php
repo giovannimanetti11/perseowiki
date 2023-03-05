@@ -45,6 +45,7 @@ function perseowiki_styles() {
 
   wp_enqueue_style('perseowiki-style', get_template_directory_uri().'/style.css');
   wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' );
+  wp_enqueue_style( 'font-awesome-free', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' );
 
 }
 

@@ -47,5 +47,8 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     ));
     ?>
     <button class="btn" type="button">Subscribe</button>
+    <span class="navbar-text">
+      Login <i class="fa-solid fa-angle-down"></i>
+    </span>
 </nav>
 

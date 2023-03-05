@@ -172,6 +172,10 @@ nav button:hover {
   background: #561c00 !important;
 }
 
+nav span {
+  color: #fff !important;
+}
+
 /* 
 *
 *  HOMEPAGE HERO
