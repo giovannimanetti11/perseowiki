@@ -46,6 +46,6 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         'items_wrap' => '<ul>%3$s</ul>'
     ));
     ?>
-    <button class="btn btn-outline-success" type="button">Subscribe</button>
+    <button class="btn" type="button">Subscribe</button>
 </nav>
 

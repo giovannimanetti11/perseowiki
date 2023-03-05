@@ -48,7 +48,7 @@ function perseowiki_styles() {
 
 }
 
-add_action('wp_enqueue_scripts', 'perseowiki_styles')
+add_action('wp_enqueue_scripts', 'perseowiki_styles');
 
 
 function add_svg_to_upload_mimes( $upload_mimes ) {

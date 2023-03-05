@@ -150,12 +150,26 @@ nav ul {
 
 nav ul li {
   margin: 0 10px;
-  
 }
 
 nav ul a {
   color: #fff;
   text-decoration: none;
+}
+
+nav ul a:hover {
+  text-decoration: underline;
+}
+
+nav button {
+  background: #963100 !important;
+  margin-top: -10px !important;
+  color: #fff !important;
+  padding: 3 20px !important;
+}
+
+nav button:hover {
+  background: #561c00 !important;
 }
 
 /* 
@@ -165,8 +179,17 @@ nav ul a {
 */
 
 .homepage-hero {
-  background: linear-gradient()
+  background: linear-gradient( #071c2d, #0e3457);
+  height: 150px;
+  width: 100%;
 }
-.search {
+
+.search, #searchform div {
   margin: 0 auto;
+  width: 50%;
+}
+
+.searchform {
+  margin: 0 auto;
+  padding-top: 50px;
 }
