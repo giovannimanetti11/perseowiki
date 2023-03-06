@@ -178,7 +178,7 @@ header {
   margin-left: auto;
 }
 
-.call-to-action button {
+.call-to-action button, #popup-menu button {
   background: #963100;
   transition: all .3s ease;
   color: #fff;
@@ -187,7 +187,7 @@ header {
   width: 100px;
 }
 
-.call-to-action button:hover {
+.call-to-action button:hover, #popup-menu button:hover {
   background: #561c00;
   color: #fff;
 }
@@ -197,6 +197,71 @@ header {
   display: none;
 }
 
+#popup-menu {
+ position: absolute;
+ top: 50px;
+ left: 0;
+ width: 100%;
+ background-color: #071c2e;
+ text-align: center;
+ border-bottom: 1px solid #000;
+ padding-bottom: 10px;
+}
+
+#popup-menu ul {
+  padding: 0;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+}
+
+#popup-menu ul li {
+  list-style-type: none;
+  text-align: center;
+}
+
+#popup-menu ul li a {
+  text-decoration: none;
+  transition: all .3s ease;
+  color: #fff;
+}
+
+#popup-menu ul li a:hover {
+  text-decoration: underline;
+}
+
+.mobileMenuPopup, #popup-menu {
+  display: none;
+}
+
+#menu-icon {
+  transition: opacity 0.3s ease-in-out;
+}
+
+#menu-icon.visible {
+  opacity: 1;
+}
+
+#menu-icon.hidden {
+  opacity: 0;
+}
+
+/* Medium devices (portrait tablets and large phones, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+  .mobileMenu {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .mobileMenu i {
+    display: block;
+    transition: all .3s ease;
+  }
+
+  .menu, .call-to-action {
+    display: none;
+  }
+}
 
 /* 
 *

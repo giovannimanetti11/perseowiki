@@ -46,6 +46,7 @@ function perseowiki_styles() {
   wp_enqueue_style('perseowiki-style', get_template_directory_uri().'/style.css');
   wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' );
   wp_enqueue_style( 'font-awesome-free', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' );
+  wp_enqueue_script( 'custom-functions', get_template_directory_uri().'/js/functions.js' );
 
 }
 
@@ -59,6 +60,15 @@ function add_svg_to_upload_mimes( $upload_mimes ) {
 }
 add_filter( 'upload_mimes', 'add_svg_to_upload_mimes', 10, 1 );
 
+
+// remove wp version number from scripts and styles
+function remove_css_js_version( $src ) {
+  if( strpos( $src, '?ver=' ) )
+      $src = remove_query_arg( 'ver', $src );
+  return $src;
+}
+add_filter( 'style_loader_src', 'remove_css_js_version', 9999 );
+add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
  
 
