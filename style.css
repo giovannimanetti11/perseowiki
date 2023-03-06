@@ -127,65 +127,76 @@ body {
 *
 */
 
-h1 {
+.logo h1 {
   color: #fff !important;
   font-size: 25px !important;
+  font-weight: 700;
+  margin-top: 5px;
 }
 
-.logo {
-  margin: 0 10px 0 20px;
+.logo img {
+  display: inline-block;
+  margin: 0 20px;
+  margin-top: -5px;
 }
 
-nav {
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 10%;
   background: #071c2e;
-  height: 50px;
   border-bottom: 1px solid #000;
 }
 
-nav ul {
+.menu {
+  margin-left: 50px;
+}
+
+.menu ul {
+  padding: 0 !important;
+}
+
+.menu li {
+  display: inline-block;
+  padding: 0 10px;
   list-style-type: none;
-  width: 50%;
-  display: flex;
-  margin-bottom: 5px;
+  margin-top: 15px;
 }
 
-nav ul li {
-  margin: 0 10px;
-}
-
-nav ul a {
+.menu a, .login a {
   color: #fff;
   text-decoration: none;
+  transition: all .3s ease;
 }
 
-nav ul a:hover {
+.menu a:hover, .login a:hover {
   text-decoration: underline;
 }
 
-nav button {
-  background: #963100 !important;
-  margin-top: -5px !important;
-  color: #fff !important;
-  padding: 3px 30px !important;
-  font-size: 16px !important;
+.call-to-action {
+  margin-left: auto;
 }
 
-nav button:hover {
-  background: #561c00 !important;
-}
-
-nav span {
-  color: #fff !important;
-  margin: 0 20px;
-}
-
-nav span i {
+.call-to-action button {
+  background: #963100;
+  transition: all .3s ease;
+  color: #fff;
+  padding: 3px 20px;
   margin: 0 5px;
+  width: 100px;
 }
 
-.align-right {
-  text-align: right;
+.call-to-action button:hover {
+  background: #561c00;
+  color: #fff;
 }
+
+.mobileMenu i {
+  color: #fff;
+  display: none;
+}
+
 
 /* 
 *

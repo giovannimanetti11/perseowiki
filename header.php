@@ -29,12 +29,12 @@ $custom_logo_id = get_theme_mod( 'custom_logo' );
 $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 ?>
 
-<nav class="navbar navbar-light d-flex flex-row justify-content-between">
+<header>
 
-    <div class="col">
-        <a class="navbar-brand" href="#">
+    <div class="logo">
+        <a class="" href="#">
             <?php if ( has_custom_logo() ) { 
-                echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="logo d-inline-block align-top" alt="' . get_bloginfo( 'name' ) . '">';
+                echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="" alt="' . get_bloginfo( 'name' ) . '">';
                 echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
             } else {
                 echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
@@ -42,8 +42,10 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             ?>
         </a>
     </div>
-
-    <div class="col-6">
+    <div class="mobileMenu">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <nav class="menu">
         <?php
             wp_nav_menu(array(
                 'theme_location' => 'perseowiki-primary-menu',
@@ -51,14 +53,15 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 'items_wrap' => '<ul>%3$s</ul>'
             ));
         ?>
-    </div>
+    </nav>
     
-    <div class="col align-right">
+    <div class="call-to-action">
         <button class="btn btn-sm" type="button">Subscribe</button>
-        <span class="navbar-text text-right">
-        Login <i class="fa-solid fa-angle-down"></i>
-        </span>
+        <button class="btn btn-sm" type="button">Login</button>
     </div>
 
-</nav>
+</header>
+
+
+
 

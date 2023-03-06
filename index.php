@@ -3,7 +3,7 @@
 <main>
     <div class="homepage-hero">
         <div class="search">
-             <?php get_search_form(); ?>
+
         </div>
     </div>
 </main>
