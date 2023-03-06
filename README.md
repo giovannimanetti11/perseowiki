@@ -9,7 +9,7 @@ Giovanni Manetti ( [@GioManetti11](http://twitter.com/GioManetti11) / [perseodes
 
 ## Summary
 
-perseowiki is a WordPress theme developed by Giovanni Manetti. It does not use any boilerplate so it will not have any unused JS.
+perseowiki is a WordPress theme developed by Giovanni Manetti. It does not use any boilerplate so it will not have any unused JS. It also does not use any page builders.
 
 Getting Started
 ---------------
