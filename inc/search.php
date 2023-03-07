@@ -1,4 +1,5 @@
 <?php
+header("HTTP/1.1 200 OK");
 // Connessione al database
 $servername = "localhost";
 $username = "wikiherbalist";
@@ -18,20 +19,28 @@ if (empty($keywords)) {
   }
 
 // Query per la ricerca
-$sql = "SELECT * FROM wp_posts WHERE post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%'";
+$sql = "SELECT * FROM wh_posts WHERE post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%' ORDER BY `post_title` ASC  LIMIT 10  ";
 
+$result = $conn->query($sql);
 
-$result = mysqli_query($conn, $sql);
 
 // Mostrare i risultati della ricerca
-if (mysqli_num_rows($result) > 0) {
-  while($row = mysqli_fetch_assoc($result)) {
-    echo "<h2>" . $row["title"] . "</h2>";
-    echo "<p>" . $row["content"] . "</p>";
+if ( $result->num_rows > 0 ) {
+  $response = array();
+  while($row = $result->fetch_assoc() ) {
+  $post_content = strip_tags($row["post_content"]); // rimuove i tag HTML dal contenuto del post
+  $post = array(
+  "title" => $row["post_title"],
+  "content" => $post_content,
+  "featured_image" => get_the_post_thumbnail_url($row["ID"], 'medium')
+  );
+  array_push($response, $post);
   }
-} else {
-  echo "Nessun risultato trovato.";
-}
+  echo json_encode($response);
+  } else {
+  echo json_encode(array("message" => "Nessun risultato trovato."));
+  }
 
-mysqli_close($conn);
+$conn->close();
+
 ?>

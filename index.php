@@ -13,7 +13,7 @@ if (isset($_GET['keywords'])) {
                 <input type="search" class="searchBar" placeholder="Search WikiHerbalist..">
                 <i class="fas fa-search"></i>
             </div>
-            <div id="searchResults"></div>
+            <ul id="searchResults"></ul>
         </div>
     </main>
 

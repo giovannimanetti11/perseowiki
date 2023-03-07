@@ -24,7 +24,11 @@ function perseowiki_support() {
    * @link https://codex.wordpress.org/Post_Thumbnails
    */
 
-  add_theme_support( 'post_thumbnails' );
+   add_theme_support('post-thumbnails', array(
+    'post',
+    'page',
+    'custom-post-type-name',
+    ));
 
 }
 
@@ -70,8 +74,6 @@ function remove_css_js_version( $src ) {
 add_filter( 'style_loader_src', 'remove_css_js_version', 9999 );
 add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
-
- 
 
 
 
