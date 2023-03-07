@@ -1,10 +1,23 @@
-<?php get_header(); ?>
+<?php 
+// Verifica se l'utente ha eseguito una ricerca
+if (isset($_GET['keywords'])) {
+    // Includi il file di ricerca
+    get_template_part( 'inc/search' );
+} else {
+    get_header(); 
+    ?>
 
-<main>
-    <div class="homepage-hero">
-        <div class="search">
-
+    <main>
+        <div class="homepage-hero">
+            <div class="search">
+                <input type="search" class="searchBar" placeholder="Search WikiHerbalist..">
+                <i class="fas fa-search"></i>
+            </div>
+            <div id="searchResults"></div>
         </div>
-    </div>
-</main>
-<?php get_footer();  ?>
+    </main>
+
+    <?php 
+    get_footer(); 
+}
+?>

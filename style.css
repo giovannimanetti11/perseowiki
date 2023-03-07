@@ -208,6 +208,10 @@ header {
  padding-bottom: 10px;
 }
 
+.admin-bar #popup-menu {
+  margin-top: 48px;
+}
+
 #popup-menu ul {
   padding: 0;
   border-bottom: 1px solid #000;
@@ -273,16 +277,40 @@ header {
   background: linear-gradient( #071c2d, #0e3457);
   height: 150px;
   width: 100%;
+  border-bottom: 1px solid #000;
 }
 
-.search, #searchform div {
-  margin: 0 auto;
-  width: 50%;
-}
-
-.searchform {
-  margin: 0 auto;
+.search {
+  text-align: center;
   padding-top: 50px;
+  position: relative;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.search input:focus{
+  outline: none;
+}
+
+.search i {
+  position: absolute; 
+  right: 20px;
+  top: 65px;
+  color: #808080;
+}
+
+.searchBar {
+  width: 100%;
+  border-radius: 15px;
+  padding: 10px;
+  border: 1px solid #fff;
+}
+
+#searchResults {
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* 
