@@ -52,18 +52,11 @@ document.addEventListener("DOMContentLoaded", function() {
         searchResults.innerHTML = "";
         if (data.length > 0) {
           data.forEach(post => {
-            var postElement = document.createElement("div");
-            postElement.classList.add("post");
+            var postElement = document.createElement("li");
+            postElement.classList.add("post-row");
 
-            var titleElement = document.createElement("h2");
-            titleElement.classList.add("title");
-            titleElement.innerHTML = post.title;
-            postElement.appendChild(titleElement);
-
-            var contentElement = document.createElement("div");
-            contentElement.classList.add("content");
-            contentElement.innerHTML = post.content;
-            postElement.appendChild(contentElement);
+            var postLink = document.createElement("a"); // crea il link
+            postLink.href = post.permalink; // imposta l'URL del post
 
             var imgElement = document.createElement("img");
             imgElement.classList.add("featured");
@@ -73,28 +66,32 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
               imgElement.style.display = "none"; // nasconde l'immagine se non è presente
             }
-            postElement.appendChild(imgElement);
+            postLink.appendChild(imgElement); // aggiungi l'immagine al link
+
+            postElement.appendChild(postLink); // aggiungi il link al risultato
+
+            var titleElement = document.createElement("h2");
+            titleElement.classList.add("title");
+            titleElement.innerHTML = post.title;
+            postLink.appendChild(titleElement); // aggiungi il titolo al link
 
             searchResults.appendChild(postElement);
+
           });
           searchBar.classList.add("noradius");
           searchResults.style.display = "block";
           clearSearch.style.display = "block";
         } else {
           searchResults.style.display = "none";
-          clearSearch.style.display = "none";
-          searchBar.classList.remove("noradius");
-          searchResults.innerHTML = "Nessun risultato trovato.";
-          
         }
-      })
-      .catch(error => console.error(error));
-
+      });
   });
 
-  clearSearch.addEventListener("click", function() { 
+  clearSearch.addEventListener("click", function() {
+    searchBar.value = "";
     searchResults.style.display = "none";
     clearSearch.style.display = "none";
     searchBar.classList.remove("noradius");
   });
+
 });

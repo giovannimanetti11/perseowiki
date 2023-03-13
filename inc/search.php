@@ -19,10 +19,11 @@ if (empty($keywords)) {
   }
 
 // Query per la ricerca
-$sql = "SELECT * FROM wh_posts WHERE post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%' AND ( post_type = 'post' OR post_type = 'page' ) ORDER BY `post_title` ASC LIMIT 10";
+$sql = "SELECT * FROM wh_posts WHERE ( post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%' ) AND ( post_type = 'post' OR post_type = 'page' ) ORDER BY `post_title` ASC LIMIT 10";
 
 
 $result = $conn->query($sql);
+
 
 
 // Mostrare i risultati della ricerca
@@ -33,7 +34,8 @@ if ( $result->num_rows > 0 ) {
   $post = array(
   "title" => $row["post_title"],
   "content" => $post_content,
-  "featured_image" => get_the_post_thumbnail_url($row["ID"], 'medium')
+  "featured_image" => get_the_post_thumbnail_url($row["ID"], 'medium'),
+  "permalink" => get_permalink($row["ID"]) // aggiungi il permalink del post
   );
   array_push($response, $post);
   }

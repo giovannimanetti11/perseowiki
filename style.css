@@ -291,6 +291,9 @@ header {
 #searchResults {
   display: none;
   background: #fff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding-left: 0;
 }
 
 .search input:focus{
@@ -326,6 +329,41 @@ header {
 .noradius {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.post-row {
+  list-style-type: none;
+}
+
+.post-row:hover {
+  color: #fff;
+  background: #d3d3d3;
+}
+
+.post-row:hover a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.post-row a {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  color: #0e3457;
+  text-decoration: none;
+}
+
+.post-row img {
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
 /* 
