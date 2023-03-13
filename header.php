@@ -32,7 +32,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 <header>
 
     <div class="logo">
-        <a class="" href="#">
+        <a class="" href="<?php echo esc_url( home_url( '/' ) ); ?>">
             <?php if ( has_custom_logo() ) { 
                 echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="" alt="' . get_bloginfo( 'name' ) . '">';
                 echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
