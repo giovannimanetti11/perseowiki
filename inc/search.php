@@ -19,7 +19,8 @@ if (empty($keywords)) {
   }
 
 // Query per la ricerca
-$sql = "SELECT * FROM wh_posts WHERE post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%' ORDER BY `post_title` ASC  LIMIT 10  ";
+$sql = "SELECT * FROM wh_posts WHERE post_title LIKE '%$keywords%' OR post_content LIKE '%$keywords%' AND ( post_type = 'post' OR post_type = 'page' ) ORDER BY `post_title` ASC LIMIT 10";
+
 
 $result = $conn->query($sql);
 

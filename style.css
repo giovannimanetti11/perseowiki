@@ -280,7 +280,7 @@ header {
   border-bottom: 1px solid #000;
 }
 
-.search {
+.search, #searchResults {
   text-align: center;
   padding-top: 50px;
   position: relative;
@@ -288,15 +288,32 @@ header {
   margin: 0 auto;
 }
 
+#searchResults {
+  display: none;
+  background: #fff;
+}
+
 .search input:focus{
   outline: none;
 }
 
-.search i {
+.search #iconSearch {
   position: absolute; 
   right: 20px;
   top: 65px;
-  color: #808080;
+  color: #0e3457;
+}
+
+.search #clearSearch {
+  position: absolute; 
+  right: 60px;
+  top: 65px;
+  color: #0e3457;
+  display: none;
+}
+
+.search #clearSearch:hover {
+  cursor: pointer;
 }
 
 .searchBar {
@@ -306,11 +323,9 @@ header {
   border: 1px solid #fff;
 }
 
-#searchResults {
-  color: #fff;
-  width: 50%;
-  margin: 0 auto;
-  text-align: center;
+.noradius {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 /* 
