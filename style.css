@@ -259,7 +259,7 @@ header {
   background: linear-gradient( #071c2d, #0e3457);
   height: 150px;
   width: 100%;
-  border-bottom: 1px solid #000;
+  padding-bottom: 30px;
 }
 
 .search, #searchResults {
@@ -346,6 +346,27 @@ header {
   height: 70px;
   margin-right: 10px;
   margin-left: 20px;
+}
+
+#menu-categorie {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+#menu-categorie li {
+  margin: 0 10px;
+  list-style: none;
+}
+
+#menu-categorie a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+#menu-categorie a:hover {
+  text-decoration: underline;
 }
 
 /* 

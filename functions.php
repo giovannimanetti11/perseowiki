@@ -4,7 +4,7 @@ define("THEME_DIR", get_template_directory_uri());
 
 function perseowiki_support() {
 
-  /**
+  /*
    * Add support for core custom logo.
    *
    * @link https://codex.wordpress.org/Theme_Logo
@@ -18,7 +18,7 @@ function perseowiki_support() {
     'flex-height' => true,
   ]);
 
-  /**
+  /*
    * Add featured images to post and pages.
    *
    * @link https://codex.wordpress.org/Post_Thumbnails
@@ -34,16 +34,30 @@ function perseowiki_support() {
 
 add_action( 'after_setup_theme', 'perseowiki_support' );
 
+  /*
+   * 
+   * Add custom menu.
+   *
+   */
+
 function perseowiki_nav_menus() {
   
   // This theme uses wp_nav_menu() in one location.
 
   register_nav_menus([
     'perseowiki-primary-menu' => esc_html__( 'Primary Menu', 'perseowiki' ),
+    'perseowiki-category-menu' => esc_html__( 'Category Menu', 'perseowiki' ),
   ]);
 }
 
 add_action( 'init', 'perseowiki_nav_menus' );
+
+
+/*
+   * 
+   * Add custom styles and scripts.
+   *
+   */
 
 function perseowiki_styles() {
 
@@ -57,6 +71,12 @@ function perseowiki_styles() {
 add_action('wp_enqueue_scripts', 'perseowiki_styles');
 
 
+  /*
+     * 
+     * Add svg support .
+     *
+     */
+
 function add_svg_to_upload_mimes( $upload_mimes ) {
 	$upload_mimes['svg'] = 'image/svg+xml';
 	$upload_mimes['svgz'] = 'image/svg+xml';
@@ -64,8 +84,12 @@ function add_svg_to_upload_mimes( $upload_mimes ) {
 }
 add_filter( 'upload_mimes', 'add_svg_to_upload_mimes', 10, 1 );
 
+  /*
+     * 
+     * remove wp version number from scripts and styles
+     *
+     */
 
-// remove wp version number from scripts and styles
 function remove_css_js_version( $src ) {
   if( strpos( $src, '?ver=' ) )
       $src = remove_query_arg( 'ver', $src );
@@ -73,6 +97,9 @@ function remove_css_js_version( $src ) {
 }
 add_filter( 'style_loader_src', 'remove_css_js_version', 9999 );
 add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
+
+
+
 
 
 

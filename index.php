@@ -15,6 +15,7 @@ if (isset($_GET['keywords'])) {
                 <i class="fas fa-search" id="iconSearch"></i>
             </div>
             <ul id="searchResults"></ul>
+            <?php wp_nav_menu( array( 'theme_location' => 'perseowiki-category-menu' ) ); ?>
         </div>
     </main>
 
