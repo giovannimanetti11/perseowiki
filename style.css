@@ -250,7 +250,7 @@ header {
 
 .homepage-hero {
   background: linear-gradient( #071c2d, #0e3457);
-  height: 150px;
+  height: 180px;
   width: 100%;
   padding-bottom: 30px;
 }
@@ -393,6 +393,19 @@ header {
 
 #menu-categorie a:hover {
   text-decoration: underline;
+}
+
+/* 
+*
+*  HOMEPAGE CONTENT
+*
+*/
+
+.home-content {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 /* 
