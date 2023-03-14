@@ -130,3 +130,32 @@ document.addEventListener('DOMContentLoaded', function() {
     rightArrow.style.display = 'none';
   }
 });
+
+
+// AJAX get posts alphabetically
+
+document.addEventListener('DOMContentLoaded', () => {
+  const alphabetLinks = document.querySelectorAll('.alphabet-link');
+  const postsContainer = document.querySelector('#posts-container');
+
+  alphabetLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      const letter = link.dataset.letter;
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          postsContainer.innerHTML = response.data;
+        }
+      };
+      const ajaxUrl = myAjax.ajax_url;
+      const urlParams = new URLSearchParams({
+        action: 'get_posts_by_letter',
+        letter: letter,
+      });
+      xhr.open('GET', ajaxUrl + '?' + urlParams.toString());
+      xhr.send();
+    });
+  });
+});

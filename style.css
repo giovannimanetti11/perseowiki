@@ -408,6 +408,27 @@ header {
   margin-bottom: 50px;
 }
 
+#alphabet {
+  width: 50%;
+  display: flex;
+  list-style-type: none;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+#alphabet a {
+  margin: 0 5px;
+}
+
+#posts-container {
+  width: 100%;
+  height: 500px;
+}
+
 /* 
 *
 *  FOOTER

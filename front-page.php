@@ -34,6 +34,14 @@ if (isset($_GET['keywords'])) {
             echo apply_filters('the_content', $home_content->post_content);
             ?>
         </div>
+
+        <div id="alphabet">
+        <?php foreach(range('A', 'Z') as $char): ?>
+            <a href="#" class="alphabet-link" data-letter="<?php echo $char; ?>"><?php echo $char; ?></a>
+        <?php endforeach; ?>
+        </div>
+        <div id="posts-container"></div>
+
     </main>
 
     <?php 
