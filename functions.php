@@ -59,9 +59,6 @@ add_action( 'init', 'perseowiki_nav_menus' );
    *
    */
 
-
-
-
 function perseowiki_styles() {
 
   wp_enqueue_style('perseowiki-style', get_template_directory_uri().'/style.css');

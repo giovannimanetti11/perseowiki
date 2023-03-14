@@ -422,6 +422,13 @@ header {
 
 #alphabet a {
   margin: 0 5px;
+  color: #071c2d;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+#alphabet a:hover {
+  color: #963100;
 }
 
 #posts-container {
