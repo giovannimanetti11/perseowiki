@@ -198,18 +198,11 @@ header {
 }
 
 #popup-menu {
- position: absolute;
- top: 50px;
- left: 0;
  width: 100%;
  background-color: #071c2e;
  text-align: center;
  border-bottom: 1px solid #000;
  padding-bottom: 10px;
-}
-
-.admin-bar #popup-menu {
-  margin-top: 48px;
 }
 
 #popup-menu ul {
@@ -348,9 +341,41 @@ header {
   margin-left: 20px;
 }
 
+.category-menu {
+  position: relative;
+}
+
+#iconLeftArrow {
+  display: none;
+  position: absolute;
+  top: -7px;
+  left: 20px;
+  width: 35px;
+  height: 35px;
+}
+
+#iconRightArrow {
+  display: none;
+  position: absolute;
+  top: -7px;
+  right: 20px;
+  width: 35px;
+  height: 35px;
+}
+
+#iconRightArrow i, #iconLeftArrow i {
+  font-size: 30px;
+  color: #fff;
+  background: #071c2e;
+  padding: 5px;
+}
+
 #menu-categorie {
   display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   justify-content: center;
+  align-items: center;
   margin: 30px 0;
 }
 
@@ -363,6 +388,7 @@ header {
   color: #fff;
   text-decoration: none;
   font-size: 16px;
+  white-space: nowrap;
 }
 
 #menu-categorie a:hover {
@@ -406,6 +432,7 @@ footer {
   .mobileMenu i {
     display: block;
     transition: all .3s ease;
+    margin-top: -30px;
   }
 
   .menu, .call-to-action {
@@ -424,4 +451,37 @@ footer {
   .post-row a {
     height: 60px;
   }
+
+  header {
+    flex-direction: column;
+  }
+
+  #popup-menu ul {
+    border-bottom: 0;
+  }
+
+  #menu-categorie {
+    justify-content: start;
+    overflow-x: hidden;
+  }
+
+  #iconRightArrow {
+    display: block;
+  }
+
+  #iconLeftArrow {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .logo img {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+
+  header {
+    padding: 0 5%;
+  }
+
 }

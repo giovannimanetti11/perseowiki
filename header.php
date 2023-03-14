@@ -44,17 +44,17 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     </div>
     <div class="mobileMenu">
         <i id="menu-icon" class="fa-solid fa-bars"></i>
-        <div id="popup-menu" class="mobileMenuPopup">
-            <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'perseowiki-primary-menu',
-                    'container' => false,
-                    'items_wrap' => '<ul>%3$s</ul>'
-                ));
-            ?>
-            <button class="btn btn-sm" type="button">Subscribe</button>
-            <button class="btn btn-sm" type="button">Login</button>
-        </div>
+    </div>
+    <div id="popup-menu" class="mobileMenuPopup">
+        <?php
+            wp_nav_menu(array(
+                'theme_location' => 'perseowiki-primary-menu',
+                'container' => false,
+                'items_wrap' => '<ul>%3$s</ul>'
+            ));
+        ?>
+        <button class="btn btn-sm" type="button">Subscribe</button>
+        <button class="btn btn-sm" type="button">Login</button>
     </div>
     <nav class="menu">
         <?php

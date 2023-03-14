@@ -95,3 +95,38 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+
+
+// Category menu scroll
+
+document.addEventListener('DOMContentLoaded', function() {
+  var menu = document.querySelector('#menu-categorie');
+  var rightArrow = document.querySelector('#iconRightArrow');
+  var leftArrow = document.querySelector('#iconLeftArrow');
+
+  rightArrow.addEventListener('click', function() {
+    menu.scrollBy({ left: 250, behavior: 'smooth' });
+    leftArrow.style.display = 'block';
+    if (menu.scrollLeft + menu.clientWidth >= menu.scrollWidth) {
+      rightArrow.style.display = 'none';
+    }
+  });
+
+  leftArrow.addEventListener('click', function() {
+    menu.scrollBy({ left: -250, behavior: 'smooth' });
+    rightArrow.style.display = 'block';
+    if (menu.scrollLeft === 0) {
+      leftArrow.style.display = 'none';
+    }
+  });
+
+  // Hide the left arrow initially if the menu is at the beginning
+  if (menu.scrollLeft === 0) {
+    leftArrow.style.display = 'none';
+  }
+
+  // Hide the right arrow initially if the menu is at the end
+  if (menu.scrollLeft + menu.clientWidth >= menu.scrollWidth) {
+    rightArrow.style.display = 'none';
+  }
+});
