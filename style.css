@@ -179,17 +179,19 @@ header {
 }
 
 .call-to-action button, #popup-menu button {
-  background: #963100;
+  background: #3E92A2;
   transition: all .3s ease;
   color: #fff;
   padding: 3px 20px;
   margin: 0 5px;
   width: 100px;
+  border: 1px solid transparent;
 }
 
 .call-to-action button:hover, #popup-menu button:hover {
-  background: #561c00;
+  background: #071c2e;
   color: #fff;
+  border: 1px solid #fff;
 }
 
 .mobileMenu i {
@@ -442,6 +444,11 @@ header {
   margin-top: 25px;
 }
 
+#posts-info {
+  text-align: center;
+  margin-top: 25px;
+}
+
 .card-deck {
   margin-bottom: 20px;
   width: 50%;
@@ -458,7 +465,7 @@ header {
 }
 
 .card .btn-card {
-  background: #963100;
+  background: #3E92A2;
   transition: all .3s ease;
   color: #fff;
   padding: 3px 20px;
@@ -467,7 +474,7 @@ header {
 }
 
 .card .btn-card:hover {
-  background: #561c00;
+  background: #071c2e;
   color: #fff;
 }
 
@@ -482,6 +489,7 @@ header {
 
 .card-title {
   font-weight: bold;
+  margin-bottom: 20px !important;
 }
 
 /* 
@@ -561,6 +569,24 @@ footer {
   #iconLeftArrow {
     display: block;
   }
+
+  .home-content {
+    width: 90%;
+    text-align: justify;
+  }
+
+  #alphabet {
+    justify-content: flex-start;
+  }
+
+  .card-deck {
+    width: 90%;
+  }
+
+  .card-deck .card {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
@@ -571,6 +597,18 @@ footer {
 
   header {
     padding: 0 5%;
+  }
+
+  .home-content {
+    width: 80%;
+  }
+
+  .card-deck {
+    width: 80%;
+  }
+
+  .card-deck .card {
+    width: 50%;
   }
 
 }

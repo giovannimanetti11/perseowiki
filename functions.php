@@ -119,6 +119,7 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
       $posts = new WP_Query($args);
       remove_filter( 'posts_where', 'search_by_letter', 10, 2 );
       $output = '';
+      $count = 0;
       $counter = 0; // counter for every 3 posts
       while ($posts->have_posts()) {
           $posts->the_post();
@@ -126,11 +127,13 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
           $link = get_permalink();
           $image = get_the_post_thumbnail_url(null, 'medium');
           $alt = get_the_title();
-          
-          // Create a new card for every 3 posts
+  
+          // Create a new card deck for every 3 posts
           if ($counter % 3 == 0) {
               $output .= '<div class="card-deck">';
           }
+  
+          $count++;
   
           // Add a new card
           $output .= '<div class="card">';
@@ -147,20 +150,23 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
   
           $counter++;
       }
-      wp_reset_postdata();
-      if (empty($output)) {
-          $output = 'No posts found';
-      }
-      wp_send_json_success($output);
-  }
   
+  
+      wp_reset_postdata();
+      echo json_encode(array(
+        'data' => $output,
+        'count' => $count,
+      ));
+      wp_die();
+  }
+    
   function search_by_letter($where, &$query) {
       global $wpdb;
       $letter = $_GET['letter'];
       $where .= " AND $wpdb->posts.post_title LIKE '$letter%'";
       return $where;
   }
-  
+    
   add_action('wp_ajax_get_posts_by_letter', 'get_posts_by_letter');
   add_action('wp_ajax_nopriv_get_posts_by_letter', 'get_posts_by_letter');
 

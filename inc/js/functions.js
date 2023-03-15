@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', () => {
   const alphabetLinks = document.querySelectorAll('.alphabet-link');
   const postsContainer = document.querySelector('#posts-container');
+  const postsInfo = document.querySelector('#posts-info');
 
   alphabetLinks.forEach(link => {
     link.addEventListener('click', event => {
@@ -144,19 +145,23 @@ document.addEventListener('DOMContentLoaded', () => {
       alphabetLinks.forEach(link => link.classList.remove('active'));
       link.classList.add('active');
       const letter = link.dataset.letter;
-      const xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          postsContainer.innerHTML = response.data;
-        }
-      };
       const ajaxUrl = myAjax.ajax_url;
       const urlParams = new URLSearchParams({
         action: 'get_posts_by_letter',
         letter: letter,
       });
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          postsContainer.innerHTML = response.data;
+          const count = response.count;
+          postsInfo.innerHTML = `<p>${count} erbe che iniziano per ${letter}</p>`;
+        }
+      };
       xhr.open('GET', ajaxUrl + '?' + urlParams.toString());
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.send();
     });
   });

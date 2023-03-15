@@ -40,6 +40,7 @@ if (isset($_GET['keywords'])) {
             <a href="#" class="alphabet-link" data-letter="<?php echo $char; ?>"><?php echo $char; ?></a>
         <?php endforeach; ?>
         </div>
+        <div id="posts-info"></div>
         <div id="posts-container"></div>
 
     </main>
