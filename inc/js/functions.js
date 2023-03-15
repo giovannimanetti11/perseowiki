@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
   alphabetLinks.forEach(link => {
     link.addEventListener('click', event => {
       event.preventDefault();
+      alphabetLinks.forEach(link => link.classList.remove('active'));
+      link.classList.add('active');
       const letter = link.dataset.letter;
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
@@ -158,4 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
       xhr.send();
     });
   });
+  
+  const defaultLink = document.querySelector('.alphabet-link[data-letter="A"]');
+  defaultLink.classList.add('active');
+  defaultLink.click();
 });

@@ -109,31 +109,48 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
      function get_posts_by_letter() {
       $letter = $_GET['letter'];
-  
       add_filter( 'posts_where', 'search_by_letter', 10, 2 );
-  
       $args = array(
           'post_type' => 'post',
           'posts_per_page' => -1,
           'orderby' => 'title',
           'order' => 'ASC',
       );
-  
       $posts = new WP_Query($args);
-  
       remove_filter( 'posts_where', 'search_by_letter', 10, 2 );
-  
       $output = '';
+      $counter = 0; // counter for every 3 posts
       while ($posts->have_posts()) {
           $posts->the_post();
-          $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+          $title = get_the_title();
+          $link = get_permalink();
+          $image = get_the_post_thumbnail_url(null, 'medium');
+          $alt = get_the_title();
+          
+          // Create a new card for every 3 posts
+          if ($counter % 3 == 0) {
+              $output .= '<div class="card-deck">';
+          }
+  
+          // Add a new card
+          $output .= '<div class="card">';
+          $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
+          $output .= '<div class="card-body">';
+          $output .= '<h4 class="card-title">' . $title . '</h4>';
+          $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
+          $output .= '</div></div>';
+  
+          // Close the card deck for every 3 posts
+          if ($counter % 3 == 2 || $counter == $posts->post_count - 1) {
+              $output .= '</div>';
+          }
+  
+          $counter++;
       }
       wp_reset_postdata();
-  
       if (empty($output)) {
           $output = 'No posts found';
       }
-  
       wp_send_json_success($output);
   }
   
