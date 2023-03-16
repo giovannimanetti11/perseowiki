@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      
     <!--=== LINK TAGS ===-->
-    <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>"  rel="stylesheet">
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS2 Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
  
