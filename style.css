@@ -386,6 +386,10 @@ header {
   padding: 5px;
 }
 
+#iconRightArrow:hover, #iconLeftArrow:hover {
+  cursor: pointer;
+}
+
 #menu-categorie {
   display: flex;
   flex-wrap: nowrap;
@@ -561,10 +565,15 @@ footer {
   .post-row img {
     width: 50px;
     height: 50px;
+    margin-top: 0;
   }
 
   .post-row a {
     height: 60px;
+  }
+
+  .post-row h2 {
+    margin-top: 0px;
   }
 
   header {
@@ -605,6 +614,10 @@ footer {
     width: 100%;
     margin: 0 auto;
   }
+
+  #alphabet {
+    width: 90%;
+  }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
@@ -622,6 +635,10 @@ footer {
   }
 
   .card-deck {
+    width: 80%;
+  }
+
+  #alphabet {
     width: 80%;
   }
 
