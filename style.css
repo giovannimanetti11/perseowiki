@@ -713,7 +713,28 @@ footer {
   }
 
   .post-content {
-    width: 90%;
+    width: 100%;
+  }
+
+  .post-content-module {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 15px;
+    margin-left: 0;
+  }
+
+  .post-featured-image img {
+    margin: 0 auto;
+  }
+
+  .post-tags-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  .post-tags-list li {
+    height: 27px;
+    padding: 0 5px;
   }
 }
 

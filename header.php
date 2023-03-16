@@ -18,6 +18,16 @@
      
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZ4J8CZ4CW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GZ4J8CZ4CW');
+    </script>
       
 </head>
 
