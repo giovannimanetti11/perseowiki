@@ -316,21 +316,22 @@ header {
 
 .post-row {
   list-style-type: none;
+  height: 70px;
+  margin-bottom: 5px;
+  padding-top: 5px;
 }
 
 .post-row:hover {
-  color: #fff;
   background: #d3d3d3;
 }
 
-.post-row:hover a {
-  color: #fff;
+.post-row a:hover {
+  color: #0e3457;
   text-decoration: none;
 }
 
 .post-row a {
-  display: flex;
-  align-items: center;
+  display: inline;
   height: 80px;
   color: #0e3457;
   text-decoration: none;
@@ -339,8 +340,21 @@ header {
 .post-row img {
   width: 70px;
   height: 70px;
-  margin-right: 10px;
-  margin-left: 20px;
+  margin: 0 20px;
+  float: left;
+  margin-top: -5px;
+}
+
+.post-row h2 {
+  margin-top: 5px;
+}
+
+.post-row h2, .post-row p {
+  text-align: left;
+}
+
+.meta-box-nome-scientifico {
+  font-style: italic;
 }
 
 .category-menu {
@@ -489,7 +503,11 @@ header {
 
 .card-title {
   font-weight: bold;
-  margin-bottom: 20px !important;
+}
+
+.card-scientific-name {
+  margin-bottom: 20px;
+  font-style: italic;
 }
 
 /* 

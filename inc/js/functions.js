@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function() {
             var postElement = document.createElement("li");
             postElement.classList.add("post-row");
 
-            var postLink = document.createElement("a"); // crea il link
-            postLink.href = post.permalink; // imposta l'URL del post
+            var postLink = document.createElement("a"); 
+            postLink.href = post.permalink; 
 
             var imgElement = document.createElement("img");
             imgElement.classList.add("featured");
@@ -64,16 +64,24 @@ document.addEventListener("DOMContentLoaded", function() {
             if (post.featured_image) {
               imgElement.src = post.featured_image;
             } else {
-              imgElement.style.display = "none"; // nasconde l'immagine se non è presente
+              imgElement.style.display = "none"; 
             }
-            postLink.appendChild(imgElement); // aggiungi l'immagine al link
+            postLink.appendChild(imgElement);
 
-            postElement.appendChild(postLink); // aggiungi il link al risultato
+            postElement.appendChild(postLink); 
 
             var titleElement = document.createElement("h2");
             titleElement.classList.add("title");
             titleElement.innerHTML = post.title;
-            postLink.appendChild(titleElement); // aggiungi il titolo al link
+            postLink.appendChild(titleElement); 
+
+
+            if (post.meta_box_nome_scientifico) {
+              var metaBoxElement = document.createElement("p");
+              metaBoxElement.classList.add("meta-box-nome-scientifico");
+              metaBoxElement.innerHTML = post.meta_box_nome_scientifico;
+              postLink.appendChild(metaBoxElement); // aggiungi il campo meta box al risultato
+            }
 
             searchResults.appendChild(postElement);
 

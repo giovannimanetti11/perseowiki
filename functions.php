@@ -100,6 +100,56 @@ add_filter( 'style_loader_src', 'remove_css_js_version', 9999 );
 add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
 
+
+  /*
+     * 
+     * ADD custom field "Nome scientifico"
+     *
+     */
+
+function custom_meta_box_markup($post)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+        <input name="meta-box-nome-scientifico" type="text" value="<?php echo get_post_meta($post->ID, "meta-box-nome-scientifico", true); ?>">
+    <?php  
+}
+
+function add_custom_meta_box()
+{
+    add_meta_box("custom-meta-box", "Nome scientifico", "custom_meta_box_markup", "post", "side", "high", null);
+}
+
+add_action("add_meta_boxes", "add_custom_meta_box");
+
+function save_custom_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "post";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $meta_box_nome_scientifico_value = "";
+    if(isset($_POST["meta-box-nome-scientifico"]))
+    {
+        $meta_box_nome_scientifico_value = $_POST["meta-box-nome-scientifico"];
+    }   
+    update_post_meta($post_id, "meta-box-nome-scientifico", $meta_box_nome_scientifico_value);
+}
+
+add_action("save_post", "save_custom_meta_box", 10, 3);
+
+
+
   /*
      * 
      * AJAX get posts by letter [homepage]
@@ -127,6 +177,7 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
           $link = get_permalink();
           $image = get_the_post_thumbnail_url(null, 'medium');
           $alt = get_the_title();
+          $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true); 
   
           // Create a new card deck for every 3 posts
           if ($counter % 3 == 0) {
@@ -140,6 +191,7 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
           $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
           $output .= '<div class="card-body">';
           $output .= '<h4 class="card-title">' . $title . '</h4>';
+          $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
           $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
           $output .= '</div></div>';
   
