@@ -755,6 +755,10 @@ footer {
     height: 100%;
     margin-bottom: 25px;
   }
+
+  .print-button {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
