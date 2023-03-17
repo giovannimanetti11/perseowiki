@@ -178,3 +178,18 @@ document.addEventListener('DOMContentLoaded', () => {
   defaultLink.classList.add('active');
   defaultLink.click();
 });
+
+
+// Print article
+
+function printArticle() {
+  var content = document.getElementById("post-content").innerHTML;
+  var mywindow = window.open('', 'Print', 'height=600,width=800');
+  mywindow.document.write('<html><head><title>WikiHerbalist.com</title>');
+  mywindow.document.write('</head><body>');
+  mywindow.document.write(content);
+  mywindow.document.write('</body></html>');
+  mywindow.print();
+  mywindow.close();
+  return true;
+}

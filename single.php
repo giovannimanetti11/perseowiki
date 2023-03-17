@@ -5,14 +5,14 @@
     
     if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-    <article class="post-content">
+    <article class="post-content" id="post-content">
 
         <h1><?php the_title(); ?></h1>
 
         <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
         <span class="meta-box-nome-scientifico"><?php echo esc_html( $meta_box_value ); ?></span>
         <div class="post-buttons">
-            <button class="button print-button"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
+            <button class="button print-button" onclick="printArticle()"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
             <button class="button share-button"><i class="fa fa-share-alt" aria-hidden="true"></i> Condividi</button>
             <button class="button edit-button"><i class="fa-solid fa-pen-to-square"></i> Modifica</button>
         </div>
