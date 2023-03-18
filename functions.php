@@ -149,6 +149,148 @@ function save_custom_meta_box($post_id, $post, $update)
 add_action("save_post", "save_custom_meta_box", 10, 3);
 
 
+/*
+ * ADD custom field "Nome comune"
+ *
+ */
+
+ function custom_meta_box_markup_comune($post)
+ {
+     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+ 
+     ?>
+         <input name="meta-box-nome-comune" type="text" value="<?php echo get_post_meta($post->ID, "meta-box-nome-comune", true); ?>">
+     <?php  
+ }
+ 
+ function add_custom_meta_box_comune()
+ {
+     add_meta_box("custom-meta-box-comune", "Nome comune", "custom_meta_box_markup_comune", "post", "side", "high", null);
+ }
+ 
+ add_action("add_meta_boxes", "add_custom_meta_box_comune");
+ 
+ function save_custom_meta_box_comune($post_id, $post, $update)
+ {
+     if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+         return $post_id;
+ 
+     if(!current_user_can("edit_post", $post_id))
+         return $post_id;
+ 
+     if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+         return $post_id;
+ 
+     $slug = "post";
+     if($slug != $post->post_type)
+         return $post_id;
+ 
+     $meta_box_nome_comune_value = "";
+     if(isset($_POST["meta-box-nome-comune"]))
+     {
+         $meta_box_nome_comune_value = $_POST["meta-box-nome-comune"];
+     }   
+     update_post_meta($post_id, "meta-box-nome-comune", $meta_box_nome_comune_value);
+ }
+ 
+ add_action("save_post", "save_custom_meta_box_comune", 10, 3);
+ 
+ 
+ /*
+  * ADD custom field "Parti usate"
+  *
+  */
+ 
+ function custom_meta_box_markup_parti($post)
+ {
+     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+ 
+     ?>
+         <input name="meta-box-parti-usate" type="text" value="<?php echo get_post_meta($post->ID, "meta-box-parti-usate", true); ?>">
+     <?php  
+ }
+ 
+ function add_custom_meta_box_parti()
+ {
+     add_meta_box("custom-meta-box-parti", "Parti usate", "custom_meta_box_markup_parti", "post", "side", "high", null);
+ }
+ 
+ add_action("add_meta_boxes", "add_custom_meta_box_parti");
+ 
+ function save_custom_meta_box_parti($post_id, $post, $update)
+ {
+     if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+         return $post_id;
+ 
+     if(!current_user_can("edit_post", $post_id))
+         return $post_id;
+ 
+     if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+         return $post_id;
+ 
+     $slug = "post";
+     if($slug != $post->post_type)
+         return $post_id;
+ 
+     $meta_box_parti_usate_value = "";
+     if(isset($_POST["meta-box-parti-usate"]))
+     {
+         $meta_box_parti_usate_value = $_POST["meta-box-parti-usate"];
+     }   
+     update_post_meta($post_id, "meta-box-parti-usate", $meta_box_parti_usate_value);
+ }
+ 
+ add_action("save_post", "save_custom_meta_box_parti", 10, 3);
+
+
+ /*
+ * ADD custom field "Costituenti"
+ *
+ */
+
+function custom_meta_box_markup_costituenti($post)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+        <input name="meta-box-costituenti" type="text" value="<?php echo get_post_meta($post->ID, "meta-box-costituenti", true); ?>">
+    <?php  
+}
+
+function add_custom_meta_box_costituenti()
+{
+    add_meta_box("custom-meta-box-costituenti", "Costituenti", "custom_meta_box_markup_costituenti", "post", "side", "high", null);
+}
+
+add_action("add_meta_boxes", "add_custom_meta_box_costituenti");
+
+function save_custom_meta_box_costituenti($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "post";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $meta_box_costituenti_value = "";
+    if(isset($_POST["meta-box-costituenti"]))
+    {
+        $meta_box_costituenti_value = $_POST["meta-box-costituenti"];
+    }   
+    update_post_meta($post_id, "meta-box-costituenti", $meta_box_costituenti_value);
+}
+
+add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
+
+
+
 
   /*
      * 

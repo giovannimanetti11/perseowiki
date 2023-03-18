@@ -193,3 +193,32 @@ function printArticle() {
   mywindow.close();
   return true;
 }
+
+// Share article
+
+function openSharePopup() {
+  var popup = document.getElementById("share-popup");
+  popup.style.display = "block";
+}
+
+
+function closeSharePopup() {
+  var popup = document.getElementById("share-popup");
+  popup.style.display = "none";
+}
+
+
+function copyToClipboard() {
+  var urlInput = document.getElementById("article-url");
+  urlInput.select();
+  document.execCommand("copy");
+  urlInput.classList.add("copied");
+  setTimeout(function() {
+    urlInput.classList.remove("copied");
+  }, 1000);
+}
+
+function shareUrl(url) {
+  window.open(url, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");
+  return false;
+}
