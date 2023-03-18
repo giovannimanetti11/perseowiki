@@ -487,6 +487,10 @@ header {
   display: flex;
 }
 
+.card-body {
+  text-align: center;
+}
+
 .card {
   display: inline-block;
   width: calc(100% / 3 - 10px);
@@ -521,11 +525,13 @@ header {
 
 .card-title {
   font-weight: bold;
+  text-align: center;
 }
 
 .card-scientific-name {
   margin-bottom: 20px;
   font-style: italic;
+  text-align: center;
 }
 
 /* 
@@ -648,6 +654,26 @@ header {
 
 .entry-header {
   margin-top: 25px;
+}
+
+
+/* 
+*
+*  TAG PAGE
+*
+*/
+
+.tag-header h1 {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.tag-header .container {
+  width: 50%;
+}
+
+.tag-posts {
+  margin-top: 50px;
 }
 
 
@@ -877,6 +903,7 @@ footer {
     width: 90%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 25px;
   }
 
   .card-deck .card {
@@ -937,6 +964,10 @@ footer {
   #article-url {
     font-size: 14px;
   }
+
+  .tag-header .container {
+    width: 90%;
+  }
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
@@ -969,4 +1000,15 @@ footer {
     width: 80%;
   }
 
+  .tag-header .container {
+    width: 80%;
+  }
+
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .card-deck .card {
+    width: calc(100% / 2 - 10px);
+  }
+  
 }
