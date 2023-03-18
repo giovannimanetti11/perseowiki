@@ -528,11 +528,18 @@ header {
   text-align: center;
 }
 
+.card-title a {
+  color: #000;
+  text-decoration: none;
+}
+
 .card-scientific-name {
   margin-bottom: 20px;
   font-style: italic;
   text-align: center;
 }
+
+
 
 /* 
 *
@@ -674,6 +681,26 @@ header {
 
 .tag-posts {
   margin-top: 50px;
+}
+
+
+/* 
+*
+*  CATEGORY PAGE
+*
+*/
+
+.category .category-title {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.category .card-deck {
+  width: 100%;
+}
+
+.category .card {
+  width: 100%;
 }
 
 
@@ -967,6 +994,11 @@ footer {
 
   .tag-header .container {
     width: 90%;
+  }
+
+  .category .card {
+    margin: 0 auto;
+    margin-bottom: 20px;
   }
 }
 
