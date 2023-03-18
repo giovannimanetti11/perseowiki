@@ -634,7 +634,21 @@ header {
   background-color:rgba(62, 146, 162, 0.3);
 }
 
+/* 
+*
+*  SINGLE PAGE
+*
+*/
 
+.entry-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.entry-header {
+  margin-top: 25px;
+}
 
 
 /* 
@@ -652,6 +666,27 @@ footer {
 
 .footerBottom {
   margin-top: 100px !important;
+}
+
+.footerLinks ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.footerLinks ul li {
+  margin: 0 10px;
+}
+
+.footerLinks a {
+  color: #3E92A2;
+  text-decoration: none;
+}
+
+.footerLinks a:hover {
+  color: #fff;
 }
 
 
