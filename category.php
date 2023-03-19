@@ -23,11 +23,20 @@ get_header();
     </div>
 
     <?php
-        $args = array(
+    $category = get_queried_object();
+    if ( $category && ! is_wp_error( $category ) ) {
+        $cat_id = $category->term_id;
+    } else {
+        $cat_id = 0;
+    }
+    
+    $args = array(
         'post_type' => 'post',
         'orderby'   => 'title',
-        'order'     => 'ASC'
+        'order'     => 'ASC',
+        'cat'       => $cat_id
     );
+    
     $query = new WP_Query( $args );
 
     if ( $query->have_posts() ) :
