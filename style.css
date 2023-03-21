@@ -612,7 +612,7 @@ header {
 }
 
 .post-tags-list h3 {
-  text-align: center;
+  margin-left: 25px;
   width: 100%;
 }
 
@@ -633,6 +633,7 @@ header {
   font-size: 16px;
   color: #071c2e;
   font-weight: bold;
+  position: relative;
 }
 
 .post-buttons button {
@@ -646,6 +647,60 @@ header {
 .post-buttons button:hover {
   background-color:rgba(62, 146, 162, 0.3);
 }
+
+.index {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.index-title {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.index-title i {
+  margin-right: 5px;
+}
+
+.index-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #071c2e;
+  margin-top: 20px;
+}
+
+
+.index-item {
+  width: 48%;
+  margin-bottom: 10px;
+}
+
+.index-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.romboid {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #071c2e;
+  color: white;
+  font-weight: bold;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  margin-right: 5px;
+}
+
+
+
 
 /* 
 *
@@ -905,7 +960,7 @@ footer {
   }
 
   #menu-categorie {
-    justify-content: start;
+    justify-content: center;
     overflow-x: hidden;
   }
 

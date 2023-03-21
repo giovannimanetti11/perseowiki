@@ -71,6 +71,14 @@ function perseowiki_styles() {
 
 add_action('wp_enqueue_scripts', 'perseowiki_styles');
 
+function enqueue_single_post_scripts() {
+    if ( is_singular( 'post' ) ) {
+        wp_enqueue_script( 'single-post', get_template_directory_uri() . '/inc/js/single-post.js', array( 'jquery' ), '1.0', true );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_single_post_scripts' );
+
+
 
   /*
      * 

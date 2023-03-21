@@ -47,6 +47,10 @@
 
 
         <div class="post-content-text">
+            <div class="index">
+                
+            </div>
+
             <div class="post-content-module">
                 <div class="post-featured-image">
                 <?php if ( has_post_thumbnail() ) { 
