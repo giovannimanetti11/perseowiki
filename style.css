@@ -612,7 +612,7 @@ header {
 }
 
 .post-tags-list h3 {
-  margin-left: 25px;
+  margin-left: 20px;
   width: 100%;
 }
 
@@ -673,6 +673,7 @@ header {
   padding-bottom: 30px;
   border-bottom: 1px solid #071c2e;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 
@@ -924,6 +925,10 @@ footer {
     margin-top: -30px;
   }
 
+  #menu-icon:hover {
+    cursor: pointer;
+  }
+
   .logo img {
     margin-left: 0;
     margin-right: 10px;
@@ -1002,6 +1007,7 @@ footer {
   .post-content {
     width: 100%;
     margin-top: 0;
+    padding: 15px;
   }
 
   .post-container {
@@ -1011,8 +1017,9 @@ footer {
   .post-content-module {
     width: 100%;
     margin-bottom: 15px;
-    padding: 15px;
+    padding: 0;
     margin-left: 0;
+    border: 0;
   }
 
   .post-featured-image img, .post-featured-image {
@@ -1022,6 +1029,10 @@ footer {
   .post-tags-list {
     display: inline-flex;
     flex-wrap: wrap;
+  }
+
+  .post-tags-list h3 {
+    margin-left: 0;
   }
 
   .post-tags-list li {
@@ -1054,6 +1065,18 @@ footer {
   .category .card {
     margin: 0 auto;
     margin-bottom: 20px;
+  }
+
+  .romboid {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .index-item a {
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 13px;
   }
 }
 

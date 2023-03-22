@@ -31,5 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
       h3.id = 'section-' + indexCounter;
       indexCounter++;
     });
+
+
   });
   

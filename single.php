@@ -17,7 +17,7 @@
         <div class="post-buttons">
             <button class="button print-button" type="button" onclick="printArticle()"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
             <button class="button share-button" type="button" onclick="openSharePopup()"><i class="fa fa-share-alt" aria-hidden="true"></i> Condividi</button>
-            <button class="button edit-button" type="button"><i class="fa-solid fa-pen-to-square"></i> Modifica</button>
+            <!-- <button class="button edit-button" type="button"><i class="fa-solid fa-pen-to-square"></i> Modifica</button> -->
         </div>
 
         <!-- Popup -->
