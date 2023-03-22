@@ -164,7 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const response = JSON.parse(xhr.responseText);
           postsContainer.innerHTML = response.data;
           const count = response.count;
-          postsInfo.innerHTML = `<p>${count} erbe che iniziano per ${letter}</p>`;
+          const noun = count === 1 ? "erba" : "erbe";
+          const verb = count === 1 ? "inizia" : "iniziano";
+          postsInfo.innerHTML = `<p>${count} ${noun} che ${verb} per ${letter}</p>`;
         }
       };
       xhr.open('GET', ajaxUrl + '?' + urlParams.toString());

@@ -271,6 +271,7 @@ header {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   padding-left: 0;
+  padding-bottom: 15px;
 }
 
 .search input:focus{
@@ -477,7 +478,7 @@ header {
 
 #posts-info {
   text-align: center;
-  margin-top: 25px;
+  margin-top: 10px;
 }
 
 .card-deck {
@@ -551,6 +552,15 @@ header {
   background: #f2f2f2;
   width: 100% !important;
   padding: 25px 0;
+}
+
+.article-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-date, .post-reading-time {
+  font-size: 12px;
 }
 
 .post-content {
@@ -1077,6 +1087,11 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     font-size: 13px;
+  }
+
+  .article-info {
+    flex-direction: column;
+    justify-content: flex-start;
   }
 }
 

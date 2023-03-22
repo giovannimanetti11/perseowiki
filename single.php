@@ -45,6 +45,31 @@
             </div>
         </div>
 
+        <div class="article-info">
+            <div class="post-date">
+            <?php
+                $data_pubblicazione = get_the_date();
+                $data_ultimo_aggiornamento = get_the_modified_date();
+                if ($data_pubblicazione != $data_ultimo_aggiornamento) {
+                echo "Scheda pubblicata il $data_pubblicazione e aggiornata il $data_ultimo_aggiornamento";
+                } else {
+                echo "Scheda pubblicata il $data_pubblicazione";
+                }
+            ?>
+            </div>
+            <?php
+            $words_per_minute = 200;
+            $content = get_post_field( 'post_content', $post->ID );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $reading_time = ceil( $word_count / $words_per_minute );
+            ?>
+            <div class="post-reading-time">
+                <i class="fa-solid fa-clock"></i> Tempo di lettura: <?php echo $reading_time; ?> min
+            </div>
+
+
+        </div>
+        
 
         <div class="post-content-text">
             <div class="index">
