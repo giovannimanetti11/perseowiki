@@ -2,13 +2,36 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
-function perseowiki_support() {
+  /*
+   * Add info for open graphs
+   * 
+   */
+
+function add_open_graph_meta_tags() {
+    if (is_single() || is_page()) {
+        global $post;
+        $og_title = get_the_title();
+        $og_description = get_the_excerpt();
+        $og_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+        $og_url = get_permalink();
+        echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
+        echo '<meta property="og:description" content="' . esc_attr($og_description) . '" />' . "\n";
+        echo '<meta property="og:image" content="' . esc_attr($og_image[0]) . '" />' . "\n";
+        echo '<meta property="og:url" content="' . esc_attr($og_url) . '" />' . "\n";
+    }
+}
+add_action('wp_head', 'add_open_graph_meta_tags');
+
+
 
   /*
-   * Add support for core custom logo.
+   * Add support for core custom logo and add featured images to post and pages.
    *
    * @link https://codex.wordpress.org/Theme_Logo
+   * @link https://codex.wordpress.org/Post_Thumbnails
    */
+
+function perseowiki_support() {
 
   add_theme_support( 
     'custom-logo', [
@@ -18,11 +41,6 @@ function perseowiki_support() {
     'flex-height' => true,
   ]);
 
-  /*
-   * Add featured images to post and pages.
-   *
-   * @link https://codex.wordpress.org/Post_Thumbnails
-   */
 
    add_theme_support('post-thumbnails', array(
     'post',
@@ -73,10 +91,20 @@ add_action('wp_enqueue_scripts', 'perseowiki_styles');
 
 function enqueue_single_post_scripts() {
     if ( is_singular( 'post' ) ) {
-        wp_enqueue_script( 'single-post', get_template_directory_uri() . '/inc/js/single-post.js', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script( 'single-post', get_template_directory_uri() . '/inc/js/single-post.js');
     }
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_single_post_scripts' );
+
+
+function add_print_css() {
+    if (is_single()) {
+      wp_enqueue_style('print-style', get_template_directory_uri() . '/print.css', array(), '1.0', 'print');
+    }
+  }
+  add_action('wp_enqueue_scripts', 'add_print_css');
+  
+
 
 
 

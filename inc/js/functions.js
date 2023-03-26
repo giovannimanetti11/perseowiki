@@ -187,15 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function printArticle() {
   var content = document.getElementById("post-content").innerHTML;
   var mywindow = window.open('', 'Print', 'height=600,width=800');
-  mywindow.document.write('<html><head><title>WikiHerbalist.com</title>');
-  mywindow.document.write('<link rel="stylesheet" type="text/css" href="' + 
-    window.location.origin + '/wp-content/themes/perseowiki/style.css">');
+  mywindow.document.write('<html><head><title>&nbsp;</title>');
+  mywindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
   mywindow.document.write('</head><body>');
   mywindow.document.write(content);
   mywindow.document.write('</body></html>');
   mywindow.print();
   mywindow.close();
-  console.log("File CSS caricato correttamente: " + mywindow.document.getElementsByTagName("link")[0].href);
   return true;
 }
 
