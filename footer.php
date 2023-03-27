@@ -6,6 +6,7 @@
                 </div>
                 <div class="footerLinks">
                     <ul>
+                        <a href="https://www.wikiherbalist.com/cookie-policy/"><li>Cookie Policy</li></a> |
                         <a href="https://www.wikiherbalist.com/privacy-policy/"><li>Privacy Policy</li></a> | 
                         <a href="https://www.wikiherbalist.com/diclaimer/"><li>Disclaimer</li></a>
                     </ul>
