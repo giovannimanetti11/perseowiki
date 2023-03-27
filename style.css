@@ -134,6 +134,37 @@ body {
   flex: 1 0 auto;
 }
 
+.tooltip-term-excerpt {
+  position: absolute;
+  display: block;
+  background-color: #071c2e;
+  border: 1px solid #000;
+  color: #f2f2f2;
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 300px;
+  width: 300px;
+  height: 175px;
+  text-align: left;
+  z-index: 50;
+  box-sizing: border-box;
+}
+
+.tooltip-term-excerpt::before {
+  content: "";
+  position: absolute;
+  top: 100%; 
+  left: 50%;
+  margin-left: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: #071c2e transparent transparent transparent;
+  z-index: 999; 
+}
+
+
+
 
 /* 
 *
@@ -651,7 +682,7 @@ header {
   text-align: center;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
-  z-index: 9999;
+  z-index: 49;
   position: relative;
 }
 

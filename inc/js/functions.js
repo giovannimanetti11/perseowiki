@@ -235,21 +235,21 @@ function shareUrl(url) {
 document.addEventListener('DOMContentLoaded', function() {
   // Esegui la richiesta AJAX per ottenere i titoli e i permalink
   fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
-      .then(response => response.json())
-      .then(data => {
-          // Ottieni l'URL corrente
-          const currentURL = window.location.href;
+    .then(response => response.json())
+    .then(data => {
+      // Ottieni l'URL corrente
+      const currentURL = window.location.href;
 
-          // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
-          const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
-          contentElements.forEach(element => {
-              linkifyContent(element, data, currentURL);
-          });
+      // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
+      const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
+      contentElements.forEach(element => {
+        linkifyContent(element, data, currentURL);
       });
+    });
 });
 
 function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); 
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 }
 
 function linkifyContent(element, titlesAndLinks, currentURL) {
@@ -257,15 +257,60 @@ function linkifyContent(element, titlesAndLinks, currentURL) {
   let newHTML = originalHTML;
 
   // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
-  titlesAndLinks.forEach(({ title, link }) => {
+  titlesAndLinks.forEach(({ title, link, excerpt }) => {
     if (link !== currentURL) {
       const escapedTitle = escapeRegExp(title);
       const regex = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
-      newHTML = newHTML.replace(regex, `<a href="${link}">$1</a>`);
+      const linkHTML = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
+      newHTML = newHTML.replace(regex, linkHTML);
     }
   });
 
   element.innerHTML = newHTML;
+
+  // Inizializza i tooltip per tutti i link
+  const linksWithExcerpt = element.querySelectorAll('.link-with-excerpt');
+  linksWithExcerpt.forEach(link => {
+    const excerpt = link.getAttribute('data-excerpt');
+    link.addEventListener('mouseover', (event) => {
+      showTooltip(excerpt, event);
+    });
+    link.addEventListener('mouseout', () => {
+      hideTooltip();
+    });
+  });
+} // Aggiungi la chiusura della funzione qui
+
+let tooltip = null;
+
+function showTooltip(excerpt, event) {
+  tooltip = document.createElement('div');
+  tooltip.classList.add('tooltip-term-excerpt');
+  tooltip.innerHTML = excerpt;
+
+  const linkRect = event.target.getBoundingClientRect();
+  const scrollX = window.pageXOffset;
+  const scrollY = window.pageYOffset;
+  const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
+  const tooltipY = linkRect.top + scrollY - 10 - 175; // 10 px sopra il link e spostato in alto di 175px (altezza del tooltip)
+
+  tooltip.style.left = `${tooltipX}px`;
+  tooltip.style.top = `${tooltipY}px`;
+
+  document.body.appendChild(tooltip);
 }
+
+
+
+function hideTooltip() {
+  if (tooltip) {
+    document.body.removeChild(tooltip);
+    tooltip = null;
+  }
+}
+
+
+
+
 
 

@@ -478,6 +478,7 @@ function get_all_posts_titles_and_links() {
             $titles_and_links[] = array(
                 'title' => get_the_title(),
                 'link' => get_permalink(),
+                'excerpt' => get_the_excerpt(),
             );
         }
     }
