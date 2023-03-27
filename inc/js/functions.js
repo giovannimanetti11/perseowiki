@@ -30,6 +30,106 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+// Mailing List Popup
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  function toggleElementVisibility(element, show) {
+    if (show) {
+      element.classList.remove("hidden");
+    } else {
+      element.classList.add("hidden");
+    }
+  }
+  
+  const form = document.getElementById("subscribe-form");
+  const successMessage = document.getElementById("mailingList-success-message");
+  const errorMessage = document.getElementById("mailingList-error-message");
+  
+  form.addEventListener("submit", (event) => {
+    const nome = document.getElementById("nome").value;
+    const cognome = document.getElementById("cognome").value;
+    const email = document.getElementById("email").value;
+  
+    const { nomeValid, cognomeValid, emailValid } = validateInputs(nome, cognome, email);
+  
+    if (!nomeValid || !cognomeValid || !emailValid) {
+      toggleElementVisibility(errorMessage, true);
+      toggleElementVisibility(successMessage, false);
+      event.preventDefault();
+    } else {
+      const data = {
+        members: [
+          {
+            email_address: email,
+            status: "subscribed",
+            merge_fields: {
+              FNAME: nome,
+              LNAME: cognome,
+            },
+          },
+        ],
+      };
+  
+      fetch(
+        "/wp-content/themes/perseowiki/inc/subscribe.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data }),
+        }
+      )
+      
+      .then((response) => {
+        console.log(response); // Aggiungi questa riga per vedere la risposta dell'API
+        if (response.status === 200) {
+          toggleElementVisibility(successMessage, true);
+          toggleElementVisibility(errorMessage, false);
+        } else {
+          toggleElementVisibility(errorMessage, true);
+          toggleElementVisibility(successMessage, false);
+        }
+      })
+      .catch((error) => {
+        toggleElementVisibility(errorMessage, true);
+        toggleElementVisibility(successMessage, false);
+      });
+      
+  
+      event.preventDefault(); 
+    }
+  });
+  
+  const popupBtn = document.getElementById("mailingList-popup-btn");
+  const popup = document.getElementById("mailingList-popup");
+  const closeBtn = document.getElementById("mailingList-popup-close-btn");
+  
+  popupBtn.addEventListener("click", () => {
+    popup.style.display = "block";
+  });
+  
+  closeBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+  
+  window.addEventListener("click", (event) => {
+    if (event.target === popup) {
+      popup.style.display = "none";
+    }
+  });
+
+  function validateInputs(nome, cognome, email) {
+    const nomeValid = nome.trim() !== "";
+    const cognomeValid = cognome.trim() !== "";
+    const emailValid = email.trim() !== "" && /\S+@\S+\.\S+/.test(email);
+    return { nomeValid, cognomeValid, emailValid };
+  }
+});
+
+
+
 
 // AJAX Search
 
@@ -268,8 +368,11 @@ function linkifyContent(element, titlesAndLinks, currentURL) {
 
   element.innerHTML = newHTML;
 
+
+
   // Inizializza i tooltip per tutti i link
-  const linksWithExcerpt = element.querySelectorAll('.link-with-excerpt');
+  
+  const linksWithExcerpt = document.querySelectorAll('.link-with-excerpt');
   linksWithExcerpt.forEach(link => {
     const excerpt = link.getAttribute('data-excerpt');
     link.addEventListener('mouseover', (event) => {
@@ -279,35 +382,50 @@ function linkifyContent(element, titlesAndLinks, currentURL) {
       hideTooltip();
     });
   });
-} // Aggiungi la chiusura della funzione qui
+} 
+
+function isTouchDevice() {
+  return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+}
 
 let tooltip = null;
 
 function showTooltip(excerpt, event) {
-  tooltip = document.createElement('div');
-  tooltip.classList.add('tooltip-term-excerpt');
-  tooltip.innerHTML = excerpt;
+  if (tooltip) {
+    tooltip.remove();
+    tooltip = null;
+  }
 
-  const linkRect = event.target.getBoundingClientRect();
-  const scrollX = window.pageXOffset;
-  const scrollY = window.pageYOffset;
-  const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
-  const tooltipY = linkRect.top + scrollY - 10 - 175; // 10 px sopra il link e spostato in alto di 175px (altezza del tooltip)
+  if (!isTouchDevice()) {
+    tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip-term-excerpt');
+    tooltip.innerHTML = excerpt;
 
-  tooltip.style.left = `${tooltipX}px`;
-  tooltip.style.top = `${tooltipY}px`;
+    document.body.appendChild(tooltip);
 
-  document.body.appendChild(tooltip);
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const tooltipHeight = tooltipRect.height;
+
+    const linkRect = event.target.getBoundingClientRect();
+    const scrollX = window.pageXOffset;
+    const scrollY = window.pageYOffset;
+    const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
+    const tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
+
+    tooltip.style.left = `${tooltipX}px`;
+    tooltip.style.top = `${tooltipY}px`;
+  }
 }
 
 
 
 function hideTooltip() {
   if (tooltip) {
-    document.body.removeChild(tooltip);
+    tooltip.remove();
     tooltip = null;
   }
 }
+
 
 
 

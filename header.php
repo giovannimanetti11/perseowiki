@@ -62,8 +62,8 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 'items_wrap' => '<ul>%3$s</ul>'
             ));
         ?>
-        <button class="btn btn-sm" type="button">Subscribe</button>
-        <button class="btn btn-sm" type="button">Login</button>
+        <button id="mailingList-popup-btn-mobile" class="btn btn-sm" type="button">Iscriviti</button>
+        <button class="btn btn-sm" type="button">Entra</button>
     </div>
     <nav class="menu">
         <?php
@@ -76,8 +76,30 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     </nav>
     
     <div class="call-to-action">
-        <button class="btn btn-sm" type="button">Subscribe</button>
-        <button class="btn btn-sm" type="button">Login</button>
+        <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Iscriviti</button>
+        <button class="btn btn-sm" type="button">Entra</button>
+    </div>
+
+    <div id="mailingList-popup" class="popup">
+        <div class="popup-content">
+        <a href="#" id="mailingList-popup-close-btn"><i class="fa fa-times"></i></a>
+            <h2>Iscriviti alla Mailing List di WikiHerbalist</h2>
+            <form id="subscribe-form" novalidate>
+
+                <input type="text" id="nome" placeholder="Nome" />
+                <input type="text" id="cognome" placeholder="Cognome" />
+                <input type="email" id="email" placeholder="Indirizzo Email" />
+
+                <div class="alert alert-success hidden" role="alert" id="mailingList-success-message">
+                    Grazie per esserti iscritto alla mailing list di WikiHerbalist
+                </div>
+                <div class="alert alert-danger hidden" role="alert" id="mailingList-error-message">
+                    Compila i campi per completare la tua iscrizione.
+                </div>
+
+                <button type="submit" id="subscribe-btn" class="btn">Iscriviti</button>
+            </form>
+        </div>
     </div>
 
 </header>

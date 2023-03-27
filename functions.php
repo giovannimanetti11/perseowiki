@@ -491,6 +491,69 @@ add_action('wp_ajax_get_all_posts_titles_and_links', 'get_all_posts_titles_and_l
 add_action('wp_ajax_nopriv_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
 
 
+/*
+ * 
+ * ADD CUSTOM BREADCRUMB TO BE PLACED WITH <?php custom_breadcrumb(); ?>
+ *
+ */
+function custom_breadcrumb() {
+
+    global $post;
+    echo '<div class="breadcrumbs">';
+
+    if (!is_front_page()) {
+
+        $separator = ' <span> > </span> ';
+
+        echo '<a href="' . home_url('/') . '">Home</a>' . $separator;
+
+        if (is_single()) {
+
+            $categories = get_the_category();
+            $cat_parents = array();
+
+            // Loop attraverso le categorie del post e inserisci solo le categorie padre in un array
+            foreach ($categories as $category) {
+                if ($category->parent == 0) {
+                    array_push($cat_parents, $category);
+                }
+            }
+
+            // Ordina l'array delle categorie padre in ordine discendente di profondità
+            $cat_parents = array_reverse($cat_parents);
+
+            // Mostra la categoria padre più profonda con il link alla categoria
+            echo '<a href="' . get_category_link($cat_parents[0]->cat_ID) . '">' . $cat_parents[0]->name . '</a>';
+
+            echo $separator;
+            echo the_title();
+        } elseif (is_page()) {
+            echo the_title();
+        } elseif (is_category()) {
+            single_cat_title();
+        } elseif (is_tag()) {
+            single_tag_title();
+        } elseif (is_day()) {
+            echo "<a href='" . get_year_link(get_the_time('Y')) . "'>" . get_the_time('Y') . "</a>";
+            echo $separator;
+            echo "<a href='" . get_month_link(get_the_time('Y'), get_the_time('m')) . "'>" . get_the_time('F') . "</a>";
+            echo $separator;
+            echo get_the_time('d');
+        } elseif (is_month()) {
+            echo "<a href='" . get_year_link(get_the_time('Y')) . "'>" . get_the_time('Y') . "</a>";
+            echo $separator;
+            echo get_the_time('F');
+        } elseif (is_year()) {
+            echo get_the_time('Y');
+        } elseif (is_author()) {
+            echo "Archives by: " . get_the_author_meta('display_name', $post->post_author);
+        } else {
+            echo the_title();
+        }
+    }
+
+    echo '</div>';
+}
 
 
 

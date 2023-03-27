@@ -145,11 +145,12 @@ body {
   line-height: 1.4;
   max-width: 300px;
   width: 300px;
-  height: 175px;
   text-align: left;
   z-index: 50;
   box-sizing: border-box;
+  pointer-events: none;
 }
+
 
 .tooltip-term-excerpt::before {
   content: "";
@@ -160,11 +161,26 @@ body {
   border-width: 15px;
   border-style: solid;
   border-color: #071c2e transparent transparent transparent;
-  z-index: 999; 
+  z-index: 999;
 }
 
+.link-with-excerpt:hover {
+  cursor: pointer;
+}
 
+.breadcrumbs {
+  width: 50%;
+  margin: 0 auto;
+  color: #071c2e;
+}
 
+.breadcrumbs span {
+  color: #adadad;
+}
+
+.breadcrumbs a {
+  color: #3E92A2;
+}
 
 /* 
 *
@@ -287,6 +303,67 @@ header {
 
 #menu-icon.hidden {
   opacity: 0;
+}
+
+#mailingList-popup {
+  margin-top: 100px;
+}
+
+#mailingList-popup-close-btn {
+  float: right;
+}
+
+#subscribe-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#subscribe-form #nome, #subscribe-form #cognome {
+  width: 48%;
+}
+
+#subscribe-form #nome {
+  margin-right: 10px;
+}
+
+#subscribe-form #email {
+  width: 100%;
+  margin-top: 15px;
+}
+
+#mailingList-popup h2 {
+  font-size: 25px;
+  margin-bottom: 25px;
+}
+
+#mailingList-popup-close-btn {
+  color: #000;
+}
+
+#subscribe-form input {
+  padding: 10px;
+  border: 2px solid #3E92A2;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #071c2e;
+  background-color: #f5f5f5;
+  outline: none;
+}
+
+#subscribe-btn {
+  background: #3E92A2;
+  color: #fff;
+  border: 1px solid #3E92A2;
+  margin-top: 25px;
+}
+
+#mailingList-error-message, #mailingList-success-message {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.hidden {
+  display: none;
 }
 
 /* 
@@ -983,6 +1060,12 @@ footer {
 
 @media only screen and (max-width: 768px) {
 
+  .breadcrumbs {
+    width: 95%;
+    padding: 5px;
+    font-size: 13px;
+  }
+
   .mobileMenu {
     display: flex;
     margin-left: auto;
@@ -1155,6 +1238,12 @@ footer {
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
+
+  .breadcrumbs {
+    width: 80%;
+    font-size: 15px;
+  }
+
   .logo img {
     margin-right: 10px;
     margin-left: 0;
