@@ -227,3 +227,45 @@ function shareUrl(url) {
   window.open(url, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");
   return false;
 }
+
+
+// Replace terms with hyperlink
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Esegui la richiesta AJAX per ottenere i titoli e i permalink
+  fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
+      .then(response => response.json())
+      .then(data => {
+          // Ottieni l'URL corrente
+          const currentURL = window.location.href;
+
+          // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
+          const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
+          contentElements.forEach(element => {
+              linkifyContent(element, data, currentURL);
+          });
+      });
+});
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); 
+}
+
+function linkifyContent(element, titlesAndLinks, currentURL) {
+  const originalHTML = element.innerHTML;
+  let newHTML = originalHTML;
+
+  // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
+  titlesAndLinks.forEach(({ title, link }) => {
+    if (link !== currentURL) {
+      const escapedTitle = escapeRegExp(title);
+      const regex = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
+      newHTML = newHTML.replace(regex, `<a href="${link}">$1</a>`);
+    }
+  });
+
+  element.innerHTML = newHTML;
+}
+
+

@@ -2,10 +2,10 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
-  /*
-   * Add info for open graphs
-   * 
-   */
+/*
+ * Add info for open graphs
+ * 
+ */
 
 function add_open_graph_meta_tags() {
     if (is_single() || is_page()) {
@@ -24,12 +24,12 @@ add_action('wp_head', 'add_open_graph_meta_tags');
 
 
 
-  /*
-   * Add support for core custom logo and add featured images to post and pages.
-   *
-   * @link https://codex.wordpress.org/Theme_Logo
-   * @link https://codex.wordpress.org/Post_Thumbnails
-   */
+/*
+ * Add support for core custom logo and add featured images to post and pages.
+ *
+ * @link https://codex.wordpress.org/Theme_Logo
+ * @link https://codex.wordpress.org/Post_Thumbnails
+ */
 
 function perseowiki_support() {
 
@@ -42,25 +42,19 @@ function perseowiki_support() {
   ]);
 
 
-   add_theme_support('post-thumbnails', array(
-    'post',
-    'page',
-    'custom-post-type-name',
-    ));
+  add_theme_support( 'post-thumbnails' );
 
 }
 
 add_action( 'after_setup_theme', 'perseowiki_support' );
 
-  /*
-   * 
-   * Add custom menu.
-   *
-   */
+/*
+ * 
+ * Add custom menu.
+ *
+ */
 
 function perseowiki_nav_menus() {
-  
-  // This theme uses wp_nav_menu() in one location.
 
   register_nav_menus([
     'perseowiki-primary-menu' => esc_html__( 'Primary Menu', 'perseowiki' ),
@@ -72,10 +66,10 @@ add_action( 'init', 'perseowiki_nav_menus' );
 
 
 /*
-   * 
-   * Add custom styles and scripts.
-   *
-   */
+ * 
+ * Add custom styles and scripts.
+ *
+ */
 
 function perseowiki_styles() {
 
@@ -104,15 +98,78 @@ function add_print_css() {
   }
   add_action('wp_enqueue_scripts', 'add_print_css');
   
+/*
+ * 
+ * Add CPT glossario.
+ *
+ */
 
+  function perseowiki_custom_post_type() {
 
+    $labels = array(
+        'name' => 'Glossario',
+        'singular_name' => 'Termine',
+        'menu_name' => 'Glossario',
+        'add_new_item' => 'Aggiungi nuovo termine',
+        'edit_item' => 'Modifica termine',
+        'view_item' => 'Vedi termine',
+        'all_items' => 'Tutti i termini',
+        'search_items' => 'Cerca termine',
+        'not_found' => 'Nessun termine trovato',
+        'not_found_in_trash' => 'Nessun termine trovato nel cestino'
+    );
 
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => true,
+        'menu_position' => 5,
+        'menu_icon' => 'dashicons-book',
+        'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes', 'post-formats' ),
+        'rewrite' => array( 'slug' => 'glossario' )
+    );
 
-  /*
-     * 
-     * Add svg support .
-     *
-     */
+    register_post_type( 'termine', $args );
+}
+add_action( 'init', 'perseowiki_custom_post_type' );
+
+/*
+ * 
+ * Add custom category to CPT glossario.
+ *
+ */
+
+function aggiungi_taxonomy() {
+
+    $labels = array(
+        'name' => 'Categorie',
+        'singular_name' => 'Categoria',
+        'search_items' => 'Cerca categoria',
+        'all_items' => 'Tutte le categorie',
+        'parent_item' => 'Categoria padre',
+        'parent_item_colon' => 'Categoria padre:',
+        'edit_item' => 'Modifica categoria',
+        'update_item' => 'Aggiorna categoria',
+        'add_new_item' => 'Aggiungi nuova categoria',
+        'new_item_name' => 'Nome nuova categoria',
+        'menu_name' => 'Categorie'
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'hierarchical' => true,
+        'rewrite' => array( 'slug' => 'categorie' )
+    );
+
+    register_taxonomy( 'categoria', 'termine', $args );
+}
+add_action( 'init', 'aggiungi_taxonomy' );
+
+/*
+ * 
+ * Add svg support .
+ *
+ */
 
 function add_svg_to_upload_mimes( $upload_mimes ) {
 	$upload_mimes['svg'] = 'image/svg+xml';
@@ -121,11 +178,11 @@ function add_svg_to_upload_mimes( $upload_mimes ) {
 }
 add_filter( 'upload_mimes', 'add_svg_to_upload_mimes', 10, 1 );
 
-  /*
-     * 
-     * remove wp version number from scripts and styles
-     *
-     */
+/*
+ * 
+ * remove wp version number from scripts and styles
+ *
+ */
 
 function remove_css_js_version( $src ) {
   if( strpos( $src, '?ver=' ) )
@@ -137,11 +194,11 @@ add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
 
 
-  /*
-     * 
-     * ADD custom field "Nome scientifico"
-     *
-     */
+/*
+ * 
+ * ADD custom field "Nome scientifico"
+ *
+ */
 
 function custom_meta_box_markup($post)
 {
@@ -232,10 +289,10 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
  add_action("save_post", "save_custom_meta_box_comune", 10, 3);
  
  
- /*
-  * ADD custom field "Parti usate"
-  *
-  */
+/*
+ * ADD custom field "Parti usate"
+ *
+ */
  
  function custom_meta_box_markup_parti($post)
  {
@@ -279,7 +336,7 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
  add_action("save_post", "save_custom_meta_box_parti", 10, 3);
 
 
- /*
+/*
  * ADD custom field "Costituenti"
  *
  */
@@ -328,11 +385,11 @@ add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
 
 
 
-  /*
-     * 
-     * AJAX get posts by letter [homepage]
-     *
-     */
+/*
+ * 
+ * AJAX get posts by letter [homepage]
+ *
+ */
 
 
      function get_posts_by_letter() {
@@ -347,7 +404,7 @@ add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
       $posts = new WP_Query($args);
       remove_filter( 'posts_where', 'search_by_letter', 10, 2 );
       $output = '';
-      $count = 0;
+      $count = 0; // counter for posts
       $counter = 0; // counter for every 3 posts
       while ($posts->have_posts()) {
           $posts->the_post();
@@ -399,6 +456,43 @@ add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
     
   add_action('wp_ajax_get_posts_by_letter', 'get_posts_by_letter');
   add_action('wp_ajax_nopriv_get_posts_by_letter', 'get_posts_by_letter');
+
+  
+/*
+ * 
+ * AJAX TO GET ALL POST WITH THEIR TITLES AND PERMALINKS
+ *
+ */
+function get_all_posts_titles_and_links() {
+    $args = array(
+        'post_type' => array('post', 'page', 'termine'),
+        'posts_per_page' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC',
+    );
+    $posts = new WP_Query($args);
+    $titles_and_links = array();
+    while ($posts->have_posts()) {
+        $posts->the_post();
+        if (!is_singular()) {
+            $titles_and_links[] = array(
+                'title' => get_the_title(),
+                'link' => get_permalink(),
+            );
+        }
+    }
+    wp_reset_postdata();
+    echo json_encode($titles_and_links);
+    wp_die();
+}
+
+add_action('wp_ajax_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
+add_action('wp_ajax_nopriv_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
+
+
+
+
+
 
 
 ?>

@@ -301,13 +301,18 @@ h3 {
     margin-top: 25px;
 }
 
-.adv-products-container, .adv-products-container iframe, .popup-content, #share-popup, .popup-header, .popup-body {
+.adv-products-container, .adv-products-container iframe, .popup-content, #share-popup, .popup-header, .popup-body, .post-content-module span {
     display: none !important;
 }
 
 .meta-box-costituenti h3, .meta-box-parti-usate h3, .meta-box-nome-comune h3, .post-tags-list h3 {
     margin-top: 0;
-} 
+}
+
+.romboid {
+    color: #071c2e;
+    margin: 0;
+}
 
 
 /* 

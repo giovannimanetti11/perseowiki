@@ -727,8 +727,6 @@ header {
 }
 
 
-
-
 /* 
 *
 *  SINGLE PAGE
@@ -743,6 +741,19 @@ header {
 
 .entry-header {
   margin-top: 25px;
+}
+
+/* 
+*
+*  SINGLE GLOSSARIO
+*
+*/
+
+.wp-image-description {
+  font-size: 13px;
+  text-align: center;
+  font-style: italic;
+
 }
 
 
