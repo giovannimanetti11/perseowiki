@@ -34,7 +34,8 @@ get_header();
         'post_type' => 'post',
         'orderby'   => 'title',
         'order'     => 'ASC',
-        'cat'       => $cat_id
+        'cat'       => $cat_id,
+        'posts_per_page' => -1
     );
     
     $query = new WP_Query( $args );
