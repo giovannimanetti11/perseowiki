@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var popupMenu = document.getElementById("popup-menu");
   var isClicked = false;
 
+
   menuIcon.addEventListener("click", function() {
     if (!isClicked) {
       menuIcon.classList.remove("fa-bars");
@@ -41,52 +42,53 @@ document.addEventListener('DOMContentLoaded', () => {
       element.classList.add("hidden");
     }
   }
-  
+
   const form = document.getElementById("subscribe-form");
   const successMessage = document.getElementById("mailingList-success-message");
   const errorMessage = document.getElementById("mailingList-error-message");
-  
+
   form.addEventListener("submit", (event) => {
     const nome = document.getElementById("nome").value;
     const cognome = document.getElementById("cognome").value;
     const email = document.getElementById("email").value;
-  
+
     const { nomeValid, cognomeValid, emailValid } = validateInputs(nome, cognome, email);
-  
+
     if (!nomeValid || !cognomeValid || !emailValid) {
       toggleElementVisibility(errorMessage, true);
       toggleElementVisibility(successMessage, false);
       event.preventDefault();
     } else {
       const data = {
-        members: [
-          {
-            email_address: email,
-            status: "subscribed",
-            merge_fields: {
-              FNAME: nome,
-              LNAME: cognome,
-            },
-          },
-        ],
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: nome,
+          LNAME: cognome,
+        },
       };
-  
+
       fetch(
         "/wp-content/themes/perseowiki/inc/subscribe.php",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ data }),
+          body: JSON.stringify(data),
         }
       )
-      
       .then((response) => {
-        console.log(response); // Aggiungi questa riga per vedere la risposta dell'API
         if (response.status === 200) {
           toggleElementVisibility(successMessage, true);
           toggleElementVisibility(errorMessage, false);
+        } else if (response.status === 400) {
+          response.json().then((errorData) => {
+            if (errorData.title === "Member Exists") {
+              toggleElementVisibility(errorMessage, true);
+              errorMessage.textContent = "L'email inserita è già presente nella lista. Per favore, inserisci un'altra email.";
+            } else {
+              toggleElementVisibility(errorMessage, true);
+              errorMessage.textContent = "Si è verificato un errore durante l'iscrizione. Per favore, riprova più tardi.";
+            }
+          });
         } else {
           toggleElementVisibility(errorMessage, true);
           toggleElementVisibility(successMessage, false);
@@ -96,24 +98,24 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleElementVisibility(errorMessage, true);
         toggleElementVisibility(successMessage, false);
       });
-      
-  
       event.preventDefault(); 
     }
   });
-  
+
   const popupBtn = document.getElementById("mailingList-popup-btn");
   const popup = document.getElementById("mailingList-popup");
   const closeBtn = document.getElementById("mailingList-popup-close-btn");
-  
+
   popupBtn.addEventListener("click", () => {
+    loginPopup.style.display = "none";
+    signupPopup.style.display = "none";
     popup.style.display = "block";
   });
-  
+
   closeBtn.addEventListener("click", () => {
     popup.style.display = "none";
   });
-  
+
   window.addEventListener("click", (event) => {
     if (event.target === popup) {
       popup.style.display = "none";
@@ -126,10 +128,107 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailValid = email.trim() !== "" && /\S+@\S+\.\S+/.test(email);
     return { nomeValid, cognomeValid, emailValid };
   }
+
+  // Login Popup
+
+  const loginPopupBtn = document.getElementById("login-popup-btn");
+  const loginCloseBtn = document.getElementById("login-popup-close-btn");
+  const signupPopup = document.getElementById("signup-popup");
+  const loginPopup = document.getElementById("login-popup");
+
+
+  loginPopupBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+    signupPopup.style.display = "none";
+    loginPopup.style.display = "block";
+  });
+
+  loginCloseBtn.addEventListener("click", () => {
+    loginPopup.style.display = "none";
+  });
+
+  const signupBtnFromLogin = document.getElementById("signup-btn-from-login");
+  signupBtnFromLogin.addEventListener("click", (event) => {
+    event.preventDefault(); 
+    loginPopup.style.display = "none";
+    signupPopup.style.display = "block";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === loginPopup) {
+      loginPopup.style.display = "none";
+    }
+  });
+
+  // Signup Popup
+
+  const signupCloseBtn = document.getElementById("signup-popup-close-btn");
+  const signupPopupBtn = document.getElementById("signup-btn-from-login");
+  const loginBtnFromSignup = document.getElementById("login-btn-from-signup");
+
+  signupPopupBtn.addEventListener("click", () => {
+    signupPopup.style.display = "block";
+  });
+
+  signupCloseBtn.addEventListener("click", () => {
+    signupPopup.style.display = "none";
+  });
+
+  loginBtnFromSignup.addEventListener("click", (event) => {
+    event.preventDefault();
+    signupPopup.style.display = "none";
+    loginPopup.style.display = "block";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === signupPopup) {
+      signupPopup.style.display = "none";
+    }
+  });
+
 });
 
+// Manage AJAX for signup
+document.addEventListener("DOMContentLoaded", () => {
 
+  const signupForm = document.getElementById("signup-form");
+  const signupSuccessMessage = document.getElementById("signup-success-message");
+  const signupErrorMessage = document.getElementById("signup-error-message");
 
+  signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    const data = new FormData();
+    data.append("action", "register_user");
+    data.append("email", email);
+    data.append("password", password);
+
+    fetch(myAjax.ajax_url, {
+      method: "POST",
+      body: data,
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      if (result.success) {
+        signupSuccessMessage.textContent = result.message;
+        signupSuccessMessage.classList.remove("hidden");
+        signupErrorMessage.classList.add("hidden");
+      } else {
+        signupErrorMessage.textContent = result.message;
+        signupErrorMessage.classList.remove("hidden");
+        signupSuccessMessage.classList.add("hidden");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  });
+
+});
 
 // AJAX Search
 
@@ -333,11 +432,13 @@ function shareUrl(url) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
   // Esegui la richiesta AJAX per ottenere i titoli e i permalink
   fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
-    .then(response => response.json())
+    .then(response => {
+        return response.json();
+    })
     .then(data => {
-      // Ottieni l'URL corrente
       const currentURL = window.location.href;
 
       // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
@@ -346,87 +447,90 @@ document.addEventListener('DOMContentLoaded', function() {
         linkifyContent(element, data, currentURL);
       });
     });
-});
 
-function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
-}
 
-function linkifyContent(element, titlesAndLinks, currentURL) {
-  const originalHTML = element.innerHTML;
-  let newHTML = originalHTML;
+  function escapeRegExp(string) {
+    return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+  }
 
-  // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
-  titlesAndLinks.forEach(({ title, link, excerpt }) => {
-    if (link !== currentURL) {
-      const escapedTitle = escapeRegExp(title);
-      const regex = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
-      const linkHTML = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
-      newHTML = newHTML.replace(regex, linkHTML);
+  function linkifyContent(element, titlesAndLinks, currentURL) {
+    const originalHTML = element.innerHTML;
+    let newHTML = originalHTML;
+
+    // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
+    titlesAndLinks.forEach(({ title, link, excerpt }) => {
+      if (link !== currentURL) {
+        const escapedTitle = escapeRegExp(title);
+        const regex = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
+        const linkHTML = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
+        newHTML = newHTML.replace(regex, linkHTML);
+      }
+    });
+
+    element.innerHTML = newHTML;
+
+
+
+    // Inizializza i tooltip per tutti i link
+    
+    const linksWithExcerpt = document.querySelectorAll('.link-with-excerpt');
+    linksWithExcerpt.forEach(link => {
+      const excerpt = link.getAttribute('data-excerpt');
+      link.addEventListener('mouseover', (event) => {
+        showTooltip(excerpt, event);
+      });
+      link.addEventListener('mouseout', () => {
+        hideTooltip();
+      });
+    });
+  } 
+
+  function isTouchDevice() {
+    try {
+      document.createEvent("TouchEvent");
+      return true;
+    } catch (e) {
+      return false;
     }
-  });
-
-  element.innerHTML = newHTML;
-
-
-
-  // Inizializza i tooltip per tutti i link
+  }
   
-  const linksWithExcerpt = document.querySelectorAll('.link-with-excerpt');
-  linksWithExcerpt.forEach(link => {
-    const excerpt = link.getAttribute('data-excerpt');
-    link.addEventListener('mouseover', (event) => {
-      showTooltip(excerpt, event);
-    });
-    link.addEventListener('mouseout', () => {
-      hideTooltip();
-    });
-  });
-} 
 
-function isTouchDevice() {
-  return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
-}
+  let tooltip = null;
 
-let tooltip = null;
+  function showTooltip(excerpt, event) {
+    if (tooltip) {
+      tooltip.remove();
+      tooltip = null;
+    }
 
-function showTooltip(excerpt, event) {
-  if (tooltip) {
-    tooltip.remove();
-    tooltip = null;
+    if (!isTouchDevice()) {
+      tooltip = document.createElement('div');
+      tooltip.classList.add('tooltip-term-excerpt');
+      tooltip.innerHTML = excerpt;
+
+      document.body.appendChild(tooltip);
+
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const tooltipHeight = tooltipRect.height;
+
+      const linkRect = event.target.getBoundingClientRect();
+      const scrollX = window.pageXOffset;
+      const scrollY = window.pageYOffset;
+      const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
+      const tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
+
+      tooltip.style.left = `${tooltipX}px`;
+      tooltip.style.top = `${tooltipY}px`;
+    }
   }
 
-  if (!isTouchDevice()) {
-    tooltip = document.createElement('div');
-    tooltip.classList.add('tooltip-term-excerpt');
-    tooltip.innerHTML = excerpt;
-
-    document.body.appendChild(tooltip);
-
-    const tooltipRect = tooltip.getBoundingClientRect();
-    const tooltipHeight = tooltipRect.height;
-
-    const linkRect = event.target.getBoundingClientRect();
-    const scrollX = window.pageXOffset;
-    const scrollY = window.pageYOffset;
-    const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
-    const tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
-
-    tooltip.style.left = `${tooltipX}px`;
-    tooltip.style.top = `${tooltipY}px`;
+  function hideTooltip() {
+    if (tooltip) {
+      tooltip.remove();
+      tooltip = null;
+    }
   }
-}
-
-
-
-function hideTooltip() {
-  if (tooltip) {
-    tooltip.remove();
-    tooltip = null;
-  }
-}
-
-
+});
 
 
 

@@ -8,7 +8,9 @@
 
     <article class="post-content" id="post-content">
 
-        <h1><?php the_title(); ?></h1>
+        <div class="article-title">
+            <h1><?php the_title(); ?></h1> <i class="fa-solid fa-volume-up" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it"></i>
+        </div>
 
         <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
         <?php if (!empty($meta_box_value)) : ?>

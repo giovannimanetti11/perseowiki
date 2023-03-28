@@ -8,7 +8,11 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    $postData = json_encode($data['data']);
+
+    error_log("Dati ricevuti: " . print_r($data, true));
+    
+    $postData = json_encode($data);
+
 
     $url = 'https://us17.api.mailchimp.com/3.0/lists/' . MAILCHIMP_LIST_ID . '/members';
     $apiKey = MAILCHIMP_API_KEY;

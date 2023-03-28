@@ -77,9 +77,9 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     
     <div class="call-to-action">
         <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Iscriviti</button>
-        <button class="btn btn-sm" type="button">Entra</button>
+        <button id="login-popup-btn" class="btn btn-sm" type="button">Entra</button>
     </div>
-
+    <!-- MAILING LIST POPUP -->
     <div id="mailingList-popup" class="popup">
         <div class="popup-content">
         <a href="#" id="mailingList-popup-close-btn"><i class="fa fa-times"></i></a>
@@ -101,7 +101,72 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             </form>
         </div>
     </div>
-
+    <!-- LOGIN POPUP -->
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <a href="#" id="login-popup-close-btn"><i class="fa fa-times"></i></a>
+            <h2>Accedi all'area personale</h2>
+            <div class="no-account-create">
+                Non hai un account WikiHerbalist? <a href="" id="signup-btn-from-login">Registrati</a>
+            </div>
+            <div class="login-form-row">
+                <div class="col-md-6">
+                    <form id="login-form" novalidate>
+                        <input type="email" id="login-email" placeholder="Indirizzo Email" />
+                        <input type="password" id="login-password" placeholder="Password" />
+                        <div class="login-cta">
+                            <button type="submit" id="login-btn" class="btn">Accedi</button> <a href="">Password dimenticata?</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="divider">
+                    <span></span> 
+                    o 
+                    <span></span>
+                </div>
+                <div class="col-md-6 social-login-buttons">
+                    <button class="btn btn-block btn-social btn-google" type="button"><i class="fa-brands fa-google"></i> Accedi con Google</button>
+                    <button class="btn btn-block btn-social btn-microsoft" type="button"><i class="fa-brands fa-microsoft"></i> Accedi con Microsoft</button>
+                    <button class="btn btn-block btn-social btn-apple" type="button"><i class="fa-brands fa-apple"></i> Accedi con Apple</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SIGNUP POPUP -->
+    <div id="signup-popup" class="popup">
+        <div class="popup-content">
+            <a href="#" id="signup-popup-close-btn"><i class="fa fa-times"></i></a>
+            <h2>Accedi all'area personale</h2>
+            <div class="no-account-create">
+                Hai già un account WikiHerbalist? <a href="" id="login-btn-from-signup">Entra</a>
+            </div>
+            <div class="signup-form-row">
+                <div class="col-md-6">
+                    <form id="signup-form" novalidate>
+                        <input type="email" id="signup-email" placeholder="Indirizzo Email" />
+                        <input type="password" id="signup-password" placeholder="Password" />
+                        <div class="alert alert-success hidden" role="alert" id="signup-success-message">
+                        </div>
+                        <div class="alert alert-danger hidden" role="alert" id="signup-error-message">
+                        </div>
+                        <div class="signup-cta">
+                            <button type="submit" id="signup-btn" class="btn">Registrati</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="divider">
+                    <span></span> 
+                    o 
+                    <span></span>
+                </div>
+                <div class="col-md-6 social-login-buttons">
+                    <button class="btn btn-block btn-social btn-google" type="button"><i class="fa-brands fa-google"></i> Registrati con Google</button>
+                    <button class="btn btn-block btn-social btn-microsoft" type="button"><i class="fa-brands fa-microsoft"></i> Registrati con Microsoft</button>
+                    <button class="btn btn-block btn-social btn-apple" type="button"><i class="fa-brands fa-apple"></i> Registrati con Apple</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
 
 

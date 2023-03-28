@@ -130,6 +130,11 @@ body {
 
 }
 
+::selection {
+  background-color: #3E92A2;
+  color: #fff;
+}
+
 .container {
   flex: 1 0 auto;
 }
@@ -180,6 +185,10 @@ body {
 
 .breadcrumbs a {
   color: #3E92A2;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
 }
 
 /* 
@@ -305,11 +314,11 @@ header {
   opacity: 0;
 }
 
-#mailingList-popup {
+#mailingList-popup, #login-popup, #signup-popup {
   margin-top: 100px;
 }
 
-#mailingList-popup-close-btn {
+#mailingList-popup-close-btn, #login-popup-close-btn, #signup-popup-close-btn {
   float: right;
 }
 
@@ -323,7 +332,7 @@ header {
 }
 
 #subscribe-form #nome {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 #subscribe-form #email {
@@ -334,13 +343,28 @@ header {
 #mailingList-popup h2 {
   font-size: 25px;
   margin-bottom: 25px;
+  font-weight: bold;
 }
 
-#mailingList-popup-close-btn {
+#login-popup h2, #signup-popup h2 {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.no-account-create {
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.no-account-create a {
+  text-decoration: none;
+}
+
+#mailingList-popup-close-btn, #login-popup-close-btn, #signup-popup-close-btn {
   color: #000;
 }
 
-#subscribe-form input {
+#subscribe-form input, #login-form input, #signup-form input {
   padding: 10px;
   border: 2px solid #3E92A2;
   border-radius: 4px;
@@ -350,7 +374,12 @@ header {
   outline: none;
 }
 
-#subscribe-btn {
+#login-form input, #signup-form input {
+  width: 95%;
+  margin: 5px 0;
+}
+
+#subscribe-btn, #login-btn, #signup-btn {
   background: #3E92A2;
   color: #fff;
   border: 1px solid #3E92A2;
@@ -365,6 +394,60 @@ header {
 .hidden {
   display: none;
 }
+
+.login-cta, .signup-cta {
+  display: flex;
+}
+
+.login-cta a, .signup-cta a {
+  margin-top: 33px;
+  margin-left: 10px;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.divider {
+  display: flex;
+  flex-direction: column;
+}
+
+.divider span {
+  height: 75px;
+  width: 1px;
+  background-color: #3E92A2;
+  margin-left: 4px;
+}
+
+.login-form-row, .signup-form-row {
+  display: flex;
+  flex-direction: row;;
+}
+
+.login-form-row .btn-google, .login-form-row .btn-microsoft, .login-form-row .btn-apple, .signup-form-row .btn-google, .signup-form-row .btn-microsoft, .signup-form-row .btn-apple {
+  width: 95%;
+  border: 2px solid #3E92A2;
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin: 5px 0;
+  margin-left: auto;
+}
+
+.login-form-row .btn-google:hover, .login-form-row .btn-microsoft:hover, .login-form-row .btn-apple:hover, .signup-form-row .btn-google:hover, .signup-form-row .btn-microsoft:hover, .signup-form-row .btn-apple:hover {
+  border: 2px solid #3E92A2;
+  background-color: #fff;
+}
+
+.login-form-row .btn-google i, .login-form-row .btn-microsoft i, .login-form-row .btn-apple i, .signup-form-row .btn-google i, .signup-form-row .btn-microsoft i, .signup-form-row .btn-apple i {
+  float: left;
+  margin-top: 4px;
+}
+
+.social-login-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 /* 
 *
@@ -622,7 +705,6 @@ header {
   margin-right: 20px;
   margin-bottom: 20px;
   vertical-align: top;
-  max-width: 288px;
 }
 
 .card .btn-card {
@@ -664,13 +746,24 @@ header {
   text-align: center;
 }
 
-
-
 /* 
 *
 *  SINGLE POST
 *
 */
+
+.article-title {
+  display: flex;
+}
+
+.article-title i {
+  margin-top: 18px;
+  margin-left: 15px;
+}
+
+.article-title i:hover {
+  cursor: pointer;
+}
 
 .post-container {
   background: #f2f2f2;
@@ -853,100 +946,6 @@ header {
   margin-top: 25px;
 }
 
-/* 
-*
-*  SINGLE GLOSSARIO
-*
-*/
-
-.wp-image-description {
-  font-size: 13px;
-  text-align: center;
-  font-style: italic;
-
-}
-
-
-/* 
-*
-*  TAG PAGE
-*
-*/
-
-.tag-header h1 {
-  text-align: center;
-  margin-top: 25px;
-}
-
-.tag-header .container {
-  width: 50%;
-}
-
-.tag-posts {
-  margin-top: 50px;
-}
-
-
-/* 
-*
-*  CATEGORY PAGE
-*
-*/
-
-.category .category-title {
-  text-align: center;
-  margin-top: 25px;
-}
-
-.category .card-deck {
-  width: 100%;
-}
-
-.category .card {
-  width: 100%;
-}
-
-
-/* 
-*
-*  FOOTER
-*
-*/
-
-footer {
-  background: #0e3457;
-  height: 200px;
-  text-align: center;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.footerBottom {
-  margin-top: 100px !important;
-}
-
-.footerLinks ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: inline-flex;
-  flex-direction: row;
-}
-
-.footerLinks ul li {
-  margin: 0 10px;
-}
-
-.footerLinks a {
-  color: #3E92A2;
-  text-decoration: none;
-}
-
-.footerLinks a:hover {
-  color: #fff;
-}
-
-
 /* Popup styles */
 .popup {
   display: none;
@@ -1056,11 +1055,120 @@ footer {
 
 /* 
 *
+*  SINGLE GLOSSARIO
+*
+*/
+
+.wp-image-description {
+  font-size: 13px;
+  text-align: center;
+  font-style: italic;
+
+}
+
+
+/* 
+*
+*  TAG PAGE
+*
+*/
+
+.tag-header h1 {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.tag-header .container {
+  width: 50%;
+}
+
+.tag-posts {
+  margin-top: 50px;
+}
+
+
+/* 
+*
+*  CATEGORY PAGE
+*
+*/
+
+.category .category-title {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.category .card-deck {
+  width: 100%;
+}
+
+.category .card {
+  width: 100%;
+}
+
+
+/* 
+*
+*  FOOTER
+*
+*/
+
+footer {
+  background: #0e3457;
+  height: 200px;
+  text-align: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.footerBottom {
+  margin-top: 100px !important;
+  padding: 0 !important;
+}
+
+.footerLinks {
+  padding: 0;
+}
+
+.footerLinks ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.footerLinks ul li {
+  margin: 0 5px;
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.footerLinks a {
+  color: #3E92A2;
+  text-decoration: none;
+}
+
+.footerLinks a:hover {
+  color: #fff;
+}
+
+
+
+
+
+/* 
+*
 *  MEDIA QUERIES
 *
 */
 
 @media only screen and (max-width: 768px) {
+
+  .article-title i {
+    margin-top: 10px;
+    margin-left: 10px;
+  }
 
   .breadcrumbs {
     width: 95%;
@@ -1237,6 +1345,45 @@ footer {
     flex-direction: column;
     justify-content: flex-start;
   }
+
+  .login-form-row {
+    flex-direction: column;
+  }
+
+  .login-form-row .col-md-6 {
+    width: 100%;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .login-cta {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .login-cta a {
+    margin-top: 10px;
+    margin-left: 0;
+    margin-bottom: 15px;
+  }
+
+  #login-form input {
+    width: 100%;
+  }
+
+  #login-btn {
+    margin-top: 10px;
+  }
+
+  .social-login-buttons .btn-google,
+  .social-login-buttons .btn-microsoft,
+  .social-login-buttons .btn-apple {
+    width: 100%;
+    margin-left: 0;
+  }
+
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {

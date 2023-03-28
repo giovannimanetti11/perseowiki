@@ -97,6 +97,41 @@ function add_print_css() {
     }
   }
   add_action('wp_enqueue_scripts', 'add_print_css');
+
+
+// Extract config.php API keys
+
+function get_aws_credentials() {
+    $config_file_path = get_stylesheet_directory() . '/inc/config.php';
+    if (file_exists($config_file_path)) {
+        require_once($config_file_path);
+        $access_key = constant('AWS_ACCESS_KEY') ?: '';
+        $secret_key = constant('AWS_SECRET_KEY') ?: '';
+
+        return array(
+            'accessKeyId' => $access_key,
+            'secretAccessKey' => $secret_key
+        );
+    } else {
+        echo 'Errore: file di configurazione AWS mancante o non valido.';
+        return null;
+    }
+}
+
+// Add Amazon SDK and Custom JS and add Amazon API keys to it
+
+function enqueue_aws_sdk_and_custom_scripts() {
+    if (is_single() || is_page_template('single-termine.php') || is_tag()) {
+      wp_enqueue_script('aws-sdk', 'https://sdk.amazonaws.com/js/aws-sdk-2.962.0.min.js', array(), '2.962.0', false);
+      wp_enqueue_script('custom-polly', get_template_directory_uri() . '/inc/js/custom-polly.js', array('aws-sdk'), '1.0.0', true);
+      $awsCredentials = get_aws_credentials();
+      wp_localize_script('custom-polly', 'awsCredentials', $awsCredentials);
+    }
+  }
+  add_action('wp_enqueue_scripts', 'enqueue_aws_sdk_and_custom_scripts');
+  
+
+
   
 /*
  * 
@@ -464,6 +499,7 @@ add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
  *
  */
 function get_all_posts_titles_and_links() {
+    error_log("La funzione AJAX è stata chiamata.");
     $args = array(
         'post_type' => array('post', 'page', 'termine'),
         'posts_per_page' => -1,
@@ -496,6 +532,7 @@ add_action('wp_ajax_nopriv_get_all_posts_titles_and_links', 'get_all_posts_title
  * ADD CUSTOM BREADCRUMB TO BE PLACED WITH <?php custom_breadcrumb(); ?>
  *
  */
+
 function custom_breadcrumb() {
 
     global $post;
@@ -555,8 +592,43 @@ function custom_breadcrumb() {
     echo '</div>';
 }
 
+/*
+ * 
+ * ADD AJAX ACTION TO MANAGE SIGN UP
+ *
+ */
 
+ function ajax_register_user() {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
+    log_message("Registering user: email = {$email}, password = {$password}");
+
+    $user_id = wp_create_user($email, $password, $email);
+
+    if (!is_wp_error($user_id)) {
+        log_message("User registration successful: user_id = {$user_id}");
+        echo json_encode(array('success' => true, 'message' => 'Registrazione avvenuta con successo.'));
+    } else {
+        log_message("User registration error: " . $user_id->get_error_message());
+        echo json_encode(array('success' => false, 'message' => $user_id->get_error_message()));
+    }
+
+    wp_die();
+}
+
+add_action('wp_ajax_nopriv_register_user', 'ajax_register_user');
+add_action('wp_ajax_register_user', 'ajax_register_user');
+
+function log_message($message) {
+    if (WP_DEBUG === true) {
+        if (is_array($message) || is_object($message)) {
+            error_log(print_r($message, true));
+        } else {
+            error_log($message);
+        }
+    }
+}
 
 
 ?>
