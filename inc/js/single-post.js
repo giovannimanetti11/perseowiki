@@ -35,3 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   });
   
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const section9 = document.getElementById('section-9');
+    const content = section9.parentNode.innerHTML;
+    const searchPattern = /(section-9.+?)(Riferimenti)/s;
+    const replacement = '$1<p id="section-10">Riferimenti</p>';
+
+    section9.parentNode.innerHTML = content.replace(searchPattern, replacement);
+});

@@ -5,15 +5,16 @@
     <!--=== META TAGS ===-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
-    <meta name="author" content="PerSeoDesign">
+    <meta name="author" content="WikiHerbalist">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      
     <!--=== LINK TAGS ===-->
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS2 Feed" href="<?php bloginfo('rss2_url'); ?>" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
- 
-    <!--=== TITLE ===-->  
-    <title><?php bloginfo( 'name' ); ?></title>
+
+    <title><?php wp_title(''); ?></title>
+
+    </head>
      
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>
@@ -76,8 +77,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     </nav>
     
     <div class="call-to-action">
-        <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Iscriviti</button>
-        <button id="login-popup-btn" class="btn btn-sm" type="button">Entra</button>
+        <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Mailing List</button>
     </div>
     <!-- MAILING LIST POPUP -->
     <div id="mailingList-popup" class="popup">
@@ -101,7 +101,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             </form>
         </div>
     </div>
-    <!-- LOGIN POPUP -->
+    <!-- LOGIN POPUP 
     <div id="login-popup" class="popup">
         <div class="popup-content">
             <a href="#" id="login-popup-close-btn"><i class="fa fa-times"></i></a>
@@ -132,7 +132,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             </div>
         </div>
     </div>
-    <!-- SIGNUP POPUP -->
+    SIGNUP POPUP 
     <div id="signup-popup" class="popup">
         <div class="popup-content">
             <a href="#" id="signup-popup-close-btn"><i class="fa fa-times"></i></a>
@@ -166,7 +166,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </header>
 
 

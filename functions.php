@@ -631,4 +631,159 @@ function log_message($message) {
 }
 
 
+/*
+ * 
+ * ADD STRUCTURED DATA - MARKUP SCHEMA.ORG AND DISABLE YOAST SEO ONE
+ *
+ */
+
+
+
+ function perseowiki_schema_markup_post() {
+    if (is_single()) {
+        $schema = 'https://schema.org/';
+        $type = 'MedicalWebPage';
+        $url = get_permalink();
+        $title = get_the_title();
+        $description = get_the_excerpt();
+        $datePublished = get_the_date('c');
+        $dateModified = get_the_modified_date('c');
+        $author = "Redazione WikiHerbalist";
+        $image = get_the_post_thumbnail_url();
+
+        $sections = array(
+            array(
+                '@type' => 'WebPageElement',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-1',
+                'name' => 'Proprietà',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Nome comune',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-2',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Parti usate',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-3',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Costituenti',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-4',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Descrizione',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-5',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Raccolta',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-6',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Assunzione',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-7',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Benefici',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-8',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Sovradosaggio/Effetti indesiderati',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-9',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Riferimenti',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-10',
+            ),
+            
+        );
+
+        echo '<script type="application/ld+json">';
+        echo json_encode(array(
+            '@context' => $schema,
+            '@type' => $type,
+            'about'=> array(
+                '@type' => 'Substance',
+                'name'=> $title,
+            ),
+            'url' => $url,
+            'image' => $image,
+            'headline' => $title,
+            'description' => $description,
+            'datePublished' => $datePublished,
+            'dateModified' => $dateModified,
+            'publisher' => array(
+                '@type' => 'Organization',
+                'name' => 'WikiHerbalist',
+                'logo' => 'https://www.wikiherbalist.com/wp-content/uploads/2023/03/logo.svg'
+            ),
+            'author' => array(
+                '@type' => 'Person',
+                'name' => $author
+            ),
+            'hasPart' => $sections,
+            'inLanguage' => 'it',
+            'specialty' => array(
+                'Herbal Medicine',
+                'Phytotherapy'
+            ),
+            'potentialAction' => array(
+                '@type' => 'ReadAction',
+                'target' => $url
+            ),
+        ));
+        echo '</script>';
+    }
+}
+
+    function perseowiki_schema_markup_tag() {
+        if (is_tag()) {
+            $schema = 'https://schema.org/';
+            $type = ['CollectionPage', 'MedicalWebPage'];
+            $url = get_tag_link(get_queried_object()->term_id);
+            $title = single_tag_title('', false);
+            $description = tag_description(get_queried_object()->term_id);
+            $image = get_the_post_thumbnail_url();
+    
+            echo '<script type="application/ld+json">';
+            echo json_encode(array(
+                '@context' => $schema,
+                '@type' => $type,
+                'name' => $title,
+                'description' => $description,
+                'url' => $url,
+                'image' => $image,
+                'mainEntity' => array(
+                    '@type' => 'MedicalEntity',
+                    'name' => $title
+                ),
+                'inLanguage' => 'it'
+            ));
+            echo '</script>';
+        }
+    }
+    
+
+add_action('wp_head', 'perseowiki_schema_markup_tag');
+add_action('wp_head', 'perseowiki_schema_markup_post');
+
+
+
 ?>
