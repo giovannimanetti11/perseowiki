@@ -63,8 +63,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 'items_wrap' => '<ul>%3$s</ul>'
             ));
         ?>
-        <button id="mailingList-popup-btn-mobile" class="btn btn-sm" type="button">Iscriviti</button>
-        <button class="btn btn-sm" type="button">Entra</button>
+        <button id="mailingList-popup-btn-mobile" class="btn btn-sm" type="button">Mailing List</button>
     </div>
     <nav class="menu">
         <?php

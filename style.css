@@ -1051,6 +1051,10 @@ header {
   border: 0;
 }
 
+.postid-196 .fa-volume-up {
+  display: none;
+}
+
 
 
 /* 
@@ -1164,6 +1168,19 @@ footer {
 */
 
 @media only screen and (max-width: 768px) {
+
+
+  #subscribe-form #nome {
+    margin-right: 0;
+  }
+
+  #subscribe-form #nome, #subscribe-form #cognome {
+    width: 100%;
+  }
+
+  #subscribe-form #nome {
+    margin-bottom: 15px;
+  }
 
   .article-title i {
     margin-top: 10px;

@@ -101,14 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault(); 
     }
   });
-
+  const mobilePopupBtn = document.getElementById("mailingList-popup-btn-mobile");
   const popupBtn = document.getElementById("mailingList-popup-btn");
   const popup = document.getElementById("mailingList-popup");
   const closeBtn = document.getElementById("mailingList-popup-close-btn");
 
   popupBtn.addEventListener("click", () => {
-    loginPopup.style.display = "none";
-    signupPopup.style.display = "none";
+    popup.style.display = "block";
+  });
+
+  mobilePopupBtn.addEventListener("click", () => {
     popup.style.display = "block";
   });
 
@@ -336,39 +338,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Esegui la richiesta AJAX per ottenere i titoli e i permalink
   fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-      const currentURL = window.location.href;
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    const titlesAndLinks = data;
 
-      // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
-      const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
-      contentElements.forEach(element => {
-        linkifyContent(element, data, currentURL);
-      });
+    // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
+    const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
+    contentElements.forEach(element => {
+      linkifyContent(element, titlesAndLinks);
     });
+  });
 
 
   function escapeRegExp(string) {
     return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
   }
 
-  function linkifyContent(element, titlesAndLinks, currentURL) {
+  function linkifyContent(element, titlesAndLinks) {
     const originalHTML = element.innerHTML;
     let newHTML = originalHTML;
-
+  
     // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
-    titlesAndLinks.forEach(({ title, link, excerpt }) => {
-      if (link !== currentURL) {
+    titlesAndLinks.forEach(({ title, link, excerpt, plurale, id }) => {
+      const currentURL = window.location.href;
+      const currentPostID = parseInt(document.body.getAttribute('data-post-id'), 10);
+      
+      if (link !== currentURL && id !== currentPostID) {
         const escapedTitle = escapeRegExp(title);
-        const regex = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
-        const linkHTML = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
-        newHTML = newHTML.replace(regex, linkHTML);
+        const regexTitle = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
+        const linkHTMLTitle = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
+        newHTML = newHTML.replace(regexTitle, linkHTMLTitle);
+  
+        if (plurale && plurale !== '') {
+          const escapedPlurale = escapeRegExp(plurale);
+          const regexPlurale = new RegExp(`\\b(${escapedPlurale})\\b(?!([^<]+)?>)`, 'gi');
+          const linkHTMLPlurale = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
+          newHTML = newHTML.replace(regexPlurale, linkHTMLPlurale);
+        }
       }
     });
-
+  
     element.innerHTML = newHTML;
+  
+  
+
+
 
 
 

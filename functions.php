@@ -228,6 +228,61 @@ add_filter( 'style_loader_src', 'remove_css_js_version', 9999 );
 add_filter( 'script_loader_src', 'remove_css_js_version', 9999 );
 
 
+/*
+ * 
+ * ADD custom field "Plurale" to Glossario CPT
+ *
+ */
+
+ function perseowiki_add_plurale_metabox() {
+    add_meta_box(
+        'perseowiki_plurale_metabox',
+        'Plurale',
+        'perseowiki_plurale_metabox_callback',
+        'termine',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'perseowiki_add_plurale_metabox');
+
+
+function perseowiki_plurale_metabox_callback($post) {
+    wp_nonce_field('perseowiki_plurale_metabox', 'perseowiki_plurale_metabox_nonce');
+
+    $plurale = get_post_meta($post->ID, '_perseowiki_plurale', true);
+
+    echo '<label for="perseowiki_plurale">Plurale:</label>';
+    echo '<input type="text" id="perseowiki_plurale" name="perseowiki_plurale" value="' . esc_attr($plurale) . '" size="25" />';
+}
+
+
+function perseowiki_save_plurale_metabox_data($post_id) {
+    if (!isset($_POST['perseowiki_plurale_metabox_nonce'])) {
+        return;
+    }
+
+    if (!wp_verify_nonce($_POST['perseowiki_plurale_metabox_nonce'], 'perseowiki_plurale_metabox')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (!isset($_POST['perseowiki_plurale'])) {
+        return;
+    }
+
+    $plurale_data = sanitize_text_field($_POST['perseowiki_plurale']);
+    update_post_meta($post_id, '_perseowiki_plurale', $plurale_data);
+}
+add_action('save_post', 'perseowiki_save_plurale_metabox_data');
+
 
 /*
  * 
@@ -499,7 +554,6 @@ add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
  *
  */
 function get_all_posts_titles_and_links() {
-    error_log("La funzione AJAX è stata chiamata.");
     $args = array(
         'post_type' => array('post', 'page', 'termine'),
         'posts_per_page' => -1,
@@ -510,18 +564,19 @@ function get_all_posts_titles_and_links() {
     $titles_and_links = array();
     while ($posts->have_posts()) {
         $posts->the_post();
-        if (!is_singular()) {
-            $titles_and_links[] = array(
-                'title' => get_the_title(),
-                'link' => get_permalink(),
-                'excerpt' => get_the_excerpt(),
-            );
-        }
+        $titles_and_links[] = array(
+            'title' => get_the_title(),
+            'link' => get_permalink(),
+            'excerpt' => get_the_excerpt(),
+            'plurale' => get_post_meta(get_the_ID(), '_perseowiki_plurale', true),
+            'id' => get_the_ID(),
+        );
     }
     wp_reset_postdata();
     echo json_encode($titles_and_links);
     wp_die();
 }
+
 
 add_action('wp_ajax_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
 add_action('wp_ajax_nopriv_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
