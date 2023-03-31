@@ -42,14 +42,27 @@ if (isset($_GET['keywords'])) {
             ?>
 
         </div>
-
-        <div id="alphabet">
-            <?php foreach(range('A', 'Z') as $char): ?>
-                <a href="#" class="alphabet-link" data-letter="<?php echo $char; ?>"><?php echo $char; ?></a>
-            <?php endforeach; ?>
+        <div id="filterType">
+            <div class="filterButtons">
+                <button class="btn btn-active" id="alphabeticOrder">Ordine alfabetico</button>
+                <button class="btn" id="propertiesList">Proprietà terapeutiche</button>
+            </div>
         </div>
-        <div id="posts-info"></div>
-        <div id="posts-container"></div>
+        <div class="alphabetic-container">
+            <div id="alphabet">
+                <?php foreach(range('A', 'Z') as $char): ?>
+                    <a href="#" class="alphabet-link" data-letter="<?php echo $char; ?>"><?php echo $char; ?></a>
+                <?php endforeach; ?>
+            </div>
+            <div id="posts-info"></div>
+            <div id="posts-container"></div>
+        </div>
+        <div class="properties-container">
+            <div class="properties-header">
+            </div>
+            <div class="properties-content">
+            </div>
+        </div>
 
     </main>
 

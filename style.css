@@ -191,6 +191,10 @@ input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
 
+.content-area {
+  min-height: 72vh;
+}
+
 /* 
 *
 *  HEADER
@@ -647,6 +651,117 @@ header {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+#filterType h3 {
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.filterButtons {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.filterButtons .btn {
+  background: #3E92A2;
+  transition: all .3s ease;
+  color: #fff;
+  padding: 3px 20px;
+  margin: 0 5px;
+  width: 210px;
+}
+
+.filterButtons .btn:hover {
+  background: #071c2e;
+  color: #fff;
+}
+
+.properties-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.properties-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.properties-header h4 {
+  text-align: center;
+}
+
+.properties-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.property-herbs-row {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.property-herbs-row:hover {
+  background-color: #dfe4e8;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.property-herbs-row.even-row {
+  background-color: #f8f9fa;
+}
+
+.property-herbs-row.odd-row {
+  background-color: #e9ecef;
+}
+
+.property-name {
+  font-weight: bold;
+  margin-right: 1rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.property-herbs-row:last-child {
+  margin-bottom: 0;
+}
+
+.herbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80%;
+  gap: 0.25rem;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.herbs-list a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.2s ease;
+}
+
+.herbs-list a:hover {
+  color: #0056b3;
 }
 
 #alphabet {
@@ -1169,6 +1284,22 @@ footer {
 
 @media only screen and (max-width: 768px) {
 
+  .property-herbs-row {
+    flex-direction: column;
+  }
+
+  .herbs-list {
+    margin-top: 10px;
+  }
+
+  .properties-container {
+    width: 100%;
+  }
+
+  .filterButtons .btn {
+    padding: 5px 10px;
+    width: 160px;
+  }
 
   #subscribe-form #nome {
     margin-right: 0;
@@ -1280,7 +1411,7 @@ footer {
 
   #alphabet {
     width: 90%;
-    padding-bottom: 15px;
+    padding: 10px 0;
   }
 
   .post-content {

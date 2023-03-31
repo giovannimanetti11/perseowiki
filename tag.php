@@ -12,10 +12,10 @@ get_header(); ?>
     <?php if ( have_posts() ) : ?>
 
       <div class="tag-header">
-          <h1>Proprietà: <?php single_tag_title(); ?></h1>
+          <h1>Proprietà <?php single_tag_title(); ?></h1>
           <div class="container">
             <p><?php echo tag_description(); ?></p>
-            <span>Di seguito troverai le erbe di WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
+            <span>Di seguito troverai le erbe presenti su WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
           </div>
           
       </div>

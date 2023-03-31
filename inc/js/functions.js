@@ -242,6 +242,107 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// HOME filter
+document.addEventListener('DOMContentLoaded', () => {
+    // Seleziona i pulsanti e i contenitori
+    const alphabeticOrderBtn = document.getElementById("alphabeticOrder");
+    const propertiesListBtn = document.getElementById("propertiesList");
+    const alphabeticContainer = document.querySelector(".alphabetic-container");
+    const propertiesContainer = document.querySelector(".properties-container");
+
+    // Funzione per gestire il cambio dei contenitori e l'aggiornamento delle classi dei pulsanti
+    function switchContainers(showAlphabetic) {
+        if (showAlphabetic) {
+            alphabeticContainer.style.display = "block";
+            propertiesContainer.style.display = "none";
+            alphabeticOrderBtn.classList.add("btn-active");
+            propertiesListBtn.classList.remove("btn-active");
+        } else {
+            alphabeticContainer.style.display = "none";
+            propertiesContainer.style.display = "flex";
+            alphabeticOrderBtn.classList.remove("btn-active");
+            propertiesListBtn.classList.add("btn-active");
+        }
+    }
+
+    // Aggiungi event listener ai pulsanti
+    alphabeticOrderBtn.addEventListener("click", function () {
+        switchContainers(true);
+    });
+
+    propertiesListBtn.addEventListener("click", function () {
+        switchContainers(false);
+    });
+
+
+  // AJAX get therapeutic properties and herbs
+
+  function loadTherapeuticPropertiesAndHerbs() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/wp-admin/admin-ajax.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            const data = JSON.parse(this.responseText);
+            const propertiesColumn = document.querySelector(".properties-column");
+            const herbsColumn = document.querySelector(".herbs-column");
+
+            let counter = 0;
+            data.forEach((item) => {
+              const propertyHerbsRow = document.createElement("div");
+              propertyHerbsRow.classList.add("property-herbs-row");
+              if (counter % 2 === 0) {
+                propertyHerbsRow.classList.add("even-row");
+              } else {
+                propertyHerbsRow.classList.add("odd-row");
+              }
+              counter++;
+
+              const propertyName = document.createElement("a");
+              propertyName.classList.add("property-name");
+              propertyName.href = `/tag/${item.property}`; 
+              propertyName.textContent = item.property;
+              propertyHerbsRow.appendChild(propertyName);
+            
+              const herbsList = document.createElement("div");
+              herbsList.classList.add("herbs-list");
+            
+              const herbsArray = item.herbs.split(", ");
+              herbsArray.forEach((herb, index) => {
+                const herbLink = document.createElement("a");
+                herbLink.href = `${herb}`;
+                herbLink.textContent = herb.trim();
+
+                const herbSpan = document.createElement("span");
+                herbSpan.appendChild(herbLink);
+
+                if (index < herbsArray.length - 1) {
+                  const comma = document.createTextNode(", ");
+                  herbSpan.appendChild(comma);
+                }
+
+                herbsList.appendChild(herbSpan);
+              });
+
+            
+              propertyHerbsRow.appendChild(herbsList);
+              propertiesContainer.appendChild(propertyHerbsRow);
+            });
+        }
+    };
+    xhr.send("action=get_properties_and_herbs");
+  }
+
+  // Modifica l'event listener del pulsante propertiesList per caricare i dati quando viene premuto
+  function onClickPropertiesListBtn() {
+    switchContainers(false);
+    loadTherapeuticPropertiesAndHerbs();
+    propertiesListBtn.removeEventListener('click', onClickPropertiesListBtn); // rimuove l'event listener dopo il primo clic
+  }
+  propertiesListBtn.addEventListener("click", onClickPropertiesListBtn);
+
+});
+
 // AJAX get posts alphabetically
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -335,42 +436,39 @@ function shareUrl(url) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+  const currentPostID = parseInt(document.body.getAttribute('data-post-id'), 10);
 
-  // Esegui la richiesta AJAX per ottenere i titoli e i permalink
   fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    const titlesAndLinks = data;
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      const titlesAndLinks = data;
+      const currentURL = window.location.href;
 
-    // Esegui la funzione linkifyContent per tutti gli elementi del DOM in cui vuoi aggiungere i link
-    const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
-    contentElements.forEach(element => {
-      linkifyContent(element, titlesAndLinks);
+      const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
+      contentElements.forEach(element => {
+        linkifyContent(element, titlesAndLinks, currentURL, currentPostID);
+      });
     });
-  });
-
 
   function escapeRegExp(string) {
     return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
   }
 
-  function linkifyContent(element, titlesAndLinks) {
+  function linkifyContent(element, titlesAndLinks, currentURL, currentPostID) {
     const originalHTML = element.innerHTML;
     let newHTML = originalHTML;
-  
-    // Cerca corrispondenze nel contenuto e sostituisci con i link corrispondenti
+
     titlesAndLinks.forEach(({ title, link, excerpt, plurale, id }) => {
-      const currentURL = window.location.href;
-      const currentPostID = parseInt(document.body.getAttribute('data-post-id'), 10);
-      
+      console.log('Post ID:', id);
+      // Confronta l'ID del post corrente con gli ID dei post ottenuti tramite AJAX
       if (link !== currentURL && id !== currentPostID) {
         const escapedTitle = escapeRegExp(title);
         const regexTitle = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
         const linkHTMLTitle = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
         newHTML = newHTML.replace(regexTitle, linkHTMLTitle);
-  
+
         if (plurale && plurale !== '') {
           const escapedPlurale = escapeRegExp(plurale);
           const regexPlurale = new RegExp(`\\b(${escapedPlurale})\\b(?!([^<]+)?>)`, 'gi');
@@ -379,14 +477,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     });
-  
+
     element.innerHTML = newHTML;
+
   
-  
-
-
-
-
 
     // Inizializza i tooltip per tutti i link
     

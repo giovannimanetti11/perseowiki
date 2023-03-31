@@ -32,7 +32,8 @@
       
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> data-post-id="<?php echo get_the_ID(); ?>">
+
 
 <?php
 $custom_logo_id = get_theme_mod( 'custom_logo' );

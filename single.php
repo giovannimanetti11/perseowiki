@@ -117,7 +117,7 @@
             <br>
             <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-costituenti', true ); ?>
             <?php if (!empty($meta_box_value)) : ?>
-                <div class="meta-box-costituenti"><h3>Costituenti</h3> <?php echo esc_html( $meta_box_value ); ?></div>
+                <div class="meta-box-costituenti"><h3>Fitochimica</h3> <?php echo esc_html( $meta_box_value ); ?></div>
             <?php endif; ?>
             <br>
             <?php the_content(); ?>

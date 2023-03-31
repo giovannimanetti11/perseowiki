@@ -582,6 +582,36 @@ add_action('wp_ajax_get_all_posts_titles_and_links', 'get_all_posts_titles_and_l
 add_action('wp_ajax_nopriv_get_all_posts_titles_and_links', 'get_all_posts_titles_and_links');
 
 
+// AJAX TO RETRIEVE PROPERTIES AND HERBS
+
+function get_therapeutic_properties_and_herbs() {
+    global $wpdb;
+
+    $query = "
+        SELECT t.name AS property, GROUP_CONCAT(p.post_title ORDER BY p.post_title ASC SEPARATOR ', ') AS herbs
+        FROM wh_terms t
+        INNER JOIN wh_term_taxonomy tt ON t.term_id = tt.term_id
+        INNER JOIN wh_term_relationships tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
+        INNER JOIN wh_posts p ON tr.object_id = p.ID
+        WHERE tt.taxonomy = 'post_tag'
+        GROUP BY t.term_id
+        ORDER BY t.name
+    ";
+
+    $results = $wpdb->get_results($query);
+
+    return $results;
+}
+
+function ajax_get_therapeutic_properties_and_herbs() {
+    $data = get_therapeutic_properties_and_herbs();
+    wp_send_json($data);
+}
+add_action('wp_ajax_get_properties_and_herbs', 'ajax_get_therapeutic_properties_and_herbs');
+add_action('wp_ajax_nopriv_get_properties_and_herbs', 'ajax_get_therapeutic_properties_and_herbs');
+
+
+
 /*
  * 
  * ADD CUSTOM BREADCRUMB TO BE PLACED WITH <?php custom_breadcrumb(); ?>
@@ -727,13 +757,13 @@ function log_message($message) {
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Costituenti',
+                'name' => 'Fitochimica',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-4',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Descrizione',
+                'name' => 'Botanica',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-5',
             ),
@@ -745,19 +775,19 @@ function log_message($message) {
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Assunzione',
+                'name' => 'Posologia',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-7',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Benefici',
+                'name' => 'Indicazioni Terapeutiche',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-8',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Sovradosaggio/Effetti indesiderati',
+                'name' => 'Avvertenze e Controindicazioni',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-9',
             ),
