@@ -1,10 +1,7 @@
 <?php
 header("HTTP/1.1 200 OK");
 // Connessione al database
-$servername = "localhost";
-$username = "wikiherbalist";
-$password = "_CXbGnX8Jd43eFr!";
-$dbname = "wikiherbalist";
+require_once 'config.php';
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
@@ -18,6 +15,9 @@ if (empty($keywords)) {
     die("Parametro di ricerca non specificato.");
 }
 
+// Escape the keywords to prevent SQL injection
+$keywords = mysqli_real_escape_string($conn, $keywords);
+
 // Query per la ricerca
 $sql = "SELECT wh_posts.*, wh_postmeta.meta_value AS meta_box_nome_scientifico
 FROM wh_posts
@@ -28,15 +28,13 @@ LEFT JOIN (
     INNER JOIN wh_term_taxonomy ON (wh_term_relationships.term_taxonomy_id = wh_term_taxonomy.term_taxonomy_id)
     WHERE wh_term_taxonomy.taxonomy = 'post_tag'
 ) AS tags ON (wh_posts.ID = tags.object_id)
-WHERE ((wh_posts.post_title LIKE '%$keywords%') OR (wh_posts.post_content LIKE '%$keywords%') OR (wh_postmeta.meta_value LIKE '%$keywords%'))
+WHERE ((wh_posts.post_title RLIKE '[[:<:]]{$keywords}[[:>:]]') OR (wh_posts.post_content RLIKE '[[:<:]]{$keywords}[[:>:]]') OR (wh_postmeta.meta_value RLIKE '[[:<:]]{$keywords}[[:>:]]'))
     AND (wh_posts.post_status = 'publish')
     AND (wh_posts.post_type = 'post')
     AND (tags.object_id IS NOT NULL OR tags.object_id IS NULL)
 GROUP BY wh_posts.ID
 ORDER BY wh_posts.post_title ASC
 LIMIT 10";
-
-
 
 $result = $conn->query($sql);
 
@@ -59,9 +57,6 @@ if ($result->num_rows > 0) {
 } else {
   echo json_encode(array("message" => "Nessun risultato trovato."));
 }
-
-
-
 
 $conn->close();
 

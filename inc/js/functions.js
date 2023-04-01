@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    fetch("search.php?keywords=" + keywords)
+    fetch("search.php?keywords=" + encodeURIComponent(keywords) + "&_=" + new Date().getTime())
       .then(response => response.json())
       .then(data => {
         searchResults.innerHTML = "";
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function() {
               var metaBoxElement = document.createElement("p");
               metaBoxElement.classList.add("meta-box-nome-scientifico");
               metaBoxElement.innerHTML = post.meta_box_nome_scientifico;
-              postLink.appendChild(metaBoxElement); // aggiungi il campo meta box al risultato
+              postLink.appendChild(metaBoxElement); 
             }
 
             searchResults.appendChild(postElement);
@@ -391,14 +391,19 @@ function printArticle() {
   var content = document.getElementById("post-content").innerHTML;
   var mywindow = window.open('', 'Print', 'height=600,width=800');
   mywindow.document.write('<html><head><title>&nbsp;</title>');
-  mywindow.document.write('<link rel="stylesheet" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
+  mywindow.document.write('<link rel="stylesheet" id="print-styles" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
   mywindow.document.write('</head><body>');
   mywindow.document.write(content);
   mywindow.document.write('</body></html>');
-  mywindow.print();
-  mywindow.close();
+
+  mywindow.document.getElementById("print-styles").onload = function() {
+    mywindow.print();
+    mywindow.close();
+  };
+  
   return true;
 }
+
 
 
 
@@ -461,7 +466,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let newHTML = originalHTML;
 
     titlesAndLinks.forEach(({ title, link, excerpt, plurale, id }) => {
-      console.log('Post ID:', id);
       // Confronta l'ID del post corrente con gli ID dei post ottenuti tramite AJAX
       if (link !== currentURL && id !== currentPostID) {
         const escapedTitle = escapeRegExp(title);
