@@ -81,17 +81,12 @@
                     the_post_thumbnail( 'thumbnail' ); 
                     $thumbnail_id = get_post_thumbnail_id();
                     $thumbnail = get_post( $thumbnail_id );
-                    $caption = get_the_post_thumbnail_caption();
                     $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
                     if ( ! empty( $description ) ) {
                         echo '<div class="wp-image-description">' . $description . '</div>';
                     }
-                    if ( ! empty( $caption ) ) {
-                        echo '<div class="wp-caption-text">' . $caption . '</div>';
-                    }
                 } ?>
                 </div>
-                <span></span>
             </div>
 
 

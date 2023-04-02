@@ -151,8 +151,6 @@
       display: none;
   }
 
-
-
   /* 
   *
   *  SINGLE POST
@@ -181,6 +179,10 @@
     font-size: 12px;
   }
 
+  #post-content {
+    position: relative;
+  }
+
   .post-content {
     width: 100%;
     margin: 0 auto;
@@ -199,12 +201,12 @@
   }
 
   .post-content-text {
-    margin-top: 25px;
+    margin-top: 100px;
   }
 
   .post-content-module {
     float: right;
-    border: 1px solid #071c2e;
+    border: 0;
     padding: 10px;
   }
 
@@ -219,8 +221,16 @@
   }
 
   .post-featured-image {
-    height: 175px;
-    width: 150px;
+    height: auto;
+    width: 300px;
+    position: absolute;
+    float: right;
+    top: 0;
+    right: 30px;
+  }
+
+  .fa-volume-up {
+    display: none;
   }
 
   .wp-caption-text {

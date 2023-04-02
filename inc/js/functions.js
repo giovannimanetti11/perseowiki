@@ -387,54 +387,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Print article
 
-function printArticle() {
-  var content = document.getElementById("post-content").innerHTML;
-  var mywindow = window.open('', 'Print', 'height=600,width=800');
-  mywindow.document.write('<html><head><title>&nbsp;</title>');
-  mywindow.document.write('<link rel="stylesheet" id="print-styles" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
-  mywindow.document.write('</head><body>');
-  mywindow.document.write(content);
-  mywindow.document.write('</body></html>');
+document.addEventListener('DOMContentLoaded', () => {
+  window.printArticle = function() {
+    var content = document.getElementById("post-content").innerHTML;
+    var mywindow = window.open('', 'Print', 'height=600,width=800');
+    mywindow.document.write('<html><head><title>&nbsp;</title>');
+    mywindow.document.write('<link rel="stylesheet" id="print-styles" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
+    mywindow.document.write('</head><body>');
+    mywindow.document.write(content);
+    mywindow.document.write('</body></html>');
 
-  mywindow.document.getElementById("print-styles").onload = function() {
-    mywindow.print();
-    mywindow.close();
-  };
-  
-  return true;
-}
-
-
-
+    mywindow.document.getElementById("print-styles").onload = function() {
+      mywindow.print();
+      mywindow.close();
+    };
+    
+    return true;
+  }
+});
 
 // Share article
+document.addEventListener('DOMContentLoaded', () => {
+  window.openSharePopup = function() {
+    var popup = document.getElementById("share-popup");
+    popup.style.display = "block";
+  }
 
-function openSharePopup() {
-  var popup = document.getElementById("share-popup");
-  popup.style.display = "block";
-}
+  window.closeSharePopup = function() {
+    var popup = document.getElementById("share-popup");
+    popup.style.display = "none";
+  }
 
+  window.copyToClipboard = function() {
+    var urlInput = document.getElementById("hidden-url");
+    urlInput.select();
+    document.execCommand("copy");
+  
+    var copyMessage = document.getElementById("copy-message");
+    copyMessage.style.display = "block";
+    copyMessage.textContent = "URL copiato con successo!";
+  
+    setTimeout(function() {
+      copyMessage.style.display = "none";
+    }, 2000);
+  }
+  
+  window.shareUrl = function(url) {
+    window.open(url, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");
+    return false;
+  }
 
-function closeSharePopup() {
-  var popup = document.getElementById("share-popup");
-  popup.style.display = "none";
-}
-
-
-function copyToClipboard() {
-  var urlInput = document.getElementById("article-url");
-  urlInput.select();
-  document.execCommand("copy");
-  urlInput.classList.add("copied");
-  setTimeout(function() {
-    urlInput.classList.remove("copied");
-  }, 1000);
-}
-
-function shareUrl(url) {
-  window.open(url, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");
-  return false;
-}
+});
 
 
 // Replace terms with hyperlink

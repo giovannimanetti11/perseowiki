@@ -722,10 +722,18 @@ function log_message($message) {
  *
  */
 
+ function disable_yoast_json_ld_for_single_and_tag($data) {
+    if (is_single() || is_tag()) {
+        return array();
+    }
+    return $data;
+}
+add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
 
 
  function perseowiki_schema_markup_post() {
     if (is_single()) {
+
         $schema = 'https://schema.org/';
         $type = 'MedicalWebPage';
         $url = get_permalink();
@@ -745,57 +753,63 @@ function log_message($message) {
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Nome comune',
+                'name' => 'Nome scientifico',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-2',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Parti usate',
+                'name' => 'Nome comune',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-3',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Fitochimica',
+                'name' => 'Parti usate',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-4',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Botanica',
+                'name' => 'Fitochimica',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-5',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Raccolta',
+                'name' => 'Botanica',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-6',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Posologia',
+                'name' => 'Raccolta',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-7',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Indicazioni Terapeutiche',
+                'name' => 'Posologia',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-8',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Avvertenze e Controindicazioni',
+                'name' => 'Indicazioni Terapeutiche',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-9',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Riferimenti',
+                'name' => 'Avvertenze e Controindicazioni',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-10',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Riferimenti',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-11',
             ),
             
         );
@@ -840,6 +854,7 @@ function log_message($message) {
 
     function perseowiki_schema_markup_tag() {
         if (is_tag()) {
+
             $schema = 'https://schema.org/';
             $type = ['CollectionPage', 'MedicalWebPage'];
             $url = get_tag_link(get_queried_object()->term_id);

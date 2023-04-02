@@ -23,24 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
       var indexItem = document.createElement('div');
       indexItem.classList.add('index-item');
   
-      // Modifica questa riga per rimuovere il numero duplicato
-      indexItem.innerHTML = '<a href="#section-' + indexCounter + '"><div class="romboid">' + indexCounter + '</div>' + h3.textContent.substring(1) + '</a>';
+      indexItem.innerHTML = '<a href="#section-' + indexCounter + '"><div class="romboid">' + indexCounter + '</div>' + h3.textContent.replace(/^\d+\s*/, '') + '</a>';
   
       indexItemsContainer.appendChild(indexItem);
   
       h3.id = 'section-' + indexCounter;
       indexCounter++;
     });
-
-
-  });
   
+// Aggiunge un ID a Riferimenti
+    const section10 = document.getElementById('section-10');
+    const content = section10.parentNode.innerHTML;
+    const searchPattern = /(section-10.+?)(Riferimenti)/s;
+    const replacement = '$1<p id="section-11">Riferimenti</p>';
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const section9 = document.getElementById('section-9');
-    const content = section9.parentNode.innerHTML;
-    const searchPattern = /(section-9.+?)(Riferimenti)/s;
-    const replacement = '$1<p id="section-10">Riferimenti</p>';
+    section10.parentNode.innerHTML = content.replace(searchPattern, replacement);
 
-    section9.parentNode.innerHTML = content.replace(searchPattern, replacement);
 });
+

@@ -570,6 +570,7 @@ header {
 
 .meta-box-nome-scientifico {
   font-style: italic;
+  margin-top: 0;
 }
 
 .category-menu {
@@ -900,11 +901,15 @@ header {
 
 .article-info {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .post-date, .post-reading-time {
   font-size: 12px;
+}
+
+.post-reading-time {
+  margin-top: 15px;
 }
 
 .post-content {
@@ -926,7 +931,7 @@ header {
 }
 
 .post-content-text {
-  margin-top: 25px;
+  margin-top: 50px;
 }
 
 .post-content-module {
@@ -947,8 +952,12 @@ header {
 }
 
 .post-featured-image {
-  height: 175px;
-  width: 150px;
+  height: auto;
+  width: 300px;
+  position: relative;
+  float: right;
+  margin-left: 30px;
+  margin-top: 30px;
 }
 
 .wp-caption-text {
@@ -1120,14 +1129,17 @@ header {
 
 .facebook i {
   color: #4267B2;
+  font-size: 22px;
 }
 
 .twitter i {
   color: #1DA1F2;
+  font-size: 22px;
 }
 
 .linkedin i {
   color: #0e76a8;
+  font-size: 22px;
 }
 
 .popup-header span {
@@ -1182,6 +1194,18 @@ header {
   display: none;
 }
 
+#hidden-url {
+  width: 100%; 
+  opacity: 0; 
+  position: absolute;
+  z-index: -1;
+}
+
+.copy-message {
+  margin-top: 10px;
+  color: #071c2e;
+}
+
 
 
 /* 
@@ -1227,6 +1251,10 @@ header {
 .category .category-title {
   text-align: center;
   margin-top: 25px;
+}
+
+.category-header {
+  margin-bottom: 30px;
 }
 
 .category .card-deck {
