@@ -1232,6 +1232,57 @@ header {
 
 /* 
 *
+*  ARCHIVE GLOSSARIO / TERMINE
+*
+*/
+
+.post-type-archive-termine .page-title {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.alphabetical-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 25px;
+}
+
+.alphabetical-list .letter-group {
+  flex: 0 0 calc(50% - 2rem);
+  max-width: calc(50% - 2rem);
+}
+
+.alphabetical-list .letter-title {
+  background-color: #f1f1f1;
+  padding: 5px 20px;
+  color: #071c2e;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  border-radius: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alphabetical-list .term-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.alphabetical-list .term-title a {
+  color: #071c2e; 
+  text-decoration: none; 
+  margin-left: 20px;
+}
+
+.alphabetical-list .term-title a:hover {
+  color: #3E92A2; 
+}
+
+
+/* 
+*
 *  TAG PAGE
 *
 */
@@ -1331,6 +1382,11 @@ footer {
 */
 
 @media only screen and (max-width: 768px) {
+
+  .alphabetical-list .letter-group {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 
   .property-herbs-row {
     flex-direction: column;

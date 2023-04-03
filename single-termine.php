@@ -30,18 +30,20 @@
                     <button class="close-button" onclick="closeSharePopup()">X</button>
                 </div>
                 <div class="popup-body">
-                <span>Condividi sui social</span>
-                <div class="social-icons">
-                    <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urldecode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#" class="social-icon linked" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-                </div>
+                    <span>Condividi sui social</span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urldecode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+                    </div>
 
-                <span>URL</span>
-                <div class="copy-link">
-                    <button class="copy-button" onclick="copyToClipboard()"> <i class="fas fa-copy"></i> </button>
-                    <a href="<?php the_permalink(); ?>" id="article-url"><?php the_permalink(); ?></a>
-                </div>
+                    <span>URL</span>
+                    <div class="copy-link">
+                        <button class="copy-button" onclick="copyToClipboard()"> <i class="fas fa-copy"></i> </button>
+                        <a href="<?php the_permalink(); ?>" id="article-url"><?php the_permalink(); ?></a>
+                        <textarea id="hidden-url" readonly><?php the_permalink(); ?></textarea>
+                    </div>
+                    <div id="copy-message" style="display: none;"></div>
                 </div>
             </div>
         </div>
