@@ -619,7 +619,7 @@ add_action('wp_ajax_nopriv_get_properties_and_herbs', 'ajax_get_therapeutic_prop
  */
 
 function custom_breadcrumb() {
-
+    require_once(ABSPATH . WPINC . '/post-template.php');
     global $post;
     echo '<div class="breadcrumbs">';
 
@@ -629,7 +629,12 @@ function custom_breadcrumb() {
 
         echo '<a href="' . home_url('/') . '">Home</a>' . $separator;
 
-        if (is_single()) {
+        if (get_post_type($post) == 'termine') { 
+            echo '<a href="' . get_post_type_archive_link('termine') . '">Glossario</a>';
+            echo $separator;
+            echo the_title();
+    
+        }elseif (is_single()) {
 
             $categories = get_the_category();
             $cat_parents = array();
@@ -670,8 +675,9 @@ function custom_breadcrumb() {
         } elseif (is_author()) {
             echo "Archives by: " . get_the_author_meta('display_name', $post->post_author);
         } else {
-            echo the_title();
+            echo get_the_title();
         }
+
     }
 
     echo '</div>';

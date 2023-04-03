@@ -975,7 +975,7 @@ header {
 }
 
 .post-tags-list h3 {
-  margin-left: 20px;
+  margin-left: 10px;
   width: 100%;
 }
 
@@ -1210,7 +1210,7 @@ header {
 
 /* 
 *
-*  SINGLE GLOSSARIO
+*  SINGLE GLOSSARIO / TERMINE
 *
 */
 
@@ -1221,6 +1221,14 @@ header {
 
 }
 
+.single-termine .post-featured-image {
+  margin: 0;
+}
+
+.single-termine .post-content-module {
+  padding: 10px;
+  border: 0;
+}
 
 /* 
 *
@@ -1476,6 +1484,7 @@ footer {
 
   .post-featured-image img, .post-featured-image {
     margin: 0 auto;
+    float: none;
   }
 
   .post-tags-list {
@@ -1526,7 +1535,7 @@ footer {
   }
 
   .index-item a {
-    white-space: nowrap;
+    white-space: pre-wrap;
     overflow: hidden;
     font-size: 13px;
   }
@@ -1578,6 +1587,11 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
+
+  .post-content-text {
+    margin-top: 55px;
+  }
+
   .breadcrumbs {
     width: 80%;
     font-size: 15px;
@@ -1621,6 +1635,14 @@ footer {
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
   .card-deck .card {
     width: calc(100% / 2 - 10px);
+  }
+
+  .post-content {
+    width: 70%;
+  }
+
+  .breadcrumbs {
+    width: 70%;
   }
   
 }

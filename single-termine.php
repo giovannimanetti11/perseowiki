@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 
 <main class="post-container">
+    <?php custom_breadcrumb(); ?>
     <?php 
     
     if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
@@ -78,7 +79,7 @@
             <div class="post-content-module">
                 <div class="post-featured-image">
                 <?php if ( has_post_thumbnail() ) { 
-                    the_post_thumbnail( 'thumbnail' ); 
+                    the_post_thumbnail( 'medium' ); 
                     $thumbnail_id = get_post_thumbnail_id();
                     $thumbnail = get_post( $thumbnail_id );
                     $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';

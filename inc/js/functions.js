@@ -390,7 +390,9 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   window.printArticle = function() {
     var content = document.getElementById("post-content").innerHTML;
+    var title = document.querySelector(".article-title h1").textContent;
     var mywindow = window.open('', 'Print', 'height=600,width=800');
+    mywindow.document.title = title;
     mywindow.document.write('<html><head><title>&nbsp;</title>');
     mywindow.document.write('<link rel="stylesheet" id="print-styles" type="text/css" href="' + window.location.origin + '/wp-content/themes/perseowiki/print.css" media="print">');
     mywindow.document.write('</head><body>');
