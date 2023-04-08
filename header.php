@@ -3,18 +3,20 @@
 <head>
  
     <!--=== META TAGS ===-->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta charset="<?php bloginfo( 'charset' ); ?>" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="author" content="WikiHerbalist">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     
+
+
+
     <!--=== LINK TAGS ===-->
-    <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS2 Feed" href="<?php bloginfo('rss2_url'); ?>" />
-    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+    <link rel="alternate" type="application/rss+xml" title="WikiHerbalist RSS2 Feed" href="https://www.wikiherbalist.com/feed/" >
+    <link rel="pingback" href="https://www.wikiherbalist.com/xmlrpc.php" >
+
 
     <title><?php wp_title(''); ?></title>
 
-    </head>
      
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>

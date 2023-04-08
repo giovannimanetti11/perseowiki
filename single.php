@@ -45,15 +45,18 @@
                 <div class="popup-header">
                     <i class="fa fa-share-alt" aria-hidden="true"></i>
                     <span>Condividi l'articolo</span>
-                    <button class="close-button" onclick="closeSharePopup()">X</button>
+                    <button class="close-button" onclick="closeSharePopup()"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="popup-body">
                     <span>Condividi sui social</span>
                     <div class="social-icons">
-                        <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urldecode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urldecode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(); return false;"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon telegram" onclick="shareUrl('https://telegram.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>')"><i class="fab fa-telegram" aria-hidden="true"></i></a>
                     </div>
+
 
                     <span>URL</span>
                     <div class="copy-link">

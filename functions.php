@@ -3,25 +3,52 @@
 define("THEME_DIR", get_template_directory_uri());
 
 /*
- * Add info for open graphs
  * 
+ * Add support for html 5
+ *
  */
 
-function add_open_graph_meta_tags() {
+add_action(
+    'after_setup_theme',
+    function() {
+        add_theme_support( 'html5', [ 'script', 'style' ] );
+    }
+);
+
+/*
+ * Add info for open graphs [[DISABLED BC MANAGED BY YOAST SEO]]
+ * 
+
+
+ function add_open_graph_and_twitter_meta_tags() {
     if (is_single() || is_page()) {
         global $post;
         $og_title = get_the_title();
         $og_description = get_the_excerpt();
-        $og_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+        $og_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'medium', false);
+        $og_image[0] = set_url_scheme($og_image[0], 'https');
+        $og_image_width = $og_image[1];
+        $og_image_height = $og_image[2];
+
         $og_url = get_permalink();
         echo '<meta property="og:title" content="' . esc_attr($og_title) . '" />' . "\n";
         echo '<meta property="og:description" content="' . esc_attr($og_description) . '" />' . "\n";
         echo '<meta property="og:image" content="' . esc_attr($og_image[0]) . '" />' . "\n";
+        echo '<meta property="og:image:width" content="' . esc_attr($og_image[1]) . '" />' . "\n";
+        echo '<meta property="og:image:height" content="' . esc_attr($og_image[2]) . '" />' . "\n";
         echo '<meta property="og:url" content="' . esc_attr($og_url) . '" />' . "\n";
+        
+        // Twitter Card meta tags
+        echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+        echo '<meta name="twitter:title" content="' . esc_attr($og_title) . '" />' . "\n";
+        echo '<meta name="twitter:description" content="' . esc_attr($og_description) . '" />' . "\n";
+        echo '<meta name="twitter:image" content="' . esc_attr($og_image[0]) . '" />' . "\n";
     }
 }
-add_action('wp_head', 'add_open_graph_meta_tags');
+add_action('wp_head', 'add_open_graph_and_twitter_meta_tags');
 
+
+ */
 
 
 /*
@@ -84,7 +111,7 @@ function perseowiki_styles() {
 add_action('wp_enqueue_scripts', 'perseowiki_styles');
 
 function enqueue_single_post_scripts() {
-    if ( is_singular( 'post' ) ) {
+    if (is_single() || is_page_template('single-termine.php')) {
         wp_enqueue_script( 'single-post', get_template_directory_uri() . '/inc/js/single-post.js');
     }
 }
@@ -92,11 +119,20 @@ add_action( 'wp_enqueue_scripts', 'enqueue_single_post_scripts' );
 
 
 function add_print_css() {
-    if (is_single()) {
+    if (is_single() || is_page_template('single-termine.php')) {
       wp_enqueue_style('print-style', get_template_directory_uri() . '/print.css', array(), '1.0', 'print');
     }
   }
   add_action('wp_enqueue_scripts', 'add_print_css');
+
+
+function perseowiki_enqueue_home_scripts() {
+
+    if (is_home() || is_front_page()) {
+        wp_enqueue_script('home-js', get_template_directory_uri() . '/inc/js/home.js');
+    }
+}
+add_action('wp_enqueue_scripts', 'perseowiki_enqueue_home_scripts');
 
 
 // Extract config.php API keys
@@ -129,8 +165,6 @@ function enqueue_aws_sdk_and_custom_scripts() {
     }
   }
   add_action('wp_enqueue_scripts', 'enqueue_aws_sdk_and_custom_scripts');
-  
-
 
   
 /*

@@ -2,12 +2,10 @@ const Polly = new AWS.Polly({
     apiVersion: '2016-06-10',
     region: 'eu-west-1',
     credentials: {
-      accessKeyId: awsCredentials.accessKeyId,
-      secretAccessKey: awsCredentials.secretAccessKey
+        accessKeyId: awsCredentials.accessKeyId,
+        secretAccessKey: awsCredentials.secretAccessKey
     }
 });
-
-  
 
 function synthesizeSpeech(text, language) {
     const params = {
@@ -20,6 +18,7 @@ function synthesizeSpeech(text, language) {
 
     Polly.synthesizeSpeech(params, (err, data) => {
         if (err) {
+            console.error(err);
             return;
         }
     
@@ -32,19 +31,17 @@ function synthesizeSpeech(text, language) {
     });
 }
 
+function handleClick(event) {
+    const target = event.target;
+    if (target.classList.contains('fa-volume-up')) {
+        const text = target.getAttribute('data-text');
+        const language = target.getAttribute('data-language') || 'it';
+        synthesizeSpeech(text, language);
+    }
+}
 
+function init() {
+    document.addEventListener('click', handleClick);
+}
 
-window.onload = function() {
-    document.querySelectorAll('.fa-volume-up').forEach((element) => {
-        element.addEventListener('click', () => {
-            const text = element.getAttribute('data-text');
-            const language = element.getAttribute('data-language') || 'it';
-            synthesizeSpeech(text, language);
-        });
-    });
-};
-
-
-
-
-
+document.addEventListener('DOMContentLoaded', init);

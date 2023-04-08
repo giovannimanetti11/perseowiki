@@ -201,6 +201,7 @@ input[type="search"]::-webkit-search-cancel-button {
 *
 */
 
+
 .logo h1 {
   color: #fff !important;
   font-size: 25px !important;
@@ -345,7 +346,7 @@ header {
 }
 
 #mailingList-popup h2 {
-  font-size: 25px;
+  font-size: 16px;
   margin-bottom: 25px;
   font-weight: bold;
 }
@@ -818,12 +819,13 @@ header {
   text-align: center;
 }
 
-.card {
+.card-deck .card {
   display: inline-block;
   width: calc(100% / 3 - 10px);
   margin-right: 20px;
   margin-bottom: 20px;
   vertical-align: top;
+  border: 1px solid #d3d3d3;
 }
 
 .card .btn-card {
@@ -916,7 +918,7 @@ header {
   width: 50%;
   margin: 0 auto;
   background: #fff;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #d3d3d3;
   margin-top: 25px;
   padding: 25px;
 }
@@ -1129,16 +1131,25 @@ header {
 
 .facebook i {
   color: #4267B2;
-  font-size: 22px;
 }
 
 .twitter i {
   color: #1DA1F2;
-  font-size: 22px;
 }
 
 .linkedin i {
   color: #0e76a8;
+}
+
+.whatsapp i {
+  color: #075E54;
+}
+
+.telegram i {
+  color: #0088cc;
+}
+
+.facebook i, .twitter i, .linkedin i, .whatsapp i, .telegram i {
   font-size: 22px;
 }
 
@@ -1206,6 +1217,10 @@ header {
   color: #071c2e;
 }
 
+.post-content-text .meta-box-nome-scientifico {
+  font-style: normal;
+}
+
 
 
 /* 
@@ -1228,6 +1243,10 @@ header {
 .single-termine .post-content-module {
   padding: 10px;
   border: 0;
+}
+
+.single-termine .index {
+  display: block;
 }
 
 /* 
@@ -1254,9 +1273,9 @@ header {
 }
 
 .alphabetical-list .letter-title {
-  background-color: #f1f1f1;
+  background-color: #d3d3d3;
   padding: 5px 20px;
-  color: #071c2e;
+  color: #0e3457;
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -1513,6 +1532,7 @@ footer {
     width: 100%;
     margin: 0 auto;
     margin-top: 20px !important;
+    border: 1px solid #d3d3d3 !important;
   }
 
   #alphabet {
