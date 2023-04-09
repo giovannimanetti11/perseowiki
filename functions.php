@@ -509,6 +509,46 @@ function save_custom_meta_box_costituenti($post_id, $post, $update)
 
 add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
 
+/*
+ * ADD custom field "Tossica"
+ *
+ */
+
+// Aggiungi il metabox al post type desiderato (es. 'post')
+add_action('add_meta_boxes', 'add_tossica_metabox');
+
+function add_tossica_metabox() {
+    add_meta_box('tossica', 'Tossica', 'tossica_metabox_callback', 'post', 'side', 'default');
+}
+
+// Callback per visualizzare il contenuto del metabox
+function tossica_metabox_callback($post) {
+    wp_nonce_field('tossica_metabox', 'tossica_metabox_nonce');
+    $tossica = get_post_meta($post->ID, '_tossica', true);
+    echo '<input type="checkbox" id="tossica" name="tossica" value="1"' . checked(1, $tossica, false) . '/>';
+}
+
+// Salva il valore del custom field al salvataggio del post
+add_action('save_post', 'save_tossica_metabox_data');
+
+function save_tossica_metabox_data($post_id) {
+    // Verifica la sicurezza e la validità dei dati
+    if (!isset($_POST['tossica_metabox_nonce']) || !wp_verify_nonce($_POST['tossica_metabox_nonce'], 'tossica_metabox')) {
+        return;
+    }
+
+    // Controlla i permessi dell'utente
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Salva il valore del checkbox "Tossica"
+    if (isset($_POST['tossica'])) {
+        update_post_meta($post_id, '_tossica', 1);
+    } else {
+        delete_post_meta($post_id, '_tossica');
+    }
+}
 
 
 

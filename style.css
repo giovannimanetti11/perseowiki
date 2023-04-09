@@ -196,6 +196,10 @@ input[type="search"]::-webkit-search-cancel-button {
   min-height: 72vh;
 }
 
+.no-border {
+  border: none !important;
+}
+
 /* 
 *
 *  HEADER
@@ -799,7 +803,7 @@ header {
 
 #posts-container {
   width: 100%;
-  height: 500px;
+  min-height: 500px;
   text-align: center;
   margin-top: 25px;
 }
@@ -996,6 +1000,18 @@ header {
   border: 1px solid #e5e5e5;
   z-index: 49;
   position: relative;
+}
+
+.post-tags .alert {
+  margin-top: 15px;
+  padding: 5px;
+  text-align: center;
+}
+
+.post-content-module .alert {
+  text-decoration: none;
+  color: #cf2e2e;
+  z-index: 50;
 }
 
 .post-content h3 {
@@ -1386,6 +1402,10 @@ header {
   width: 100%;
 }
 
+.category .row {
+  margin-bottom: 15px;
+}
+
 
 /* 
 *
@@ -1595,7 +1615,7 @@ footer {
 
   .post-content-module {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     padding: 0;
     margin-left: 0;
     border: 0;

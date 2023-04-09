@@ -220,6 +220,14 @@
     background-color: #071c2e;
   }
 
+  .post-content-module .alert {
+    text-decoration: none;
+    color: #cf2e2e;
+    background-color: #f78da7;
+    padding: 5px;
+    border: 1px color #cf2e2e;
+  }
+
   .post-featured-image {
     height: auto;
     width: 300px;

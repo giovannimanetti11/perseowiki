@@ -97,22 +97,34 @@
             
             </div>
 
-            <div class="post-content-module">
+            <?php
+            $tossica = get_post_meta(get_the_ID(), '_tossica', true);
+            $border_class = $tossica ? 'no-border' : '';
+            ?>
+
+            <div class="post-content-module <?php echo $border_class; ?>">
                 <div class="post-tags">
-                <?php $post_tags = wp_get_post_tags( get_the_ID() ); ?>
-                <?php if ( $post_tags ) : ?>
+                <?php $post_tags = wp_get_post_tags(get_the_ID()); ?>
+                <?php if ($post_tags) : ?>
                     <ul class="post-tags-list">
                     <h3>Proprietà</h3>
-                    <?php foreach ( $post_tags as $tag ) : ?>
+                    <?php foreach ($post_tags as $tag) : ?>
                         <li>
-                        <?php $tag_link = get_term_link( $tag ); ?>
-                        <?php printf( '<a href="%s">%s</a>', esc_url( $tag_link ), esc_html( ucfirst( $tag->name ) ) ); ?>
+                        <?php $tag_link = get_term_link($tag); ?>
+                        <?php printf('<a href="%s">%s</a>', esc_url($tag_link), esc_html(ucfirst($tag->name))); ?>
                         </li>
                     <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
                 </div>
+                <?php if ($tossica) : ?>
+                    <a href="#section-10" class="alert alert-danger" role="alert">
+                        Pianta tossica
+                    </a>
+                <?php endif; ?>
             </div>
+
+
             <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
             <?php if (!empty($meta_box_value)) : ?>
                 <div class="meta-box-nome-scientifico"><h3>Nome scientifico</h3> <?php echo esc_html( $meta_box_value ); ?></div>
