@@ -1,4 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
+  function initLightbox() {
+    console.log('funzione initLightbox() attivata');
+    const parent = document.querySelector('#post-content');
+    console.log('parent:', parent);
+  
+    parent.addEventListener('click', function(e) {
+      const target = e.target;
+      if (target.tagName === 'IMG' && window.innerWidth > 768) {
+        openLightbox(target);
+      }
+    });
+  }
+  
+  function openLightbox(img) {
+    console.log('immagine cliccata:', img);
+    const srcset = img.getAttribute('srcset');
+    const sources = srcset.split(', ');
+    const largeImageSrc = sources[sources.length - 1].split(' ')[0];
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('custom-lightbox', 'active');
+    lightbox.innerHTML = `<div class="image-wrapper"><img src="${largeImageSrc}" alt="${img.alt}" /></div>`;
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== lightbox.querySelector('img')) {
+        lightbox.remove();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.keyCode === 27) {
+        lightbox.remove();
+      }
+    });    
+    
+    console.log('evento di click dell\'immagine gestito correttamente');
+    document.body.appendChild(lightbox);
+  }
+
+  initLightbox();
+});
+
+
+
+
+// Create index and romboids
+
+document.addEventListener('DOMContentLoaded', function() {
   var indexDiv = document.querySelector('.index');
   var h3Elements = document.querySelectorAll('.post-content-text h3');
   var indexCounter = 1;
@@ -107,5 +154,4 @@ document.addEventListener('DOMContentLoaded', () => {
       closeSharePopup();
     }
   });
-
 });

@@ -2,6 +2,9 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
+	
+add_post_type_support( 'page', 'excerpt' );
+
 /*
  * 
  * Add support for html 5
