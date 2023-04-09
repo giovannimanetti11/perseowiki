@@ -1730,7 +1730,7 @@ footer {
   }
 
   .card-deck {
-    width: 80%;
+    width: 95%;
   }
 
   #alphabet {
@@ -1751,16 +1751,13 @@ footer {
 
 }
 
-@media only screen and (min-width: 993px) and (max-width: 1200px) {
+@media only screen and (min-width: 993px) and (max-width: 1441px) {
+
   .card-deck .card {
     width: calc(100% / 2 - 10px);
   }
 
-  .post-content {
-    width: 70%;
-  }
-
-  .breadcrumbs {
+  .post-content, .home-content, .breadcrumbs, .card-deck {
     width: 70%;
   }
   
