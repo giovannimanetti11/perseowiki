@@ -53,6 +53,7 @@ get_header();
             $title = get_the_title();
             $nome_scientifico = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true );
             $link = get_permalink();
+            $tossica = get_post_meta(get_the_ID(), '_tossica', true);
             
             // Create a new row for every 4 posts
             if ( $count % 4 == 0 ) {
@@ -67,6 +68,9 @@ get_header();
             $output .= '<h4 class="card-title">' . $title . '</h4>';
             $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
             $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
+            if (!empty($tossica)) {
+                $output .= '<i class="fa-solid fa-skull-crossbones" style="position: absolute; bottom: 10px; right: 10px;"></i>';
+              }
             $output .= '</div></div></div>';
 
             // Close the row after every 4 posts

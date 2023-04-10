@@ -579,7 +579,8 @@ function save_tossica_metabox_data($post_id) {
           $link = get_permalink();
           $image = get_the_post_thumbnail_url(null, 'medium');
           $alt = get_the_title();
-          $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true); 
+          $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
+          $tossica = get_post_meta(get_the_ID(), '_tossica', true);
   
           // Create a new card deck for every 3 posts
           if ($counter % 3 == 0) {
@@ -587,7 +588,7 @@ function save_tossica_metabox_data($post_id) {
           }
   
           $count++;
-  
+          
           // Add a new card
           $output .= '<div class="card">';
           $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
@@ -595,6 +596,9 @@ function save_tossica_metabox_data($post_id) {
           $output .= '<h4 class="card-title">' . $title . '</h4>';
           $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
           $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
+          if (!empty($tossica)) {
+            $output .= '<i class="fa-solid fa-skull-crossbones" style="position: absolute; bottom: 10px; right: 10px;"></i>';
+          }
           $output .= '</div></div>';
   
           // Close the card deck for every 3 posts
