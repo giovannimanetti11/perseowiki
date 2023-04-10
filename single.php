@@ -98,30 +98,31 @@
             </div>
 
             <?php
-            $tossica = get_post_meta(get_the_ID(), '_tossica', true);
+                $tossica = get_post_meta(get_the_ID(), '_tossica', true);
             ?>
 
             <div class="post-content-module">
                 <div class="post-tags">
-                <?php $post_tags = wp_get_post_tags(get_the_ID()); ?>
-                <?php if ($post_tags) : ?>
-                    <ul class="post-tags-list">
-                    <h3>Proprietà</h3>
-                    <?php foreach ($post_tags as $tag) : ?>
-                        <li>
-                        <?php $tag_link = get_term_link($tag); ?>
-                        <?php printf('<a href="%s">%s</a>', esc_url($tag_link), esc_html(ucfirst($tag->name))); ?>
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                    <?php $post_tags = wp_get_post_tags(get_the_ID()); ?>
+                    <?php if ($post_tags) : ?>
+                        <ul class="post-tags-list">
+                        <h3>Proprietà</h3>
+                        <?php foreach ($post_tags as $tag) : ?>
+                            <li>
+                            <?php $tag_link = get_term_link($tag); ?>
+                            <?php printf('<a href="%s">%s</a>', esc_url($tag_link), esc_html(ucfirst($tag->name))); ?>
+                            </li>
+                        <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </div>
                 <?php if ($tossica) : ?>
+                    <a href="#section-10" class="alert alert-danger" role="alert">
+                        Pianta tossica
+                    </a>
                 <?php endif; ?>
-                <a href="#section-10" class="alert alert-danger" role="alert">
-                    Pianta tossica
-                </a>
             </div>
+
 
 
             <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>

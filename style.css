@@ -207,7 +207,7 @@ input[type="search"]::-webkit-search-cancel-button {
 */
 
 
-.logo h1 {
+.logo h1, .logo span {
   color: #fff !important;
   font-size: 25px !important;
   font-weight: 700;
@@ -661,6 +661,11 @@ header {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.home-content h2 {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #filterType h3 {

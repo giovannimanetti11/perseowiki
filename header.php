@@ -48,13 +48,17 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         <a class="" href="<?php echo esc_url( home_url( '/' ) ); ?>">
             <?php if ( has_custom_logo() ) { 
                 echo '<img src="' . esc_url( $logo[0] ) . '" width="30" height="30" class="" alt="' . get_bloginfo( 'name' ) . '">';
+            }
+
+            if ( is_front_page() ) {
                 echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
             } else {
-                echo '<h1 class="d-inline-block">' . get_bloginfo('name') . '</h1>';
+                echo '<span class="d-inline-block">' . get_bloginfo('name') . '</span>';
             }
             ?>
         </a>
     </div>
+
     <div class="mobileMenu">
         <i id="menu-icon" class="fa-solid fa-bars"></i>
     </div>
@@ -85,7 +89,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     <div id="mailingList-popup" class="popup">
         <div class="popup-content">
         <a href="#" id="mailingList-popup-close-btn"><i class="fa fa-times"></i></a>
-            <h2>Iscriviti alla Mailing List di WikiHerbalist</h2>
+            <h3>Iscriviti alla Mailing List di WikiHerbalist</h3>
             <form id="subscribe-form" novalidate>
 
                 <input type="text" id="nome" placeholder="Nome" />

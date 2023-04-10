@@ -14,7 +14,7 @@ get_header(); ?>
       <div class="tag-header">
           <h1>Proprietà <?php single_tag_title(); ?></h1>
           <div class="container">
-            <p><?php echo tag_description(); ?></p>
+            <p><?php echo strip_tags(tag_description()); ?></p>
             <span>Di seguito troverai le erbe presenti su WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
           </div>
           
@@ -23,14 +23,16 @@ get_header(); ?>
       <div class="tag-posts">
 
       <?php
-        $tag = get_queried_object(); // Ottiene l'oggetto del tag corrente
+        $tag = get_queried_object(); 
         $args = array(
-            'tag_id' => $tag->term_id, // Usa l'ID del tag corrente per filtrare i post
-            'post_type' => 'post', // Tipo di post da cercare
-            'posts_per_page' => -1, // Numero di post da visualizzare (-1 per mostrare tutti)
+            'tag_id' => $tag->term_id, 
+            'post_type' => 'post', 
+            'posts_per_page' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC'
         );
 
-        $posts = get_posts($args); // Esegui la query
+        $posts = get_posts($args);
 
         $output = '';
         $count = 0;
