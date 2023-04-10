@@ -99,10 +99,9 @@
 
             <?php
             $tossica = get_post_meta(get_the_ID(), '_tossica', true);
-            $border_class = $tossica ? 'no-border' : '';
             ?>
 
-            <div class="post-content-module <?php echo $border_class; ?>">
+            <div class="post-content-module">
                 <div class="post-tags">
                 <?php $post_tags = wp_get_post_tags(get_the_ID()); ?>
                 <?php if ($post_tags) : ?>
@@ -118,10 +117,10 @@
                 <?php endif; ?>
                 </div>
                 <?php if ($tossica) : ?>
-                    <a href="#section-10" class="alert alert-danger" role="alert">
-                        Pianta tossica
-                    </a>
                 <?php endif; ?>
+                <a href="#section-10" class="alert alert-danger" role="alert">
+                    Pianta tossica
+                </a>
             </div>
 
 

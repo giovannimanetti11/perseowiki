@@ -946,6 +946,7 @@ header {
   border: 1px solid #e5e5e5;
   padding: 25px;
   margin-left: 10px;
+  text-align: center;
 }
 
 .post-content-module span {
@@ -977,13 +978,16 @@ header {
   border-radius: 10px;
 }
 
+.post-tags {
+  margin-bottom: 15px;
+}
+
 .post-tags-list a {
   text-decoration: none;
   color: #071c2e;
 }
 
 .post-tags-list h3 {
-  margin-left: 10px;
   width: 100%;
 }
 
@@ -1012,6 +1016,7 @@ header {
   text-decoration: none;
   color: #cf2e2e;
   z-index: 50;
+  padding: 5px;
 }
 
 .post-content h3 {
@@ -1619,6 +1624,7 @@ footer {
     padding: 0;
     margin-left: 0;
     border: 0;
+    text-align: left;
   }
 
   .post-featured-image img, .post-featured-image {

@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   function initLightbox() {
-    console.log('funzione initLightbox() attivata');
     const parent = document.querySelector('#post-content');
-    console.log('parent:', parent);
   
     parent.addEventListener('click', function(e) {
       const target = e.target;
@@ -13,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function openLightbox(img) {
-    console.log('immagine cliccata:', img);
     const srcset = img.getAttribute('srcset');
     const sources = srcset.split(', ');
     const largeImageSrc = sources[sources.length - 1].split(' ')[0];
@@ -33,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });    
     
-    console.log('evento di click dell\'immagine gestito correttamente');
     document.body.appendChild(lightbox);
   }
 
@@ -79,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Aggiunge un ID a Riferimenti
-  const section10 = document.getElementById('section-10');
-  if (section10) {
-      const content = section10.parentNode.innerHTML;
-      const searchPattern = /(section-10.+?)(Riferimenti)/s;
-      const replacement = '$1<p id="section-11">Riferimenti</p>';
+  const section11 = document.getElementById('section-11');
+  if (section11) {
+      const content = section11.parentNode.innerHTML;
+      const searchPattern = /(section-11.+?)(Riferimenti)/s;
+      const replacement = '$1<p id="section-12">Riferimenti</p>';
 
-      section10.parentNode.innerHTML = content.replace(searchPattern, replacement);
+      section11.parentNode.innerHTML = content.replace(searchPattern, replacement);
   }
 
 });
