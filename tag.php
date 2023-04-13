@@ -15,7 +15,8 @@ get_header(); ?>
           <h1>Proprietà <?php single_tag_title(); ?></h1>
           <div class="container">
             <p><?php echo strip_tags(tag_description()); ?></p>
-            <span>Di seguito troverai le erbe presenti su WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
+
+            <span>Di seguito troverai l'elenco delle erbe presenti su WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
           </div>
           
       </div>

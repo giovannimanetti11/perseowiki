@@ -332,6 +332,10 @@ header {
   float: right;
 }
 
+#mailingList-popup p {
+  font-weight: bold;
+}
+
 #subscribe-form {
   display: flex;
   flex-wrap: wrap;
@@ -763,7 +767,7 @@ header {
 .herbs-list {
   display: flex;
   flex-wrap: wrap;
-  max-width: 80%;
+  max-width: 70%;
   gap: 0.25rem;
   align-items: center;
   flex-grow: 1;
@@ -827,6 +831,12 @@ header {
 
 .card-body {
   text-align: center;
+}
+
+.card-body i {
+  position: absolute; 
+  bottom: 10px; 
+  right: 10px;
 }
 
 .card-deck .card {
@@ -1270,7 +1280,7 @@ header {
   border: 0;
 }
 
-.postid-196 .fa-volume-up {
+.postid-196 .fa-volume-up, .postid-829 .fa-volume-up {
   display: none;
 }
 
@@ -1402,6 +1412,11 @@ header {
 
 .category-header {
   margin-bottom: 30px;
+}
+
+.category-header h2 {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .category .card-deck {

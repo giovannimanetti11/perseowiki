@@ -20,16 +20,18 @@
      
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZ4J8CZ4CW"></script>
+    
+    <!-- Google tag GA4 + UA (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44DF1GJDV6"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-GZ4J8CZ4CW');
+    gtag('config', 'G-44DF1GJDV6');
     </script>
+
+
 
       
 </head>
@@ -89,7 +91,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     <div id="mailingList-popup" class="popup">
         <div class="popup-content">
         <a href="#" id="mailingList-popup-close-btn"><i class="fa fa-times"></i></a>
-            <h3>Iscriviti alla Mailing List di WikiHerbalist</h3>
+            <p>Iscriviti alla Mailing List di WikiHerbalist</p>
             <form id="subscribe-form" novalidate>
 
                 <input type="text" id="nome" placeholder="Nome" />

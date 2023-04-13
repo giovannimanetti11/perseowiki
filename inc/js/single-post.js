@@ -1,3 +1,5 @@
+// Create custom lightbox
+
 document.addEventListener('DOMContentLoaded', function() {
   function initLightbox() {
     const parent = document.querySelector('#post-content');

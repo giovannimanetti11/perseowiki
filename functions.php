@@ -2,7 +2,32 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
-	
+
+/*
+ * 
+ * Add custom meta description to tags
+ *
+ */
+
+ function custom_tag_meta_description() {
+    if ( is_tag() ) {
+        $term = get_queried_object();
+        if ( $term && ! empty( $term->description ) ) {
+            $meta_description = esc_attr( wp_strip_all_tags( $term->description ) );
+            echo '<meta name="description" content="' . $meta_description . '">';
+        }
+    }
+}
+add_action( 'wp_head', 'custom_tag_meta_description', 5 );
+
+
+
+/*
+ * 
+ * Add excerpt to pages
+ *
+ */
+
 add_post_type_support( 'page', 'excerpt' );
 
 /*
@@ -597,7 +622,8 @@ function save_tossica_metabox_data($post_id) {
           $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
           $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
           if (!empty($tossica)) {
-            $output .= '<i class="fa-solid fa-skull-crossbones" style="position: absolute; bottom: 10px; right: 10px;"></i>';
+            $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
+
           }
           $output .= '</div></div>';
   
@@ -882,21 +908,27 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Indicazioni Terapeutiche',
+                'name' => 'Utilizzo tradizionale',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-9',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Avvertenze e Controindicazioni',
+                'name' => 'Ricerca scientifica',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-10',
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Riferimenti',
+                'name' => 'Avvertenze e Controindicazioni',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-11',
+            ),
+            array(
+                '@type' => 'WebPageElement',
+                'name' => 'Riferimenti',
+                'isAccessibleForFree' => 'True',
+                'cssSelector' => '#section-12',
             ),
             
         );
@@ -970,7 +1002,6 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
 
 add_action('wp_head', 'perseowiki_schema_markup_tag');
 add_action('wp_head', 'perseowiki_schema_markup_post');
-
 
 
 ?>

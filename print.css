@@ -208,6 +208,7 @@
     float: right;
     border: 0;
     padding: 10px;
+    margin-bottom: 35px;
   }
 
   .post-content-module span {
@@ -235,6 +236,10 @@
     float: right;
     top: 0;
     right: 30px;
+  }
+
+  #section-1 {
+    margin-top: 25px;
   }
 
   .fa-volume-up {

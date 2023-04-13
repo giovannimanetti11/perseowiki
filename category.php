@@ -17,7 +17,7 @@ get_header();
       <h1 class="category-title"><?php single_cat_title(); ?></h1>
       <?php $category_description = category_description();
         if ( ! empty( $category_description ) ) : ?>
-        <p class="category-excerpt"><?php echo wpautop( strip_tags( $category_description ) ); ?></p>
+        <p class="category-excerpt"><?php echo $category_description; ?></p>
         <?php endif; ?>
 
     </div>
@@ -69,7 +69,7 @@ get_header();
             $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
             $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
             if (!empty($tossica)) {
-                $output .= '<i class="fa-solid fa-skull-crossbones" style="position: absolute; bottom: 10px; right: 10px;"></i>';
+                $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
               }
             $output .= '</div></div></div>';
 
