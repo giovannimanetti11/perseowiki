@@ -171,25 +171,33 @@ document.addEventListener('DOMContentLoaded', function() {
   function linkifyContent(element, titlesAndLinks, currentURL, currentPostID) {
     const originalHTML = element.innerHTML;
     let newHTML = originalHTML;
-
+  
     titlesAndLinks.forEach(({ title, link, excerpt, plurale, id }) => {
-      // Confronta l'ID del post corrente con gli ID dei post ottenuti tramite AJAX
       if (link !== currentURL && id !== currentPostID) {
         const escapedTitle = escapeRegExp(title);
         const regexTitle = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
-        const linkHTMLTitle = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
-        newHTML = newHTML.replace(regexTitle, linkHTMLTitle);
-
+        let matchTitle = regexTitle.exec(newHTML);
+        
+        if (matchTitle) {
+          const linkHTMLTitle = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">${matchTitle[0]}</a>`;
+          newHTML = newHTML.slice(0, matchTitle.index) + linkHTMLTitle + newHTML.slice(matchTitle.index + matchTitle[0].length);
+        }
+        
         if (plurale && plurale !== '') {
           const escapedPlurale = escapeRegExp(plurale);
           const regexPlurale = new RegExp(`\\b(${escapedPlurale})\\b(?!([^<]+)?>)`, 'gi');
-          const linkHTMLPlurale = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">$1</a>`;
-          newHTML = newHTML.replace(regexPlurale, linkHTMLPlurale);
+          let matchPlurale = regexPlurale.exec(newHTML);
+          
+          if (matchPlurale) {
+            const linkHTMLPlurale = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">${matchPlurale[0]}</a>`;
+            newHTML = newHTML.slice(0, matchPlurale.index) + linkHTMLPlurale + newHTML.slice(matchPlurale.index + matchPlurale[0].length);
+          }
         }
       }
     });
-
+  
     element.innerHTML = newHTML;
+    
 
   
 
