@@ -194,6 +194,118 @@ function enqueue_aws_sdk_and_custom_scripts() {
   }
   add_action('wp_enqueue_scripts', 'enqueue_aws_sdk_and_custom_scripts');
 
+/*
+ * 
+ * Add Image field to categories
+ *
+ */
+
+function perseowiki_add_category_image_field() {
+    ?>
+    <div class="form-field">
+        <label for="category-image-url"><?php _e( 'Immagine URL', 'perseowiki' ); ?></label>
+        <input type="text" name="category-image-url" id="category-image-url" value="">
+        <p class="description"><?php _e( 'Inserisci l\'URL dell\'immagine per la categoria.', 'perseowiki' ); ?></p>
+    </div>
+    <?php
+}
+add_action( 'category_add_form_fields', 'perseowiki_add_category_image_field', 10, 2 );
+
+function perseowiki_edit_category_image_field( $term ) {
+    $image_url = get_term_meta( $term->term_id, 'category-image-url', true );
+    ?>
+    <tr class="form-field">
+        <th scope="row" valign="top"><label for="category-image-url"><?php _e( 'Immagine URL', 'perseowiki' ); ?></label></th>
+        <td>
+            <input type="text" name="category-image-url" id="category-image-url" value="<?php echo esc_attr( $image_url ) ? esc_attr( $image_url ) : ''; ?>">
+            <p class="description"><?php _e( 'Inserisci l\'URL dell\'immagine per la categoria.', 'perseowiki' ); ?></p>
+        </td>
+    </tr>
+    <?php
+}
+add_action( 'category_edit_form_fields', 'perseowiki_edit_category_image_field', 10, 2 );
+
+function perseowiki_save_category_image( $term_id ) {
+    if ( isset( $_POST['category-image-url'] ) ) {
+        update_term_meta( $term_id, 'category-image-url', esc_url_raw( $_POST['category-image-url'] ) );
+    }
+}
+add_action( 'edited_category', 'perseowiki_save_category_image', 10, 2 );
+add_action( 'create_category', 'perseowiki_save_category_image', 10, 2 );
+
+
+/*
+ * 
+ * Add CPT blog.
+ *
+ */
+
+ function perseowiki_create_blog_cpt() {
+    $labels = array(
+        'name' => __('Blog', 'perseowiki'),
+        'singular_name' => __('Articolo del blog', 'perseowiki'),
+        'add_new' => __('Aggiungi nuovo', 'perseowiki'),
+        'add_new_item' => __('Aggiungi nuovo articolo del blog', 'perseowiki'),
+        'edit_item' => __('Modifica articolo del blog', 'perseowiki'),
+        'new_item' => __('Nuovo articolo del blog', 'perseowiki'),
+        'view_item' => __('Visualizza articolo del blog', 'perseowiki'),
+        'search_items' => __('Cerca articoli del blog', 'perseowiki'),
+        'not_found' => __('Nessun articolo blog trovato', 'perseowiki'),
+        'not_found_in_trash' => __('Nessun articolo del blog trovato nel cestino', 'perseowiki'),
+        'all_items' => __('Tutti gli articoli del blog', 'perseowiki'),
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'has_archive' => true,
+        'menu_position' => 5,
+        'rewrite' => array('slug' => 'blog'),
+        'show_in_rest' => true,
+        'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
+        'taxonomies' => array('category', 'post_tag'),
+        'menu_icon' => 'dashicons-welcome-write-blog',
+    );
+
+    register_post_type('blog', $args);
+}
+add_action('init', 'perseowiki_create_blog_cpt');
+
+/*
+ * 
+ * Add custom category to CPT blog.
+ *
+ */
+
+ function perseowiki_register_blog_categories() {
+    $labels = array(
+        'name'              => _x( 'Categorie del blog', 'taxonomy general name', 'perseowiki' ),
+        'singular_name'     => _x( 'Categoria del blog', 'taxonomy singular name', 'perseowiki' ),
+        'search_items'      => __( 'Cerca categorie del blog', 'perseowiki' ),
+        'all_items'         => __( 'Tutte le categorie del blog', 'perseowiki' ),
+        'parent_item'       => __( 'Categoria del blog genitore', 'perseowiki' ),
+        'parent_item_colon' => __( 'Categoria del blog genitore:', 'perseowiki' ),
+        'edit_item'         => __( 'Modifica categoria del blog', 'perseowiki' ),
+        'update_item'       => __( 'Aggiorna categoria del blog', 'perseowiki' ),
+        'add_new_item'      => __( 'Aggiungi nuova categoria del blog', 'perseowiki' ),
+        'new_item_name'     => __( 'Nuova categoria del blog', 'perseowiki' ),
+        'menu_name'         => __( 'Categorie del blog', 'perseowiki' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'categorie-blog' ),
+    );
+
+    register_taxonomy( 'blog_category', array( 'blog' ), $args );
+}
+
+add_action( 'init', 'perseowiki_register_blog_categories' );
+
   
 /*
  * 
