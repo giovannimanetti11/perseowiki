@@ -1381,6 +1381,23 @@ header {
 
 /* 
 *
+*  BLOG ARCHIVIO
+*
+*/
+
+.featured-post .entry-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.featured-post .entry-summary {
+  font-size: 16px;
+}
+
+
+
+/* 
+*
 *  TAG PAGE
 *
 */

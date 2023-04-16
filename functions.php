@@ -263,7 +263,6 @@ add_action( 'create_category', 'perseowiki_save_category_image', 10, 2 );
         'rewrite' => array('slug' => 'blog'),
         'show_in_rest' => true,
         'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
-        'taxonomies' => array('category', 'post_tag'),
         'menu_icon' => 'dashicons-welcome-write-blog',
     );
 
