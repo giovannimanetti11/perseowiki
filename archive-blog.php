@@ -32,22 +32,22 @@ get_header();
 
 
                     <ul id="post_filter" data-layout="blog_newspaper">
-                        <li>
+                        <li class="filter-item">
                             <a data-view="latest" title="Latest" href="javascript:;" class="filter_active">
-                                <i class="fa fa-clock-o"></i>Latest
+                            <i class="fa-solid fa-clock"></i>Latest
                             </a>
                         </li>
-                        <li>
+                        <li class="filter-item">
                             <a data-view="trending" title="Trending" href="javascript:;">
-                                <i class="fa fa-flash"></i>Trending
+                                <i class="fa fa-bolt" aria-hidden="true"></i>Trending
                             </a>
                         </li>
-                        <li>
+                        <li class="filter-item">
                             <a data-view="hot" title="Hot" href="javascript:;">
                                 <i class="fa fa-fire"></i>Hot
                             </a>
                         </li>
-                        <li>
+                        <li class="filter-item">
                             <a data-view="editors_picks" title="Editor Picks" href="javascript:;">
                                 <i class="fa fa-heart"></i>Editor Picks
                             </a>
@@ -79,13 +79,13 @@ get_header();
                                         </a>
                                     <?php endif; ?>
 
-                                    <header class="entry-header">
+                                    <div class="entry-header">
                                         <h2 class="entry-title">
                                             <a href="<?php the_permalink(); ?>" rel="bookmark">
                                                 <?php the_title(); ?>
                                             </a>
                                         </h2>
-                                    </header>
+                                    </div>
 
                                     <div class="entry-summary">
                                         <?php the_excerpt(); ?>
@@ -103,7 +103,7 @@ get_header();
                 <?php endif; ?>
             </div>
             <div class="col-md-3">
-                <?php get_sidebar(); ?>
+                <!-- get_sidebar(); ?> -->
             </div>
         </div>
     </div>

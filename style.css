@@ -874,6 +874,7 @@ header {
 .card-title {
   font-weight: bold;
   text-align: center;
+  font-size: 22px;
 }
 
 .card-title a {
@@ -885,6 +886,7 @@ header {
   margin-bottom: 20px;
   font-style: italic;
   text-align: center;
+  font-size: 20px;
 }
 
 .card-scientific-name a {
@@ -1385,6 +1387,82 @@ header {
 *
 */
 
+.category-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.category-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.category-wrapper:hover img {
+  transform: scale(1.1);
+}
+
+.category-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+#post_filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 10px 35px;
+  margin: 30px 0;
+  max-width: 500px;
+  background-color: #f1f1f1;
+  border-radius: 25px;
+}
+
+.filter-item {
+  margin-right: 15px;
+}
+
+#post_filter a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #071c2e;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+#post_filter a:hover,
+#post_filter .filter_active {
+  color: #3E92A2;
+}
+
+#post_filter i {
+  margin-right: 5px;
+}
+
+.entry-title,
+.entry-summary {
+  transition: all 0.3s ease;
+}
+
+.entry-title a {
+  color: #071c2e;
+  text-decoration: none;
+}
+
+.entry-title a:hover {
+  color: #3E92A2;
+}
+
 .featured-post .entry-title {
   font-size: 24px;
   font-weight: bold;
@@ -1393,6 +1471,19 @@ header {
 .featured-post .entry-summary {
   font-size: 16px;
 }
+
+.article:hover .entry-title {
+  color: #007bff;
+}
+
+.blog img {
+  height: 100%;
+}
+
+.blog .entry-title {
+  text-align: left;
+}
+
 
 
 

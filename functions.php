@@ -729,8 +729,8 @@ function save_tossica_metabox_data($post_id) {
           $output .= '<div class="card">';
           $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
           $output .= '<div class="card-body">';
-          $output .= '<h4 class="card-title">' . $title . '</h4>';
-          $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
+          $output .= '<h3 class="card-title">' . $title . '</h3>';
+          $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>'; 
           $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
           if (!empty($tossica)) {
             $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
