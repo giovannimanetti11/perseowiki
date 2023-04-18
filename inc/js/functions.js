@@ -160,7 +160,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
       contentElements.forEach(element => {
-        linkifyContent(element, titlesAndLinks, currentURL, currentPostID);
+        const childNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE && !['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(node.tagName));
+        childNodes.forEach(child => {
+          linkifyContent(child, titlesAndLinks, currentURL, currentPostID);
+        });
       });
     });
 

@@ -85,6 +85,10 @@ get_header();
                                                 <?php the_title(); ?>
                                             </a>
                                         </h2>
+                                        <div class="entry-date">
+                                            <?php the_date(); ?>
+                                        </div>
+
                                     </div>
 
                                     <div class="entry-summary">

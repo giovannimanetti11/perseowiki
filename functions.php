@@ -852,6 +852,12 @@ function custom_breadcrumb() {
             echo $separator;
             echo the_title();
     
+        }
+        if (get_post_type($post) == 'blog') { 
+            echo '<a href="' . get_post_type_archive_link('blog') . '">Blog</a>';
+            echo $separator;
+            echo the_title();
+    
         }elseif (is_single()) {
 
             $categories = get_the_category();
