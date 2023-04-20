@@ -849,8 +849,6 @@ function custom_breadcrumb() {
 
         if (get_post_type($post) == 'termine') { 
             echo '<a href="' . get_post_type_archive_link('termine') . '">Glossario</a>';
-            echo $separator;
-            echo the_title();
     
         }
         if (get_post_type($post) == 'blog') { 

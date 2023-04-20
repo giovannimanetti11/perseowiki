@@ -705,6 +705,7 @@ header {
   padding-top: 25px;
   width: 50%;
   margin: 0 auto;
+  margin-bottom: 25px;
 }
 
 .properties-header {
@@ -1302,7 +1303,38 @@ header {
   font-style: normal;
 }
 
+/* post id 897 */
 
+.postid-897 table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.postid-897 thead {
+  background-color: #f2f2f2;
+}
+
+.postid-897 th,
+.postid-897 td {
+  text-align: left;
+  padding: 8px;
+}
+
+.postid-897 tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.postid-897 tr:hover {
+  background-color: #f2f2f2;
+}
+
+.postid-897 td:first-child {
+  font-weight: bold;
+}
 
 /* 
 *
@@ -1630,6 +1662,14 @@ footer {
 */
 
 @media only screen and (max-width: 768px) {
+
+  .postid-897 table {
+    font-size: 12px;
+  }
+  .postid-897 td,
+  .postid-897 th {
+    padding: 4px;
+  }
 
   .alphabetical-list .letter-group {
     flex: 0 0 100%;
