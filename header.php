@@ -21,14 +21,14 @@
     <!--=== WP_HEAD() ===-->
     <?php wp_head(); ?>
     
-    <!-- Google tag GA4 + UA (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44DF1GJDV6"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZ4J8CZ4CW"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-44DF1GJDV6');
+    gtag('config', 'G-GZ4J8CZ4CW');
     </script>
 
 
