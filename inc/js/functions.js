@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Replace terms with hyperlink
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const currentPostID = parseInt(document.body.getAttribute('data-post-id'), 10);
 
   fetch('/wp-admin/admin-ajax.php?action=get_all_posts_titles_and_links')
@@ -174,31 +174,33 @@ document.addEventListener('DOMContentLoaded', function() {
   function linkifyContent(element, titlesAndLinks, currentURL, currentPostID) {
     const originalHTML = element.innerHTML;
     let newHTML = originalHTML;
-  
+
     titlesAndLinks.forEach(({ title, link, excerpt, plurale, id }) => {
       if (link !== currentURL && id !== currentPostID) {
         const escapedTitle = escapeRegExp(title);
         const regexTitle = new RegExp(`\\b(${escapedTitle})\\b(?!([^<]+)?>)`, 'gi');
         let matchTitle = regexTitle.exec(newHTML);
-        
+
         if (matchTitle) {
           const linkHTMLTitle = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">${matchTitle[0]}</a>`;
           newHTML = newHTML.slice(0, matchTitle.index) + linkHTMLTitle + newHTML.slice(matchTitle.index + matchTitle[0].length);
+          regexTitle.lastIndex = 0;
         }
-        
+
         if (plurale && plurale !== '') {
           const escapedPlurale = escapeRegExp(plurale);
           const regexPlurale = new RegExp(`\\b(${escapedPlurale})\\b(?!([^<]+)?>)`, 'gi');
           let matchPlurale = regexPlurale.exec(newHTML);
-          
+
           if (matchPlurale) {
             const linkHTMLPlurale = `<a href="${link}" data-excerpt="${excerpt}" class="link-with-excerpt">${matchPlurale[0]}</a>`;
             newHTML = newHTML.slice(0, matchPlurale.index) + linkHTMLPlurale + newHTML.slice(matchPlurale.index + matchPlurale[0].length);
+            regexPlurale.lastIndex = 0;
           }
         }
       }
     });
-  
+
     element.innerHTML = newHTML;
     
 

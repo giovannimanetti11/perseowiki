@@ -400,6 +400,12 @@ header {
   margin-top: 25px;
 }
 
+#subscribe-btn:hover, #login-btn:hover, #signup-btn:hover {
+  border: 1px solid #fff;
+  background: #071c2e;
+  color: #fff;
+}
+
 #mailingList-error-message, #mailingList-success-message {
   width: 100%;
   margin-top: 15px;
