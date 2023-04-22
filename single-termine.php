@@ -18,7 +18,7 @@
         <div class="post-buttons">
             <button class="button print-button" type="button" onclick="printArticle()"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
             <button class="button share-button" type="button" onclick="openSharePopup()"><i class="fa fa-share-alt" aria-hidden="true"></i> Condividi</button>
-            <!-- <button class="button edit-button" type="button"><i class="fa-solid fa-pen-to-square"></i> Modifica</button> -->
+            <button class="button citation-button" type="button" onclick="openCitationPopup()"><i class="fas fa-quote-left"></i> Cita</button>
         </div>
 
         <!-- Popup -->
@@ -46,6 +46,32 @@
                         <textarea id="hidden-url" readonly><?php the_permalink(); ?></textarea>
                     </div>
                     <div id="copy-message" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Citation Popup -->
+        <div class="popup" id="citation-popup">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <i class="fas fa-quote-left" aria-hidden="true"></i>
+                    <span>Cita l'articolo</span>
+                    <button class="close-button" onclick="closeCitationPopup()"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="popup-body">
+                    <p>Nonostante sia stato fatto il possibile per seguire le regole dello stile di citazione, potrebbero esserci alcune discrepanze. In caso di domande, si prega di consultare il manuale di stile appropriato o altre fonti.</p>
+
+                    <label for="citation-style">Seleziona formato di citazione:</label>
+                    <select id="citation-style" onchange="generateCitation()">
+                        <option value="APA">APA 7th edition</option>
+                        <option value="MLA">MLA 8th edition</option>
+                    </select>
+
+                    <div class="citation">
+                        <button class="copy-button" onclick="copyCitationToClipboard()"> <i class="fas fa-copy"></i> </button>
+                        <span id="citation-text"></span>
+                    </div>
+                    <div id="citation-copy-message" style="display: none;"></div>
                 </div>
             </div>
         </div>
@@ -110,5 +136,19 @@ endif;
 ?>
 
 </main>
+
+<script>
+  var authorName = "<?php echo get_the_author(); ?>";
+  var displayAuthor = authorName === "WHAdmin" ? "Editors of WikiHerbalist" : authorName;
+
+  var articleData = {
+    author: displayAuthor,
+    title: "<?php echo addslashes(get_the_title()); ?>",
+    publishedDate: "<?php echo get_the_date('Y'); ?>",
+    lastModifiedDate: "<?php echo get_the_modified_date('Y-m-d'); ?>",
+    accessDate: "<?php echo date('Y-m-d'); ?>",
+    url: "<?php echo get_permalink(); ?>"
+  };
+</script>
 
 <?php get_footer(); ?>
