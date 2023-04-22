@@ -24,11 +24,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZ4J8CZ4CW"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-GZ4J8CZ4CW');
+        gtag('config', 'G-GZ4J8CZ4CW');
     </script>
 
 
@@ -92,6 +92,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         <div class="popup-content">
         <a href="#" id="mailingList-popup-close-btn"><i class="fa fa-times"></i></a>
             <p>Iscriviti alla Mailing List di WikiHerbalist</p>
+            <span>Resta aggiornato sulle ultime ricerche scientifiche nel campo della farmacognosia</span>
             <form id="subscribe-form" novalidate>
 
                 <input type="text" id="nome" placeholder="Nome" />

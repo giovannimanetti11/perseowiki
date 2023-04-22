@@ -153,3 +153,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+// Citation popup
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.openCitationPopup = function() {
+    document.getElementById("citation-popup").style.display = "block";
+    generateCitation();
+  }
+
+  window.closeCitationPopup = function() {
+    document.getElementById("citation-popup").style.display = "none";
+  }
+
+  window.formatDate = function(dateString, citationStyle) {
+    var date = new Date(dateString);
+    var day = date.getDate();
+    var month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+    var year = date.getFullYear();
+
+    if (citationStyle === "APA") {
+        return `${year}, ${month} ${day}`;
+    } else if (citationStyle === "MLA") {
+        return `${day} ${month} ${year}`;
+    }
+  }
+
+  window.generateCitation = function() {
+    var author = articleData.author;
+    var title = articleData.title;
+    var siteName = "WikiHerbalist";
+    var publicationDate = articleData.publishedDate;
+    var updatedDate = articleData.lastModifiedDate;
+    var accessDate = articleData.accessDate;
+    var url = articleData.url;
+    var citationStyle = document.getElementById("citation-style").value;
+  
+    var formattedPublicationDate = formatDate(publicationDate, citationStyle);
+    var formattedUpdatedDate = formatDate(updatedDate, citationStyle);
+    var formattedAccessDate = formatDate(accessDate, citationStyle);
+  
+    var citation = "";
+  
+    if (citationStyle === "APA") {
+      citation = author + ". (" + publicationDate + "). <em>" + title + "</em>. " + siteName + ". " + url;
+    } else if (citationStyle === "MLA") {
+      citation = author + ". \"" + title + ".\" <i>" + siteName + "</i>. " + formattedPublicationDate + ". Web. Accessed " + formattedAccessDate + ". " + url + ".";
+    }    
+  
+    document.getElementById("citation-text").innerHTML = citation;
+  }
+  
+
+
+  window.copyCitationToClipboard = function() {
+      var citation = document.getElementById("citation-text").textContent;
+      var textarea = document.createElement("textarea");
+      textarea.textContent = citation;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      var copyMessage = document.getElementById("citation-copy-message");
+      copyMessage.style.display = "block";
+      copyMessage.textContent = "Citazione copiata negli appunti!";
+      setTimeout(function () {
+          copyMessage.style.display = "none";
+      }, 2000);
+  }
+
+  document.querySelector('.citation-button').addEventListener('click', openCitationPopup);
+
+  // Chiude il popup quando si fa clic al di fuori del contenuto del popup
+  document.addEventListener('click', function(event) {
+    var popup = document.getElementById('citation-popup');
+    var popupContent = document.querySelector('.popup-content');
+
+    if (event.target === popup) {
+      closeCitationPopup();
+    }
+  });
+
+
+});
+

@@ -334,6 +334,11 @@ header {
 
 #mailingList-popup p {
   font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#mailingList-popup #subscribe-form {
+  margin-top: 20px;
 }
 
 #subscribe-form {
@@ -1245,9 +1250,17 @@ header {
   margin: 10px;
 }
 
-#share-popup span {
+#share-popup span, #citation-popup span {
   font-size: 16px;
   font-weight: bold;
+}
+
+#citation-text {
+  font-weight: normal !important;
+}
+
+.citation {
+  margin-top: 25px;
 }
 
 .social-icons {
