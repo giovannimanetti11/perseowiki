@@ -172,13 +172,17 @@ document.addEventListener('DOMContentLoaded', () => {
     var day = date.getDate();
     var month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
     var year = date.getFullYear();
-
+    var monthNumber = date.getMonth() + 1;
+  
     if (citationStyle === "APA") {
-        return `${year}, ${month} ${day}`;
+      return `${year}, ${month} ${day}`;
     } else if (citationStyle === "MLA") {
-        return `${day} ${month} ${year}`;
+      return `${day} ${month} ${year}`;
+    } else if (citationStyle === "Wikipedia") {
+      return `${year}-${monthNumber.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     }
   }
+  
 
   window.generateCitation = function() {
     var author = articleData.author;
@@ -200,7 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
       citation = author + ". (" + publicationDate + "). <em>" + title + "</em>. " + siteName + ". " + url;
     } else if (citationStyle === "MLA") {
       citation = author + ". \"" + title + ".\" <i>" + siteName + "</i>. " + formattedPublicationDate + ". Web. Accessed " + formattedAccessDate + ". " + url + ".";
-    }    
+    } else if (citationStyle === "Wikipedia") {
+      citation = "&lt;ref&gt;{{Cita web |url=" + url + " |titolo=" + title + " |accesso=" + formattedAccessDate + "}}&lt;/ref&gt;";
+    }
   
     document.getElementById("citation-text").innerHTML = citation;
   }
