@@ -48,8 +48,6 @@ function openMediaUploader(event) {
             button.addEventListener('click', removeImage);
         });
     
-        console.log('Attachments selected:', attachments); // Debug
-        console.log('Attachment IDs:', allAttachmentIds); // Debug
     });
 
     mediaUploader.open();
@@ -74,14 +72,6 @@ function removeImage(event) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const uploadButton = document.getElementById("upload_additional_images_button");
-
-    if (uploadButton) {
-        console.log('Upload button found'); // Debug
-        uploadButton.addEventListener("click", openMediaUploader);
-    } else {
-        console.log('Upload button not found'); // Debug
-    }
-
     const removeButtons = document.querySelectorAll(".remove-image-button");
     removeButtons.forEach(button => button.addEventListener('click', removeImage));
 });

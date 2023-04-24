@@ -1016,6 +1016,10 @@ header {
   border-radius: 5px;
 }
 
+.additional-image-thumbnail.selected {
+  border: 2px solid #3E92A2;
+}
+
 .images-container {
   display: flex;
   flex-direction: column;
@@ -1630,6 +1634,74 @@ header {
   margin-top: 50px;
 }
 
+.tag .card-deck {
+  width: 100%;
+}
+
+.tag .card {
+  width: 100%;
+  -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 200px;
+}
+
+.tag .row {
+  margin-bottom: 15px;
+}
+
+.tag .cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  justify-items: start;
+  align-items: start;
+  max-width: 50%;
+  margin: 0 auto;
+  margin-bottom: 0px;
+  margin-bottom: 25px;
+}
+
+.tag .cards-container .card-title a, .tag .cards-container .card-title h3 {
+  text-decoration: none;
+  color: #071c2e;
+}
+
+.tag .card-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.tag .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tag .card:hover {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.02);
+}
+
+.tag .card-title, .tag .card-scientific-name {
+  min-height: 3rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 /* 
 *
@@ -1670,7 +1742,7 @@ header {
 
 .category .cards-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
   justify-items: start;
   align-items: start;
@@ -1779,9 +1851,7 @@ footer {
 
 @media only screen and (max-width: 360px) {
 
-  .cards-container {
-    grid-template-columns: repeat(1, 1fr) !important;
-  }
+
 
   .blog-card .btn-card {
     display: none;
@@ -1794,12 +1864,16 @@ footer {
 
 @media only screen and (max-width: 768px) {
 
-  .cards-container {
-    grid-template-columns: repeat(1, 1fr) !important;
+  .additional-images-thumbnails {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 5px;
+
   }
 
-  .category-header {
+  .category-header, .tag .cards-container {
     width: 95%;
+    max-width: 95%;
     margin: 0 auto;
   }
 
@@ -2017,7 +2091,7 @@ footer {
     text-align: left;
   }
 
-  .post-featured-image img, .post-featured-image {
+  .post-featured-image img, .post-featured-image, .images-container {
     margin: 0 auto;
     float: none;
   }
@@ -2122,10 +2196,6 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
-  .cards-container {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-
   .blog-card .entry-header, .blog-card .entry-summary {
     padding: 5px;
   }
@@ -2173,17 +2243,15 @@ footer {
     width: 80%;
   }
 
-  .tag-header .container {
+  .tag-header .container, .tag .cards-container {
     width: 80%;
+    max-width: 80%;
   }
 
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1441px) {
 
-  .cards-container {
-    grid-template-columns: repeat(5, 1fr) !important;
-  }
 
   .card-deck .card {
     width: calc(100% / 2 - 10px);

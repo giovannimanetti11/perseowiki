@@ -36,41 +36,38 @@ get_header(); ?>
         $posts = get_posts($args);
 
         $output = '';
-        $count = 0;
-
+        $output .= '<div class="cards-container">';
         foreach ($posts as $post) : setup_postdata($post);
+            // Get post data
+            $image = get_the_post_thumbnail_url( $post->ID, 'large' );
+            $alt = get_post_meta( get_post_thumbnail_id( $post->ID ), '_wp_attachment_image_alt', true );
             $title = get_the_title();
-            $image = get_the_post_thumbnail_url($post->ID, 'large');
-            $alt = get_post_meta(get_post_thumbnail_id($post->ID), '_wp_attachment_image_alt', true);
-            $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true); 
+            $nome_scientifico = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true );
             $link = get_permalink();
-
-            // Create a new card deck for every 3 posts
-            if ($count % 3 == 0) {
-                $output .= '<div class="card-deck">';
-            }
+            $tossica = get_post_meta(get_the_ID(), '_tossica', true);
 
             // Add a new card
+            $output .= '<div class="card-wrapper">';
             $output .= '<div class="card">';
+            $output .= '<a href="' . $link . '" class="card-link"></a>'; 
             $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
             $output .= '<div class="card-body">';
-            $output .= '<h4 class="card-title">' . $title . '</h4>';
-            $output .= '<p class="card-scientific-name">' . $nome_scientifico . '</p>'; 
-            $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
-            $output .= '</div></div>';
-
-            // Close the card deck for every 3 posts
-            if ($count % 3 == 2 || $count == count($posts) - 1) {
-                $output .= '</div>';
+            $output .= '<h3 class="card-title">' . $title . '</h3>';
+            $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>';
+            // $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
+            if (!empty($tossica)) {
+                $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
             }
+            $output .= '</div></div></div>';
 
-            $count++;
         endforeach;
+        $output .= '</div>';
 
         wp_reset_postdata(); // Ripristina i dati del post originale
 
         echo $output;
-        ?>
+    ?> 
+
 
       </div><!-- .tag-posts -->
 

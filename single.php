@@ -25,15 +25,16 @@
                 $additional_images = !empty($additional_images_raw) ? json_decode($additional_images_raw, true) : array();
 
                 foreach ($additional_images as $attachment_id) {
-                    if ($attachment_id > 0) {
-                        $thumbnail_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
-                        $full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
-                        echo '<img src="' . esc_url($thumbnail_url) . '" data-full-image-url="' . esc_url($full_image_url) . '" class="additional-image-thumbnail" />';
-                    }
+                if ($attachment_id > 0) {
+                    $thumbnail_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+                    $full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
+                    echo '<img src="' . esc_url($thumbnail_url) . '" data-full-image-url="' . esc_url($full_image_url) . '" class="additional-image-thumbnail" />';
+                }
                 }
                 ?>
             </div>
         </div>
+
 
 
         <div class="article-title">

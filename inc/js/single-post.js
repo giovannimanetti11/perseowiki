@@ -1,35 +1,50 @@
 // Manage hover and clics on additional images
 
 document.addEventListener("DOMContentLoaded", function () {
-  const featuredImage = document.getElementById("featured-image");
-  const additionalImageThumbnails = document.querySelectorAll(".additional-image-thumbnail");
+  setTimeout(function () {
+    const featuredImage = document.getElementById("featured-image");
+    const additionalImageThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
-  console.log("featured image:", featuredImage);
-  console.log("additional image:", additionalImageThumbnails);
+    let originalFeaturedImageSrc = featuredImage.src;
 
-  let originalFeaturedImageSrc = featuredImage.src;
+    // Add featured image to the list of additional image thumbnails
+    const featuredImageThumbnail = document.createElement("img");
+    featuredImageThumbnail.src = featuredImage.src;
+    featuredImageThumbnail.dataset.fullImageUrl = featuredImage.dataset.fullImageUrl;
+    featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
+    document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
 
-  additionalImageThumbnails.forEach((thumbnail) => {
-    console.log("thumbnails:", thumbnail);
-    thumbnail.addEventListener("mouseenter", function () {
-      console.log("mouseenter");
-      const fullImageUrl = thumbnail.dataset.fullImageUrl;
-      featuredImage.src = fullImageUrl;
+    const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
+
+    updatedThumbnails.forEach((thumbnail) => {
+      thumbnail.addEventListener("mouseenter", function () {
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+        featuredImage.setAttribute('srcset', fullImageUrl + '');
+      });
+
+      thumbnail.addEventListener("mouseleave", function () {
+        featuredImage.src = originalFeaturedImageSrc;
+        featuredImage.setAttribute('srcset', originalFeaturedImageSrc + '');
+      });
+
+      thumbnail.addEventListener("click", function () {
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+        originalFeaturedImageSrc = fullImageUrl;
+
+        // Remove "selected" class from other thumbnails
+        document.querySelectorAll(".additional-image-thumbnail.selected").forEach((selectedThumbnail) => {
+          selectedThumbnail.classList.remove("selected");
+        });
+
+        // Add "selected" class to clicked thumbnail
+        thumbnail.classList.add("selected");
+      });
     });
-    
-    thumbnail.addEventListener("mouseleave", function () {
-      console.log("mouseleave");
-      featuredImage.src = originalFeaturedImageSrc;
-    });
-    
-    thumbnail.addEventListener("click", function () {
-      console.log("click");
-      const fullImageUrl = thumbnail.dataset.fullImageUrl;
-      featuredImage.src = fullImageUrl;
-      originalFeaturedImageSrc = fullImageUrl;
-    });
-  });
+  }, 800);
 });
+
 
 // Create custom lightbox
 
