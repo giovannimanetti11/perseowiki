@@ -870,6 +870,7 @@ header {
 
 .card-deck .card:hover {
   transform: scale(1.02);
+  transition: transform 0.3s ease-in-out;
 }
 
 .card-title, .card-scientific-name {
@@ -1012,6 +1013,7 @@ header {
 .additional-images-thumbnails img {
   width: 50px !important;
   margin: 0 3px !important;
+  border-radius: 5px;
 }
 
 .images-container {
@@ -1655,11 +1657,62 @@ header {
 
 .category .card {
   width: 100%;
+  -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .category .row {
   margin-bottom: 15px;
 }
+
+.category .cards-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px;
+  justify-items: start;
+  align-items: start;
+}
+
+.category .card-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.category .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.category .card:hover {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.02);
+}
+
+.category .card-title, .category .card-scientific-name {
+  min-height: 3rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
 
 
 /* 
@@ -1725,6 +1778,11 @@ footer {
 */
 
 @media only screen and (max-width: 360px) {
+
+  .cards-container {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
   .blog-card .btn-card {
     display: none;
   }
@@ -1735,6 +1793,10 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+
+  .cards-container {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
 
   .category-header {
     width: 95%;
@@ -2060,6 +2122,10 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
   .blog-card .entry-header, .blog-card .entry-summary {
     padding: 5px;
   }
@@ -2114,6 +2180,10 @@ footer {
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1441px) {
+
+  .cards-container {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
 
   .card-deck .card {
     width: calc(100% / 2 - 10px);

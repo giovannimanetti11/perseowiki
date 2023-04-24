@@ -41,8 +41,7 @@ get_header();
     $query = new WP_Query( $args );
 
     if ( $query->have_posts() ) :
-        $count = 0; // Initialize counter
-        $output = '';
+        $output = '<div class="cards-container">'; 
         
         while ( $query->have_posts() ) :
             $query->the_post();
@@ -54,37 +53,25 @@ get_header();
             $nome_scientifico = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true );
             $link = get_permalink();
             $tossica = get_post_meta(get_the_ID(), '_tossica', true);
-            
-            // Create a new row for every 4 posts
-            if ( $count % 4 == 0 ) {
-                $output .= '<div class="row">';
-            }
 
             // Add a new card
-            $output .= '<div class="col-sm-6 col-md-4 col-lg-3">';
+            $output .= '<div class="card-wrapper">';
             $output .= '<div class="card">';
+            $output .= '<a href="' . $link . '" class="card-link"></a>'; 
             $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
             $output .= '<div class="card-body">';
             $output .= '<h3 class="card-title">' . $title . '</h3>';
-            $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>'; 
-            $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
+            $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>';
+            // $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
             if (!empty($tossica)) {
                 $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
-              }
+            }
             $output .= '</div></div></div>';
 
-            // Close the row after every 4 posts
-            if ( $count % 4 == 3 ) {
-                $output .= '</div>';
-            }
 
-            $count++;
         endwhile;
 
-        // Close the row if it was left open
-        if ( $count % 4 != 0 ) {
-            $output .= '</div>';
-        }
+        $output .= '</div>'; // Chiudi il contenitore flex
 
         // Output the cards
         echo $output;

@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const featuredImage = document.getElementById("featured-image");
-  const additionalImageThumbnails = document.querySelectorAll("img.additional-image-thumbnail");
+  const additionalImageThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
   console.log("featured image:", featuredImage);
   console.log("additional image:", additionalImageThumbnails);
@@ -10,39 +10,34 @@ document.addEventListener("DOMContentLoaded", function () {
   let originalFeaturedImageSrc = featuredImage.src;
 
   additionalImageThumbnails.forEach((thumbnail) => {
-
-   console.log(thumbnail);
-    thumbnail.onclick = function(){
-	console.log('mela click');
-    }
-    thumbnail.addEventListener("mouseover", function () {
-        console.log("mouseover");
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-    }, true);
+    console.log("thumbnails:", thumbnail);
+    thumbnail.addEventListener("mouseenter", function () {
+      console.log("mouseenter");
+      const fullImageUrl = thumbnail.dataset.fullImageUrl;
+      featuredImage.src = fullImageUrl;
+    });
     
-    thumbnail.addEventListener("mouseout", function () {
-        console.log("mouseout");
-        featuredImage.src = originalFeaturedImageSrc;
-    }, true);
+    thumbnail.addEventListener("mouseleave", function () {
+      console.log("mouseleave");
+      featuredImage.src = originalFeaturedImageSrc;
+    });
     
     thumbnail.addEventListener("click", function () {
-        console.log("click");
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-        originalFeaturedImageSrc = fullImageUrl;
-    }, true);
-  
+      console.log("click");
+      const fullImageUrl = thumbnail.dataset.fullImageUrl;
+      featuredImage.src = fullImageUrl;
+      originalFeaturedImageSrc = fullImageUrl;
+    });
   });
 });
 
 // Create custom lightbox
 
-document.addEventListener('DOMContentLoaded', function() { return;
+document.addEventListener('DOMContentLoaded', function() {
   function initLightbox() {
     const parent = document.querySelector('#post-content');
   
-    parent.addEventListener('click', function(e) { console.log('mela3');
+    parent.addEventListener('click', function(e) {
       const target = e.target;
       if (target.closest('.additional-images-thumbnails')) {
         // Prevent lightbox for images inside additional-images-thumbnails
@@ -291,38 +286,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const featuredImage = document.getElementById("featured-image");
-  const additionalImageThumbnails = document.querySelectorAll("img.additional-image-thumbnail");
-
-  console.log("featured image:", featuredImage);
-  console.log("additional image:", additionalImageThumbnails);
-
-  let originalFeaturedImageSrc = featuredImage.src;
-
-  additionalImageThumbnails.forEach((thumbnail) => {
-
-   console.log(thumbnail);
-    thumbnail.onclick = function(){
-        console.log('mela click');
-    }
-    thumbnail.addEventListener("mouseover", function () {
-        console.log("mouseover");
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-    }, true);
-
-    thumbnail.addEventListener("mouseout", function () {
-        console.log("mouseout");
-        featuredImage.src = originalFeaturedImageSrc;
-    }, true);
-
-    thumbnail.addEventListener("click", function () {
-        console.log("click");
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-        originalFeaturedImageSrc = fullImageUrl;
-    }, true);
-
-  });
-});
