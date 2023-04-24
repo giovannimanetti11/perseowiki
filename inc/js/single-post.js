@@ -8,11 +8,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let originalFeaturedImageSrc = featuredImage.src;
 
     // Add featured image to the list of additional image thumbnails
-    const featuredImageThumbnail = document.createElement("img");
-    featuredImageThumbnail.src = featuredImage.src;
-    featuredImageThumbnail.dataset.fullImageUrl = featuredImage.dataset.fullImageUrl;
-    featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
-    document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
+    const additionalImages = document.querySelectorAll(".additional-images-thumbnails img[src]:not(#featured-image)");
+    if (additionalImages.length > 0) {
+      const featuredImageThumbnail = document.createElement("img");
+      featuredImageThumbnail.src = featuredImage.src;
+      featuredImageThumbnail.dataset.fullImageUrl = featuredImage.dataset.fullImageUrl;
+      featuredImageThumbnail.alt = featuredImage.alt;
+      featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
+      document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
+    }
+
 
     const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
@@ -42,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         thumbnail.classList.add("selected");
       });
     });
-  }, 800);
+  }, 250);
 });
 
 

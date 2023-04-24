@@ -13,8 +13,9 @@
             <div class="post-featured-image">
                 <?php
                 if (has_post_thumbnail()) {
-                    $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
-                    the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url));
+                $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
+                $alt_text = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
+                the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url, 'alt' => $alt_text));
                 }
                 ?>
             </div>
@@ -28,12 +29,14 @@
                 if ($attachment_id > 0) {
                     $thumbnail_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
                     $full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
-                    echo '<img src="' . esc_url($thumbnail_url) . '" data-full-image-url="' . esc_url($full_image_url) . '" class="additional-image-thumbnail" />';
+                    $alt_text = get_post_meta($attachment_id, '_wp_attachment_image_alt', true); 
+                    echo '<img src="' . esc_url($thumbnail_url) . '" data-full-image-url="' . esc_url($full_image_url) . '" class="additional-image-thumbnail" alt="' . esc_attr($alt_text) . '" />';
                 }
                 }
                 ?>
             </div>
         </div>
+
 
 
 
