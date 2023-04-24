@@ -91,13 +91,30 @@
     }
   }
 
+  @page {
+    margin-top: 0;
+  }
+
+  /* Nasconde l'URL della pagina */
+  ::after {
+    content: none;
+  }
+
+  /* Nasconde la data in basso a destra */
+  .date {
+    display: none;
+  }
+
+  /* Nasconde la paginazione in basso a sinistra */
+  .pageNumber:after {
+    content: none;
+  }
 
   /* 
   *
   *  BODY
   *
   */
-
 
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap');
 
@@ -145,6 +162,7 @@
     align-items: center;
     padding: 0 10%;
     background: #071c2e;
+    border: 0;
   }
 
   .menu, .call-to-action {
@@ -194,6 +212,8 @@
   .post-content h1 {
     margin: 0;
     color: #071c2e;
+    max-width: 50%;
+    font-size: 28px;
   }
 
   .post-content span {
@@ -235,7 +255,13 @@
     position: absolute;
     float: right;
     top: 0;
-    right: 30px;
+    right: 0;
+  }
+
+  .wp-image-description {
+    font-size: 13px;
+    text-align: center;
+    font-style: italic;
   }
 
   #section-1 {
@@ -318,7 +344,6 @@
     font-weight: bold;
   }
 
-
   .index-item {
     width: 48%;
     margin-bottom: 10px;
@@ -346,7 +371,6 @@
       margin: 0;
       display: none;
   }
-
 
   /* 
   *
