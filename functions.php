@@ -182,6 +182,23 @@ add_action('save_post', 'save_additional_images_meta');
 
 /*
  * 
+ * Remove category pagination.
+ *
+ */
+
+
+function remove_category_pagination( $query ) {
+    if ( $query->is_category() && $query->is_main_query() ) {
+        $query->set( 'nopaging', 1 );
+    }
+}
+add_action( 'pre_get_posts', 'remove_category_pagination' );
+
+
+
+
+/*
+ * 
  * Add custom menu.
  *
  */
@@ -781,7 +798,7 @@ function save_tossica_metabox_data($post_id) {
  */
 
 
-     function get_posts_by_letter() {
+    function get_posts_by_letter() {
       $letter = $_GET['letter'];
       add_filter( 'posts_where', 'search_by_letter', 10, 2 );
       $args = array(
@@ -796,41 +813,43 @@ function save_tossica_metabox_data($post_id) {
       $count = 0; // counter for posts
       $counter = 0; // counter for every 3 posts
       while ($posts->have_posts()) {
-          $posts->the_post();
-          $title = get_the_title();
-          $link = get_permalink();
-          $image = get_the_post_thumbnail_url(null, 'medium');
-          $alt = get_the_title();
-          $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
-          $tossica = get_post_meta(get_the_ID(), '_tossica', true);
-  
-          // Create a new card deck for every 3 posts
-          if ($counter % 3 == 0) {
-              $output .= '<div class="card-deck">';
-          }
-  
-          $count++;
-          
-          // Add a new card
-          $output .= '<div class="card">';
-          $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
-          $output .= '<div class="card-body">';
-          $output .= '<h3 class="card-title">' . $title . '</h3>';
-          $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>'; 
-          $output .= '<a href="' . $link . '" class="btn btn-card">Apri Scheda</a>';
-          if (!empty($tossica)) {
-            $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
-
-          }
-          $output .= '</div></div>';
-  
-          // Close the card deck for every 3 posts
-          if ($counter % 3 == 2 || $counter == $posts->post_count - 1) {
-              $output .= '</div>';
-          }
-  
-          $counter++;
-      }
+        $posts->the_post();
+        $title = get_the_title();
+        $link = get_permalink();
+        $image = get_the_post_thumbnail_url(null, 'medium');
+        $alt = get_the_title();
+        $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
+        $tossica = get_post_meta(get_the_ID(), '_tossica', true);
+    
+        // Create a new card deck for every 3 posts
+        if ($counter % 3 == 0) {
+            $output .= '<div class="card-deck">';
+        }
+    
+        $count++;
+    
+        // Add a new card
+        $output .= '<a href="' . $link . '" class="card-link">';
+        $output .= '<div class="card">';
+        $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
+        $output .= '<div class="card-body">';
+        $output .= '<h3 class="card-title">' . $title . '</h3>';
+        $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>'; 
+        if (!empty($tossica)) {
+          $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
+    
+        }
+        $output .= '</div></div>';
+        $output .= '</a>';
+    
+        // Close the card deck for every 3 posts
+        if ($counter % 3 == 2 || $counter == $posts->post_count - 1) {
+            $output .= '</div>';
+        }
+    
+        $counter++;
+    }
+    
   
   
       wp_reset_postdata();
@@ -839,7 +858,7 @@ function save_tossica_metabox_data($post_id) {
         'count' => $count,
       ));
       wp_die();
-  }
+    }
     
   function search_by_letter($where, &$query) {
       global $wpdb;

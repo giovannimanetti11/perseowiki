@@ -9,21 +9,31 @@
 
     <article class="post-content" id="post-content">
 
-        <div class="post-featured-image">
-            <?php if ( has_post_thumbnail() ) {
-                $full_image_url = wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' );
-                the_post_thumbnail( 'medium', array( 'id' => 'featured-image', 'data-full-image-url' => $full_image_url ) );
-                $thumbnail_id = get_post_thumbnail_id();
-                $thumbnail = get_post( $thumbnail_id );
-                $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
-                if ( ! empty( $description ) ) {
-                    echo '<div class="wp-image-description">' . $description . '</div>';
+        <div class="images-container">
+            <div class="post-featured-image">
+                <?php
+                if (has_post_thumbnail()) {
+                    $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
+                    the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url));
                 }
-            } ?>
+                ?>
+            </div>
+
+            <div class="additional-images-thumbnails">
+                <?php
+                $additional_images_raw = get_post_meta(get_the_ID(), 'additional_images', true);
+                $additional_images = !empty($additional_images_raw) ? json_decode($additional_images_raw, true) : array();
+
+                foreach ($additional_images as $attachment_id) {
+                    if ($attachment_id > 0) {
+                        $thumbnail_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+                        $full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
+                        echo '<img src="' . esc_url($thumbnail_url) . '" data-full-image-url="' . esc_url($full_image_url) . '" class="additional-image-thumbnail" />';
+                    }
+                }
+                ?>
+            </div>
         </div>
-
-
-
 
 
         <div class="article-title">

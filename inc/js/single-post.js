@@ -1,36 +1,70 @@
-// Manage clics on additional images
+// Manage hover and clics on additional images
 
 document.addEventListener("DOMContentLoaded", function () {
-  var featuredImage = document.getElementById("featured-image");
-  var thumbnailImages = document.getElementsByClassName("thumbnail-image");
+  const featuredImage = document.getElementById("featured-image");
+  const additionalImageThumbnails = document.querySelectorAll("img.additional-image-thumbnail");
 
-  for (var i = 0; i < thumbnailImages.length; i++) {
-      thumbnailImages[i].addEventListener("click", function (event) {
-          event.preventDefault();
-          featuredImage.src = this.getAttribute("src");
-          featuredImage.dataset.fullImageUrl = this.dataset.fullImageUrl;
-      });
-  }
+  console.log("featured image:", featuredImage);
+  console.log("additional image:", additionalImageThumbnails);
+
+  let originalFeaturedImageSrc = featuredImage.src;
+
+  additionalImageThumbnails.forEach((thumbnail) => {
+
+   console.log(thumbnail);
+    thumbnail.onclick = function(){
+	console.log('mela click');
+    }
+    thumbnail.addEventListener("mouseover", function () {
+        console.log("mouseover");
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+    }, true);
+    
+    thumbnail.addEventListener("mouseout", function () {
+        console.log("mouseout");
+        featuredImage.src = originalFeaturedImageSrc;
+    }, true);
+    
+    thumbnail.addEventListener("click", function () {
+        console.log("click");
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+        originalFeaturedImageSrc = fullImageUrl;
+    }, true);
+  
+  });
 });
 
 // Create custom lightbox
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { return;
   function initLightbox() {
     const parent = document.querySelector('#post-content');
   
-    parent.addEventListener('click', function(e) {
+    parent.addEventListener('click', function(e) { console.log('mela3');
       const target = e.target;
+      if (target.closest('.additional-images-thumbnails')) {
+        // Prevent lightbox for images inside additional-images-thumbnails
+        e.stopPropagation();
+        return;
+      }
       if (target.tagName === 'IMG' && window.innerWidth > 768) {
         openLightbox(target);
       }
     });
   }
   
+  
   function openLightbox(img) {
     const srcset = img.getAttribute('srcset');
-    const sources = srcset.split(', ');
-    const largeImageSrc = sources[sources.length - 1].split(' ')[0];
+    let largeImageSrc;
+    if (srcset) {
+        const sources = srcset.split(', ');
+        largeImageSrc = sources[sources.length - 1].split(' ')[0];
+    } else {
+        largeImageSrc = img.getAttribute('src');
+    }
     const lightbox = document.createElement('div');
     lightbox.classList.add('custom-lightbox', 'active');
     lightbox.innerHTML = `<div class="image-wrapper"><img src="${largeImageSrc}" alt="${img.alt}" /></div>`;
@@ -48,13 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });    
     
     document.body.appendChild(lightbox);
-  }
+}
 
   initLightbox();
 });
-
-
-
 
 // Create index and romboids
 
@@ -260,3 +291,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const featuredImage = document.getElementById("featured-image");
+  const additionalImageThumbnails = document.querySelectorAll("img.additional-image-thumbnail");
+
+  console.log("featured image:", featuredImage);
+  console.log("additional image:", additionalImageThumbnails);
+
+  let originalFeaturedImageSrc = featuredImage.src;
+
+  additionalImageThumbnails.forEach((thumbnail) => {
+
+   console.log(thumbnail);
+    thumbnail.onclick = function(){
+        console.log('mela click');
+    }
+    thumbnail.addEventListener("mouseover", function () {
+        console.log("mouseover");
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+    }, true);
+
+    thumbnail.addEventListener("mouseout", function () {
+        console.log("mouseout");
+        featuredImage.src = originalFeaturedImageSrc;
+    }, true);
+
+    thumbnail.addEventListener("click", function () {
+        console.log("click");
+        const fullImageUrl = thumbnail.dataset.fullImageUrl;
+        featuredImage.src = fullImageUrl;
+        originalFeaturedImageSrc = fullImageUrl;
+    }, true);
+
+  });
+});

@@ -91,11 +91,6 @@ select {
   font: inherit;
 }
 
-/* Blur images when they have no alt attribute */
-img:not([alt]) {
-  filter: blur(10px);
-}
-
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -840,6 +835,7 @@ header {
   width: 50%;
   margin: 0 auto;
   display: flex;
+  justify-content: center;
 }
 
 .card-body {
@@ -852,13 +848,45 @@ header {
   right: 10px;
 }
 
+.card-link {
+  width: calc(100% / 3 - 10px);
+}
+
+.card-deck .card-link {
+  margin: 10px;
+}
+
 .card-deck .card {
   display: inline-block;
-  width: calc(100% / 3 - 10px);
+  width: 100%;
   margin-right: 20px;
   margin-bottom: 20px;
   vertical-align: top;
   border: 1px solid #d3d3d3;
+  -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  height: 100%;
+}
+
+.card-deck .card:hover {
+  transform: scale(1.02);
+}
+
+.card-title, .card-scientific-name {
+  color: #071c2e !important;
+}
+
+.card-title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 22px;
+}
+
+.card-scientific-name {
+  margin-bottom: 20px;
+  font-style: italic;
+  text-align: center;
+  font-size: 17px;
 }
 
 .card .btn-card {
@@ -882,33 +910,6 @@ header {
 .card-img-top {
   height: 200px;
   object-fit: cover;
-}
-
-.card-title {
-  font-weight: bold;
-  text-align: center;
-  font-size: 22px;
-}
-
-.card-title a {
-  color: #000;
-  text-decoration: none;
-}
-
-.card-scientific-name {
-  margin-bottom: 20px;
-  font-style: italic;
-  text-align: center;
-  font-size: 17px;
-}
-
-.card-scientific-name a {
-  color: black;
-  text-decoration: none;
-}
-
-.card-scientific-name a:hover {
-  text-decoration: none;
 }
 
 /* 
@@ -968,15 +969,18 @@ header {
 }
 
 .post-content-text {
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 .post-content-module {
   float: right;
   border: 1px solid #e5e5e5;
-  padding: 25px;
+  padding: 10px;
   margin-left: 10px;
   text-align: center;
+  border-radius: 10px;
+  position: relative;
+  z-index: 10;
 }
 
 .post-content-module span {
@@ -994,9 +998,26 @@ header {
   width: 300px;
   position: relative;
   float: right;
-  margin-left: 30px;
-  margin-top: 30px;
   z-index: 90;
+}
+
+.additional-images-thumbnails {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.additional-images-thumbnails img {
+  width: 50px !important;
+  margin: 0 3px !important;
+}
+
+.images-container {
+  display: flex;
+  flex-direction: column;
+  float: right;
 }
 
 .wp-caption-text {
@@ -1714,6 +1735,31 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+
+  .category-header {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .category .card {
+    width: 95%;
+  }
+
+  .card-link {
+    width: 100%;
+  }
+
+  .card-deck .card-link {
+    margin: 0;
+  }
+
+  .post-content-text {
+    margin-top: 80px;
+  }
+
+  .images-container {
+    margin-bottom: 25px;
+  }
 
   .blog-card {
     height: auto;
