@@ -138,6 +138,7 @@ body {
 .container {
   flex: 1 0 auto;
   margin-bottom: 50px;
+  padding: 0 !important;
 }
 
 .tooltip-term-excerpt {
@@ -762,7 +763,7 @@ header {
 }
 
 .property-herbs-row.odd-row {
-  background-color: #e9ecef;
+  background-color: #d6d7d9;
 }
 
 .property-name {
@@ -952,7 +953,7 @@ header {
   width: 50%;
   margin: 0 auto;
   background: #fff;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #bdbdbd;
   margin-top: 25px;
   padding: 25px;
 }
@@ -1319,8 +1320,8 @@ header {
 }
 
 .copy-message {
-  margin-top: 10px;
-  color: #071c2e;
+  color: #3E92A2;
+  margin-top: 15px;
 }
 
 .post-content-text .meta-box-nome-scientifico {
@@ -1400,7 +1401,7 @@ header {
 .alphabetical-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 25px;
 }
 
@@ -1492,7 +1493,7 @@ header {
 
 .blog-card {
   position: relative;
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 
 .blog-card article {
@@ -1702,6 +1703,16 @@ footer {
 *
 */
 
+@media only screen and (max-width: 360px) {
+  .blog-card .btn-card {
+    display: none;
+  }
+
+  .blog-card, .blog-card article {
+    height: 100% !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
 
   .blog-card {
@@ -1709,6 +1720,28 @@ footer {
   }
   .blog-card .post-thumbnail {
     height: 200px;
+  }
+
+  .blog-card article {
+    width: 90%;
+    margin: 0 auto;
+    height: 500px;
+  }
+
+  .blog-card .entry-header, .blog-card .entry-summary {
+    padding: 0;
+  }
+
+  .blog-card .entry-title {
+    font-size: 18px;
+  }
+
+  .blog-card .entry-header  {
+    margin-top: 15px;
+  }
+
+  .blog-card .btn-card {
+    left: 40px;
   }
 
   .postid-897 table {
@@ -1981,6 +2014,14 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
+  .blog-card .entry-header, .blog-card .entry-summary {
+    padding: 5px;
+  }
+
+  .blog-card .btn-card {
+    left: 20px;
+    bottom: 15px;
+  }
 
   .post-content-text {
     margin-top: 55px;

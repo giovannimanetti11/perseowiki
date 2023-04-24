@@ -19,7 +19,7 @@ get_header();
             // Imposta la dimensione dell'immagine in base al contatore di post
             $image_size = ( $post_counter <= 3 ) ? 'large' : 'medium';
             // Imposta le classi delle colonne per il layout responsivo
-            $column_classes = 'col-lg-4 col-md-6 col-sm-12';
+            $column_classes = 'col-xl-4 col-lg-6 col-md-6 col-sm-12';
 
             // Aggiungi una classe personalizzata per i primi 3 post
             if ( $post_counter <= 3 ) {

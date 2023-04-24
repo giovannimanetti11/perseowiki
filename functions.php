@@ -103,6 +103,83 @@ function perseowiki_support() {
 
 add_action( 'after_setup_theme', 'perseowiki_support' );
 
+
+/*
+ * 
+ * Add custom meta box for additional images.
+ *
+ */
+
+function custom_post_type_metabox() {
+    add_meta_box(
+        'additional_images',
+        'Immagini Aggiuntive',
+        'additional_images_callback',
+        'post',
+        'side'
+    );
+}
+add_action('add_meta_boxes', 'custom_post_type_metabox');
+
+function additional_images_callback($post) {
+    $nonce = wp_create_nonce(basename(__FILE__));
+
+    error_log("Nonce created in callback: " . $nonce);
+    echo '<input type="hidden" name="additional_images_nonce" id="additional_images_nonce" value="' . esc_attr($nonce) . '" />';
+
+    $additional_images_raw = get_post_meta($post->ID, 'additional_images', true);
+    $additional_images = !empty($additional_images_raw) ? json_decode($additional_images_raw, true) : array();
+
+    echo '<input type="hidden" name="additional_images_data" id="additional_images_data" value="' . esc_attr($additional_images_raw) . '" />';
+    echo '<a href="#" id="upload_additional_images_button" class="button">Carica Immagini Aggiuntive</a>';
+
+
+    echo '<div id="additional_images_container">';
+    foreach ($additional_images as $attachment_id) {
+        // Verifica se l'ID dell'allegato è valido
+        if ($attachment_id > 0) {
+            $attachment_url = wp_get_attachment_url($attachment_id);
+            echo '<div style="display: inline-block; position: relative;">';
+            echo '<img src="' . esc_url($attachment_url) . '" data-id="' . intval($attachment_id) . '" style="width: 100px; height: auto; margin: 5px;" />';
+            echo '<button type="button" class="remove-image-button" style="position: absolute; top: 0; right: 0;">X</button>';
+            echo '</div>';
+        }
+    }
+    echo '</div>';
+}
+
+function save_additional_images_meta($post_id) {
+
+    error_log("Received post_id: " . $post_id);
+    if (!isset($_POST['additional_images_nonce'])) {
+        error_log("additional_images_nonce not set.");
+        return $post_id;
+    }
+
+    $nonce = $_POST['additional_images_nonce'];
+    error_log("Received nonce in save_additional_images_meta: " . $nonce);
+    if (!wp_verify_nonce($nonce, basename(__FILE__))) {
+        error_log("Nonce verification failed.");
+        return $post_id;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return $post_id;
+
+    if ('post' == $_POST['post_type'] && !current_user_can('edit_post', $post_id))
+        return $post_id;
+
+    $additional_images = !empty($_POST['additional_images_data']) ? array_map('intval', explode(',', $_POST['additional_images_data'])) : array();
+
+    update_post_meta($post_id, 'additional_images', json_encode($additional_images));
+}
+
+
+
+
+add_action('save_post', 'save_additional_images_meta');
+
+
 /*
  * 
  * Add custom menu.
@@ -161,6 +238,15 @@ function perseowiki_enqueue_home_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'perseowiki_enqueue_home_scripts');
+
+
+function enqueue_admin_scripts() {
+    if (is_admin()) {
+        wp_enqueue_script('custom-admin-script', get_template_directory_uri() . '/inc/js/admin-script.js');
+    }
+}
+add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
+
 
 
 // Extract config.php API keys

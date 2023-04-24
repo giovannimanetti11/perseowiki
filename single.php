@@ -23,6 +23,9 @@
         </div>
 
 
+
+
+
         <div class="article-title">
             <h1><?php the_title(); ?></h1> <i class="fa-solid fa-volume-up" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it"></i>
         </div>

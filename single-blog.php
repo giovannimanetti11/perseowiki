@@ -65,6 +65,7 @@
                     <select id="citation-style" onchange="generateCitation()">
                         <option value="APA">APA 7th edition</option>
                         <option value="MLA">MLA 8th edition</option>
+                        <option value="Wikipedia">Wikipedia</option>
                     </select>
 
                     <div class="citation">

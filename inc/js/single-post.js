@@ -1,3 +1,18 @@
+// Manage clics on additional images
+
+document.addEventListener("DOMContentLoaded", function () {
+  var featuredImage = document.getElementById("featured-image");
+  var thumbnailImages = document.getElementsByClassName("thumbnail-image");
+
+  for (var i = 0; i < thumbnailImages.length; i++) {
+      thumbnailImages[i].addEventListener("click", function (event) {
+          event.preventDefault();
+          featuredImage.src = this.getAttribute("src");
+          featuredImage.dataset.fullImageUrl = this.dataset.fullImageUrl;
+      });
+  }
+});
+
 // Create custom lightbox
 
 document.addEventListener('DOMContentLoaded', function() {
