@@ -131,7 +131,8 @@ function additional_images_callback($post) {
     $additional_images = !empty($additional_images_raw) ? json_decode($additional_images_raw, true) : array();
 
     echo '<input type="hidden" name="additional_images_data" id="additional_images_data" value="' . esc_attr($additional_images_raw) . '" />';
-    echo '<a href="#" id="upload_additional_images_button" class="button">Carica Immagini Aggiuntive</a>';
+    echo '<a href="#" id="upload_additional_images_button" class="button" onclick="openMediaUploader(event)">Carica Immagini Aggiuntive</a>';
+
 
 
     echo '<div id="additional_images_container">';
@@ -789,14 +790,11 @@ function save_tossica_metabox_data($post_id) {
     }
 }
 
-
-
 /*
  * 
  * AJAX get posts by letter [homepage]
  *
  */
-
 
     function get_posts_by_letter() {
       $letter = $_GET['letter'];
@@ -1122,10 +1120,10 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
             ),
             array(
                 '@type' => 'WebPageElement',
-                'name' => 'Posologia',
+                'name' => 'Modalità d\'uso',
                 'isAccessibleForFree' => 'True',
                 'cssSelector' => '#section-8',
-            ),
+            ),            
             array(
                 '@type' => 'WebPageElement',
                 'name' => 'Utilizzo tradizionale',

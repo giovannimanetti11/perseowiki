@@ -249,7 +249,7 @@
     width: 300px;
     position: absolute;
     float: right;
-    top: 0;
+    top: 15px;
     right: 0;
   }
 
@@ -365,6 +365,11 @@
       color: #071c2e;
       margin: 0;
       display: none;
+      visibility: hidden;
+  }
+
+  .additional-images-thumbnails {
+    display : none;
   }
 
   /* 

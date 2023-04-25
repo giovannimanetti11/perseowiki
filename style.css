@@ -848,10 +848,6 @@ header {
   right: 10px;
 }
 
-.card-link {
-  width: calc(100% / 3 - 10px);
-}
-
 .card-deck .card-link {
   margin: 10px;
 }
@@ -866,6 +862,7 @@ header {
   -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
   box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
   height: 100%;
+  max-width: 300px;
 }
 
 .card-deck .card:hover {
@@ -1033,6 +1030,10 @@ header {
 
 .post-featured-image img {
   border-radius: 10px;
+  width: auto;
+  margin: 0 auto;
+  height: 170px;
+  max-width: 300px;
 }
 
 .post-tags {
@@ -1394,11 +1395,10 @@ header {
 *
 */
 
-.wp-image-description {
+.wp-image-description, .featured-image-description {
   font-size: 13px;
   text-align: center;
   font-style: italic;
-
 }
 
 .single-termine .post-featured-image {
@@ -1646,6 +1646,7 @@ header {
   flex-direction: column;
   height: 100%;
   min-width: 200px;
+  max-width: 300px;
 }
 
 .tag .row {
@@ -1783,6 +1784,8 @@ header {
 .card-wrapper {
   width: 100%;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -2235,10 +2238,6 @@ footer {
     width: 80%;
   }
 
-  .card-deck .card {
-    width: 50%;
-  }
-
   .post-content {
     width: 80%;
   }
@@ -2252,10 +2251,6 @@ footer {
 
 @media only screen and (min-width: 993px) and (max-width: 1441px) {
 
-
-  .card-deck .card {
-    width: calc(100% / 2 - 10px);
-  }
 
   .post-content, .home-content, .breadcrumbs, .card-deck {
     width: 70%;

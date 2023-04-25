@@ -14,7 +14,7 @@
                 <?php
                 if (has_post_thumbnail()) {
                 $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
-                $alt_text = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
+                $alt_text = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true); 
                 the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url, 'alt' => $alt_text));
                 }
                 ?>
