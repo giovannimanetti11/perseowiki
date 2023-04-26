@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         thumbnail.classList.add("selected");
       });
     });
-  }, 250);
+  }, 450);
 });
 
 

@@ -8,6 +8,20 @@
 
     <article class="post-content" id="post-content">
 
+        <div class="images-container">
+            <div class="post-featured-image">
+                <?php if ( has_post_thumbnail() ) { 
+                        the_post_thumbnail( 'medium' ); 
+                        $thumbnail_id = get_post_thumbnail_id();
+                        $thumbnail = get_post( $thumbnail_id );
+                        $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
+                        if ( ! empty( $description ) ) {
+                            echo '<div class="wp-image-description">' . $description . '</div>';
+                        }
+                    } ?>
+            </div>
+        </div>
+
         <h1><?php the_title(); ?></h1>
 
         <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
@@ -105,20 +119,6 @@
         <div class="post-content-text">
             <div class="index">
                 
-            </div>
-
-            <div class="post-content-module">
-                <div class="post-featured-image">
-                <?php if ( has_post_thumbnail() ) { 
-                    the_post_thumbnail( 'medium' ); 
-                    $thumbnail_id = get_post_thumbnail_id();
-                    $thumbnail = get_post( $thumbnail_id );
-                    $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
-                    if ( ! empty( $description ) ) {
-                        echo '<div class="wp-image-description">' . $description . '</div>';
-                    }
-                } ?>
-                </div>
             </div>
 
 
