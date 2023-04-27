@@ -832,10 +832,12 @@ header {
 
 .card-deck {
   margin-bottom: 20px;
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
 .card-body {
@@ -854,7 +856,7 @@ header {
 
 .card-deck .card {
   display: inline-block;
-  width: 100%;
+  width: 250px;
   margin-right: 20px;
   margin-bottom: 20px;
   vertical-align: top;
@@ -862,12 +864,13 @@ header {
   -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
   box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
   height: 100%;
-  max-width: 300px;
 }
 
 .card-deck .card:hover {
-  transform: scale(1.02);
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transform: scale(1.02);
 }
 
 .card-title, .card-scientific-name {
@@ -1005,6 +1008,7 @@ header {
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .additional-images-thumbnails img {
@@ -1416,6 +1420,17 @@ header {
 
 /* 
 *
+*  PAGE SINGLE ERBE MEDICINALI
+*
+*/
+
+.page-template-page-erbe-medicinali .page-title {
+  margin-top: 25px;
+  text-align: center;
+}
+
+/* 
+*
 *  ARCHIVE GLOSSARIO / TERMINE
 *
 */
@@ -1554,6 +1569,7 @@ header {
   
 .blog-card:hover .post-thumbnail img {
   transform: scale(1.1);
+  border-radius: 5px;
 }
   
 .blog-card .entry-header {
@@ -1650,7 +1666,7 @@ header {
   gap: 30px;
   justify-items: start;
   align-items: start;
-  max-width: 50%;
+  max-width: 75%;
   margin: 0 auto;
   margin-bottom: 0px;
   margin-bottom: 25px;
@@ -1876,12 +1892,9 @@ footer {
     width: 95%;
   }
 
-  .card-link {
-    width: 100%;
-  }
-
   .card-deck .card-link {
-    margin: 0;
+    margin: 5px;
+    margin-left: 5px !important;
   }
 
   .post-content-text {
@@ -2051,12 +2064,13 @@ footer {
   .card-deck {
     width: 90%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin-bottom: 25px;
   }
 
   .card-deck .card {
-    width: 100%;
+    width: 250px;
     margin: 0 auto;
     margin-top: 20px !important;
     border: 1px solid #d3d3d3 !important;
@@ -2191,6 +2205,10 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
+  .properties-container {
+    width: 95%;
+  }
+
   .blog-card .entry-header, .blog-card .entry-summary {
     padding: 5px;
   }
@@ -2215,7 +2233,7 @@ footer {
   }
 
   header {
-    padding: 0 5%;
+    padding: 0 25px;
   }
 
   .home-content {
@@ -2224,6 +2242,9 @@ footer {
 
   .card-deck {
     width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
   }
 
   #alphabet {

@@ -16,7 +16,7 @@ get_header(); ?>
           <div class="container">
             <p><?php echo strip_tags(tag_description()); ?></p>
 
-            <span>Di seguito troverai l'elenco delle erbe presenti su WikiHerbalist che hanno proprietà <?php single_tag_title(); ?></span>
+            <span>Di seguito troverai l'elenco delle erbe presenti su WikiHerbalist che hanno proprietà <?php echo strtolower(single_tag_title('', false)); ?></span>
           </div>
           
       </div>

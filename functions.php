@@ -809,7 +809,7 @@ function save_tossica_metabox_data($post_id) {
       remove_filter( 'posts_where', 'search_by_letter', 10, 2 );
       $output = '';
       $count = 0; // counter for posts
-      $counter = 0; // counter for every 3 posts
+      $output .= '<div class="card-deck">';
       while ($posts->have_posts()) {
         $posts->the_post();
         $title = get_the_title();
@@ -818,13 +818,6 @@ function save_tossica_metabox_data($post_id) {
         $alt = get_the_title();
         $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
         $tossica = get_post_meta(get_the_ID(), '_tossica', true);
-    
-        // Create a new card deck for every 3 posts
-        if ($counter % 3 == 0) {
-            $output .= '<div class="card-deck">';
-        }
-    
-        $count++;
     
         // Add a new card
         $output .= '<a href="' . $link . '" class="card-link">';
@@ -839,15 +832,9 @@ function save_tossica_metabox_data($post_id) {
         }
         $output .= '</div></div>';
         $output .= '</a>';
-    
-        // Close the card deck for every 3 posts
-        if ($counter % 3 == 2 || $counter == $posts->post_count - 1) {
-            $output .= '</div>';
+        
         }
-    
-        $counter++;
-    }
-    
+        $output .= '</div>';
   
   
       wp_reset_postdata();
@@ -1006,44 +993,6 @@ function custom_breadcrumb() {
     }
 
     echo '</div>';
-}
-
-/*
- * 
- * ADD AJAX ACTION TO MANAGE SIGN UP
- *
- */
-
- function ajax_register_user() {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    log_message("Registering user: email = {$email}, password = {$password}");
-
-    $user_id = wp_create_user($email, $password, $email);
-
-    if (!is_wp_error($user_id)) {
-        log_message("User registration successful: user_id = {$user_id}");
-        echo json_encode(array('success' => true, 'message' => 'Registrazione avvenuta con successo.'));
-    } else {
-        log_message("User registration error: " . $user_id->get_error_message());
-        echo json_encode(array('success' => false, 'message' => $user_id->get_error_message()));
-    }
-
-    wp_die();
-}
-
-add_action('wp_ajax_nopriv_register_user', 'ajax_register_user');
-add_action('wp_ajax_register_user', 'ajax_register_user');
-
-function log_message($message) {
-    if (WP_DEBUG === true) {
-        if (is_array($message) || is_object($message)) {
-            error_log(print_r($message, true));
-        } else {
-            error_log($message);
-        }
-    }
 }
 
 
