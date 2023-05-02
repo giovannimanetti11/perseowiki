@@ -579,6 +579,10 @@ header {
   width: 100%;
 }
 
+.pagination span {
+  font-size: 15px;
+}
+
 .prev-button {
   margin-left: 20px
 }
@@ -593,6 +597,7 @@ header {
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
+  display: flex;
 }
 
 .prev-button:hover,
@@ -875,7 +880,7 @@ header {
 
 #alphabet a {
   margin: 0 5px;
-  color: #071c2d;
+  color: #0A2944;
   text-decoration: underline;
   font-weight: bold;
 }
@@ -1933,9 +1938,6 @@ footer {
 .footerLinks a:hover {
   color: #fff;
 }
-
-
-
 
 
 /* 

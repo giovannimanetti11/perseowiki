@@ -6,7 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
   var clearSearch = document.querySelector("#clearSearch");
   var currentPage = 1;
 
-  function createPagination() {
+  function createPagination(totalResults) {
+    var maxResultsPerPage = 10;
+    var totalPages = Math.ceil(totalResults / maxResultsPerPage);
+  
+    if (totalPages <= 1) {
+      return;
+    }
+  
     var pagination = document.createElement("div");
     pagination.classList.add("pagination");
   
@@ -31,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     pagination.appendChild(prevButton);
     pagination.appendChild(nextButton);
-    searchResults.appendChild(pagination);
+    searchResults.insertAdjacentElement('beforeend', pagination);
   }  
 
   searchBar.addEventListener("input", function () {
@@ -55,8 +62,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       .then((response) => response.json())
       .then((data) => {
+        const { posts, tags, glossary_terms, total_results } = data;
+        var totalResults = total_results;
+        
         searchResults.innerHTML = "";
-        const { posts, tags } = data;
+        createPagination(totalResults);
+        
 
         if (posts.length > 0 || tags.length > 0 || data.glossary_terms.length > 0) {
           if (posts.length > 0) {
@@ -161,8 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           searchResults.style.display = "none";
         }
-
-        createPagination();
       });
   });
 

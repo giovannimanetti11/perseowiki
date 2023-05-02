@@ -111,10 +111,12 @@ usort($combined_results, function ($a, $b) {
   return strcmp($a["title"], $b["title"]);
 });
 
+$total_results = count($combined_results);
+
 $limited_results = array_slice($combined_results, $offset, $limit);
 
 
-$final_response = array("posts" => array(), "tags" => array(), "glossary_terms" => array());
+$final_response = array("posts" => array(), "tags" => array(), "glossary_terms" => array(), "total_results" => $total_results);
 
 foreach ($limited_results as $result) {
   if (isset($result["content"])) {

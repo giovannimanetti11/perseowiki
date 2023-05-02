@@ -2,8 +2,6 @@
 
 define("THEME_DIR", get_template_directory_uri());
 
-
-
 /*
  * 
  * Add excerpt to pages
@@ -243,6 +241,7 @@ add_action('wp_enqueue_scripts', 'perseowiki_enqueue_home_scripts');
 function enqueue_admin_scripts() {
     if (is_admin()) {
         wp_enqueue_script('custom-admin-script', get_template_directory_uri() . '/inc/js/admin-script.js');
+        wp_enqueue_style('custom_admin_css', get_stylesheet_directory_uri() . '/admin.css');
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
@@ -732,39 +731,40 @@ function save_custom_meta_box_costituenti($post_id, $post, $update)
 add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
 
 /*
+ *
  * ADD custom field "Tossica"
  *
  */
 
-// Aggiungi il metabox al post type desiderato (es. 'post')
+// Add the metabox to the desired post type (e.g. 'post')
 add_action('add_meta_boxes', 'add_tossica_metabox');
 
 function add_tossica_metabox() {
     add_meta_box('tossica', 'Tossica', 'tossica_metabox_callback', 'post', 'side', 'default');
 }
 
-// Callback per visualizzare il contenuto del metabox
+// Callback to display the metabox content
 function tossica_metabox_callback($post) {
     wp_nonce_field('tossica_metabox', 'tossica_metabox_nonce');
     $tossica = get_post_meta($post->ID, '_tossica', true);
     echo '<input type="checkbox" id="tossica" name="tossica" value="1"' . checked(1, $tossica, false) . '/>';
 }
 
-// Salva il valore del custom field al salvataggio del post
+// Save the custom field value on post save
 add_action('save_post', 'save_tossica_metabox_data');
 
 function save_tossica_metabox_data($post_id) {
-    // Verifica la sicurezza e la validità dei dati
+    // Verify data security and validity
     if (!isset($_POST['tossica_metabox_nonce']) || !wp_verify_nonce($_POST['tossica_metabox_nonce'], 'tossica_metabox')) {
         return;
     }
 
-    // Controlla i permessi dell'utente
+    // Check user permissions
     if (!current_user_can('edit_post', $post_id)) {
         return;
     }
 
-    // Salva il valore del checkbox "Tossica"
+    // Save the value of the "Tossica" checkbox
     if (isset($_POST['tossica'])) {
         update_post_meta($post_id, '_tossica', 1);
     } else {
@@ -934,17 +934,17 @@ function custom_breadcrumb() {
             $categories = get_the_category();
             $cat_parents = array();
 
-            // Loop attraverso le categorie del post e inserisci solo le categorie padre in un array
+            // Loop through the post categories and only insert the parent categories into an array
             foreach ($categories as $category) {
                 if ($category->parent == 0) {
                     array_push($cat_parents, $category);
                 }
             }
 
-            // Ordina l'array delle categorie padre in ordine discendente di profondità
+            // Sort the parent categories array in descending order
             $cat_parents = array_reverse($cat_parents);
 
-            // Mostra la categoria padre più profonda con il link alla categoria
+            // Display the deepest parent category with a link to the category
             echo '<a href="' . get_category_link($cat_parents[0]->cat_ID) . '">' . $cat_parents[0]->name . '</a>';
 
             echo $separator;
@@ -977,6 +977,39 @@ function custom_breadcrumb() {
 
     echo '</div>';
 }
+
+/*
+ * 
+ * EDIT RIGHT NOW WIDGET IN WORDPRESS DASHBOARD
+ *
+ */
+
+ function custom_dashboard_widget() {
+    add_meta_box('dashboard_right_now', 'In sintesi', 'custom_dashboard_widget_output', 'dashboard', 'normal', 'high');
+}
+
+function custom_dashboard_widget_output() {
+    $num_posts = wp_count_posts();
+    $num_pages = wp_count_posts('page');
+    $num_comments = wp_count_comments();
+    $num_blog_posts = wp_count_posts('blog');
+    $num_glossary_terms = wp_count_posts('termine');
+    $num_all_comments = $num_comments->total_comments;
+    $output = '<ul class="widget-sintesi">';
+    $output .= '<li class="widget-sintesi-articoli"> <a href="edit.php">'.$num_posts->publish.' articoli</a></li>';
+    $output .= '<li class="widget-sintesi-pagine"> <a href="edit.php?post_type=page">'.$num_pages->publish.' pagine</a></li>';
+    $output .= '<li class="widget-sintesi-blog"> <a href="edit.php?post_type=blog">'.$num_blog_posts->publish.' post del blog</a></li>';
+    $output .= '<li class="widget-sintesi-termine"> <a href="edit.php?post_type=termine">'.$num_glossary_terms->publish.' termini del glossario</a></li>';
+    $output .= '<li class="widget-sintesi-commenti"> <a href="edit-comments.php">'.$num_all_comments.' commenti</a></li>';
+    $output .= '<li>Versione di WordPress: ' . get_bloginfo('version') . '</li>';
+    $output .= '<li>Tema attuale: ' . wp_get_theme()->get('Name') . '</li>';
+    $output .= '</ul>';
+    echo $output;
+}
+
+add_action('wp_dashboard_setup', 'custom_dashboard_widget');
+
+
 
 
 /*

@@ -1,0 +1,20 @@
+.widget-sintesi li a:before {
+    font-family: "dashicons";
+    margin-right: 5px;
+    margin-left: 10px;
+}
+.widget-sintesi .widget-sintesi-articoli a:before {
+    content: "\f109" !important;
+}
+.widget-sintesi .widget-sintesi-pagine a:before {
+    content: "\f105" !important;
+}
+.widget-sintesi .widget-sintesi-blog a:before {
+    content: "\f119" !important;
+}
+.widget-sintesi .widget-sintesi-termine a:before {
+    content: "\f330" !important;
+}
+.widget-sintesi .widget-sintesi-commenti a:before {
+    content: "\f101" !important;
+}
