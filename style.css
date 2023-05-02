@@ -486,9 +486,16 @@ header {
   padding-bottom: 30px;
 }
 
+.search {
+  padding-top: 50px;
+}
+
+#searchResults {
+  padding-top: 15px;
+}
+
 .search, #searchResults {
   text-align: center;
-  padding-top: 15px;
   position: relative;
   width: 40%;
   margin: 0 auto;
@@ -563,6 +570,34 @@ header {
   border-radius: 15px;
   padding: 10px;
   border: 1px solid #fff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.prev-button {
+  margin-left: 20px
+}
+
+.next-button {
+  margin-right: 20px;
+}
+
+.prev-button,
+.next-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  color: #0073aa;
 }
 
 .noradius {

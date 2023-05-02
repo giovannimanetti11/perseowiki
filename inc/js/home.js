@@ -4,6 +4,35 @@ document.addEventListener("DOMContentLoaded", function () {
   var searchBar = document.querySelector(".searchBar");
   var searchResults = document.querySelector("#searchResults");
   var clearSearch = document.querySelector("#clearSearch");
+  var currentPage = 1;
+
+  function createPagination() {
+    var pagination = document.createElement("div");
+    pagination.classList.add("pagination");
+  
+    var prevButton = document.createElement("button");
+    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> <span>Precedente</span>';
+    prevButton.classList.add("prev-button");
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", function () {
+      if (currentPage > 1) {
+        currentPage--;
+        searchBar.dispatchEvent(new Event("input"));
+      }
+    });
+  
+    var nextButton = document.createElement("button");
+    nextButton.innerHTML = '<span>Successivo</span> <i class="fas fa-chevron-right"></i>';
+    nextButton.classList.add("next-button");
+    nextButton.addEventListener("click", function () {
+      currentPage++;
+      searchBar.dispatchEvent(new Event("input"));
+    });
+  
+    pagination.appendChild(prevButton);
+    pagination.appendChild(nextButton);
+    searchResults.appendChild(pagination);
+  }  
 
   searchBar.addEventListener("input", function () {
     var keywords = searchBar.value;
@@ -16,9 +45,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(
       "search.php?keywords=" +
         encodeURIComponent(keywords) +
+        "&page=" +
+        currentPage +
         "&_=" +
         new Date().getTime()
     )
+    
       
 
       .then((response) => response.json())
@@ -26,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         searchResults.innerHTML = "";
         const { posts, tags } = data;
 
-        if (posts.length > 0 || tags.length > 0) {
+        if (posts.length > 0 || tags.length > 0 || data.glossary_terms.length > 0) {
           if (posts.length > 0) {
             var postsHeading = document.createElement("h4");
             postsHeading.textContent = "Erbe";
@@ -89,12 +121,48 @@ document.addEventListener("DOMContentLoaded", function () {
             });
           }
 
+          if (data.glossary_terms.length > 0) {
+            var glossaryHeading = document.createElement("h4");
+            glossaryHeading.textContent = "Glossario";
+            searchResults.appendChild(glossaryHeading);
+          
+            data.glossary_terms.forEach((glossary_term) => {
+              var glossaryTermElement = document.createElement("li");
+              glossaryTermElement.classList.add("post-row");
+            
+              var glossaryTermLink = document.createElement("a");
+              glossaryTermLink.href = glossary_term.permalink;
+            
+              var imgElement = document.createElement("img");
+              imgElement.classList.add("featured");
+              imgElement.alt = glossary_term.title;
+              if (glossary_term.featured_image) {
+                imgElement.src = glossary_term.featured_image;
+              } else {
+                imgElement.style.display = "none";
+              }
+              glossaryTermLink.appendChild(imgElement);
+            
+              glossaryTermElement.appendChild(glossaryTermLink);
+            
+              var titleElement = document.createElement("h2");
+              titleElement.classList.add("title");
+              titleElement.innerHTML = glossary_term.title;
+              glossaryTermLink.appendChild(titleElement);
+            
+              searchResults.appendChild(glossaryTermElement);
+            });
+            
+          }
+
           searchBar.classList.add("noradius");
           searchResults.style.display = "flex";
           clearSearch.style.display = "block";
         } else {
           searchResults.style.display = "none";
         }
+
+        createPagination();
       });
   });
 
@@ -104,7 +172,19 @@ document.addEventListener("DOMContentLoaded", function () {
     clearSearch.style.display = "none";
     searchBar.classList.remove("noradius");
   });
+
+  document.addEventListener("click", function (event) {
+    if (
+      !searchBar.contains(event.target) &&
+      !searchResults.contains(event.target)
+    ) {
+      searchResults.style.display = "none";
+      clearSearch.style.display = "none";
+      searchBar.classList.remove("noradius");
+    }
+  });
 });
+
 
 
 
