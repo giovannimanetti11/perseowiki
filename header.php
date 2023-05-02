@@ -87,6 +87,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     <div class="call-to-action">
         <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Mailing List</button>
     </div>
+
     <!-- MAILING LIST POPUP -->
     <div id="mailingList-popup" class="popup">
         <div class="popup-content">

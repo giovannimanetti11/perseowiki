@@ -12,9 +12,9 @@ get_header(); ?>
     <?php if ( have_posts() ) : ?>
 
       <div class="tag-header">
-          <h1>Proprietà <?php single_tag_title(); ?></h1>
+          <h1>Proprietà <?php echo strtolower(single_tag_title('', false)); ?></h1>
           <div class="container">
-            <p><?php echo strip_tags(tag_description()); ?></p>
+            <?php echo '<div class="archive-description">' . tag_description() . '</div>'; ?>
 
             <span>Di seguito troverai l'elenco delle erbe presenti su WikiHerbalist che hanno proprietà <?php echo strtolower(single_tag_title('', false)); ?></span>
           </div>

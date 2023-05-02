@@ -1,11 +1,11 @@
 // AJAX Search
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   var searchBar = document.querySelector(".searchBar");
   var searchResults = document.querySelector("#searchResults");
   var clearSearch = document.querySelector("#clearSearch");
 
-  searchBar.addEventListener("input", function() {
+  searchBar.addEventListener("input", function () {
     var keywords = searchBar.value;
 
     if (keywords.length < 3) {
@@ -13,48 +13,84 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    fetch("search.php?keywords=" + encodeURIComponent(keywords) + "&_=" + new Date().getTime())
-      .then(response => response.json())
-      .then(data => {
+    fetch(
+      "search.php?keywords=" +
+        encodeURIComponent(keywords) +
+        "&_=" +
+        new Date().getTime()
+    )
+      
+
+      .then((response) => response.json())
+      .then((data) => {
         searchResults.innerHTML = "";
-        if (data.length > 0) {
-          data.forEach(post => {
-            var postElement = document.createElement("li");
-            postElement.classList.add("post-row");
+        const { posts, tags } = data;
 
-            var postLink = document.createElement("a"); 
-            postLink.href = post.permalink; 
+        if (posts.length > 0 || tags.length > 0) {
+          if (posts.length > 0) {
+            var postsHeading = document.createElement("h4");
+            postsHeading.textContent = "Erbe";
+            searchResults.appendChild(postsHeading);
 
-            var imgElement = document.createElement("img");
-            imgElement.classList.add("featured");
-            imgElement.alt = post.title;
-            if (post.featured_image) {
-              imgElement.src = post.featured_image;
-            } else {
-              imgElement.style.display = "none"; 
-            }
-            postLink.appendChild(imgElement);
+            posts.forEach((post) => {
+              var postElement = document.createElement("li");
+              postElement.classList.add("post-row");
 
-            postElement.appendChild(postLink); 
+              var postLink = document.createElement("a");
+              postLink.href = post.permalink;
 
-            var titleElement = document.createElement("h2");
-            titleElement.classList.add("title");
-            titleElement.innerHTML = post.title;
-            postLink.appendChild(titleElement); 
+              var imgElement = document.createElement("img");
+              imgElement.classList.add("featured");
+              imgElement.alt = post.title;
+              if (post.featured_image) {
+                imgElement.src = post.featured_image;
+              } else {
+                imgElement.style.display = "none";
+              }
+              postLink.appendChild(imgElement);
 
+              postElement.appendChild(postLink);
 
-            if (post.meta_box_nome_scientifico) {
-              var metaBoxElement = document.createElement("p");
-              metaBoxElement.classList.add("meta-box-nome-scientifico");
-              metaBoxElement.innerHTML = post.meta_box_nome_scientifico;
-              postLink.appendChild(metaBoxElement); 
-            }
+              var titleElement = document.createElement("h2");
+              titleElement.classList.add("title");
+              titleElement.innerHTML = post.title;
+              postLink.appendChild(titleElement);
 
-            searchResults.appendChild(postElement);
+              if (post.meta_box_nome_scientifico) {
+                var metaBoxElement = document.createElement("p");
+                metaBoxElement.classList.add("meta-box-nome-scientifico");
+                metaBoxElement.innerHTML = post.meta_box_nome_scientifico;
+                postLink.appendChild(metaBoxElement);
+              }
 
-          });
+              searchResults.appendChild(postElement);
+            });
+          }
+
+          if (tags.length > 0) {
+            var tagsHeading = document.createElement("h4");
+            tagsHeading.textContent = "Proprietà";
+            searchResults.appendChild(tagsHeading);
+
+            tags.forEach((tag) => {
+              var tagElement = document.createElement("li");
+              tagElement.classList.add("tag-row");
+
+              var tagLink = document.createElement("a");
+              tagLink.href = tag.permalink;
+
+              var tagNameElement = document.createElement("span");
+              tagNameElement.classList.add("tag-name");
+              tagNameElement.innerHTML = tag.name;
+              tagLink.appendChild(tagNameElement);
+
+              tagElement.appendChild(tagLink);
+              searchResults.appendChild(tagElement);
+            });
+          }
+
           searchBar.classList.add("noradius");
-          searchResults.style.display = "block";
+          searchResults.style.display = "flex";
           clearSearch.style.display = "block";
         } else {
           searchResults.style.display = "none";
@@ -62,14 +98,16 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 
-  clearSearch.addEventListener("click", function() {
+  clearSearch.addEventListener("click", function () {
     searchBar.value = "";
     searchResults.style.display = "none";
     clearSearch.style.display = "none";
     searchBar.classList.remove("noradius");
   });
-
 });
+
+
+
 
 // Category menu scroll
 

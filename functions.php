@@ -3,24 +3,6 @@
 define("THEME_DIR", get_template_directory_uri());
 
 
-/*
- * 
- * Add custom meta description to tags
- *
- */
-
- function custom_tag_meta_description() {
-    if ( is_tag() ) {
-        $term = get_queried_object();
-        if ( $term && ! empty( $term->description ) ) {
-            $meta_description = esc_attr( wp_strip_all_tags( $term->description ) );
-            echo '<meta name="description" content="' . $meta_description . '">';
-        }
-    }
-}
-add_action( 'wp_head', 'custom_tag_meta_description', 5 );
-
-
 
 /*
  * 
@@ -832,6 +814,7 @@ function save_tossica_metabox_data($post_id) {
         }
         $output .= '</div></div>';
         $output .= '</a>';
+        $count ++;
         
         }
         $output .= '</div>';
