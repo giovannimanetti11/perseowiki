@@ -230,12 +230,14 @@ function add_print_css() {
 
 
 function perseowiki_enqueue_home_scripts() {
-
     if (is_home() || is_front_page()) {
+        wp_enqueue_script('home-js', get_template_directory_uri() . '/inc/js/home.js');
+    } elseif (is_404()) {
         wp_enqueue_script('home-js', get_template_directory_uri() . '/inc/js/home.js');
     }
 }
 add_action('wp_enqueue_scripts', 'perseowiki_enqueue_home_scripts');
+
 
 
 function enqueue_admin_scripts() {

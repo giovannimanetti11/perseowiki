@@ -122,7 +122,6 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-
 }
 
 ::selection {
@@ -153,6 +152,13 @@ body {
   pointer-events: none;
 }
 
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}
 
 .tooltip-term-excerpt::before {
   content: "";
@@ -1932,6 +1938,65 @@ footer {
 .footerLinks a:hover {
   color: #fff;
 }
+
+
+/* 
+*
+*  404
+*
+*/
+
+.error404-wrapper {
+  width: 70%;
+  margin: 0 auto;
+  padding-bottom: 25px;
+  min-height: 370px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error404-title {
+  font-size: 55px;
+  text-align: center;
+  padding-top: 25px;
+}
+
+.error404-message {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.error404-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error404-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#error404-home-btn {
+  color: #fff;
+  background-color: #3E92A2;
+  border: 1px solid #0A2944;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 25px;
+}
+
+#error404-home-btn:hover {
+  background-color: #0A2944;
+  border: 1px solid #3E92A2;
+}
+
 
 
 /* 
