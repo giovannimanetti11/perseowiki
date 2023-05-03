@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pagination.classList.add("pagination");
   
     var prevButton = document.createElement("button");
-    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> <span>Precedente</span>';
+    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> &nbsp;<span>Precedente</span>';
     prevButton.classList.add("prev-button");
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener("click", function () {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
     var nextButton = document.createElement("button");
-    nextButton.innerHTML = '<span>Successivo</span> <i class="fas fa-chevron-right"></i>';
+    nextButton.innerHTML = '<span>Successivo</span> &nbsp;<i class="fas fa-chevron-right"></i>';
     nextButton.classList.add("next-button");
     nextButton.addEventListener("click", function () {
       currentPage++;
@@ -73,14 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
           if (posts.length > 0) {
             var postsHeading = document.createElement("h4");
             postsHeading.textContent = "Erbe";
+            var erbeIcon = document.createElement("i");
+            erbeIcon.classList.add("fas", "fa-leaf");
+            postsHeading.prepend(erbeIcon);
             searchResults.appendChild(postsHeading);
 
             posts.forEach((post) => {
               var postElement = document.createElement("li");
               postElement.classList.add("post-row");
-
-              var postLink = document.createElement("a");
-              postLink.href = post.permalink;
+              postElement.dataset.href = post.permalink;
+              postElement.addEventListener("click", function () {
+                window.location.href = this.dataset.href;
+              });
 
               var imgElement = document.createElement("img");
               imgElement.classList.add("featured");
@@ -90,20 +94,21 @@ document.addEventListener("DOMContentLoaded", function () {
               } else {
                 imgElement.style.display = "none";
               }
-              postLink.appendChild(imgElement);
-
-              postElement.appendChild(postLink);
 
               var titleElement = document.createElement("h2");
               titleElement.classList.add("title");
               titleElement.innerHTML = post.title;
-              postLink.appendChild(titleElement);
 
               if (post.meta_box_nome_scientifico) {
                 var metaBoxElement = document.createElement("p");
                 metaBoxElement.classList.add("meta-box-nome-scientifico");
                 metaBoxElement.innerHTML = post.meta_box_nome_scientifico;
-                postLink.appendChild(metaBoxElement);
+              }
+
+              postElement.appendChild(imgElement);
+              postElement.appendChild(titleElement);
+              if (post.meta_box_nome_scientifico) {
+                postElement.appendChild(metaBoxElement);
               }
 
               searchResults.appendChild(postElement);
@@ -113,21 +118,26 @@ document.addEventListener("DOMContentLoaded", function () {
           if (tags.length > 0) {
             var tagsHeading = document.createElement("h4");
             tagsHeading.textContent = "Proprietà";
+            var proprietaIcon = document.createElement("i");
+            proprietaIcon.classList.add("fas", "fa-cogs");
+            tagsHeading.prepend(proprietaIcon);
             searchResults.appendChild(tagsHeading);
 
             tags.forEach((tag) => {
               var tagElement = document.createElement("li");
               tagElement.classList.add("tag-row");
-
-              var tagLink = document.createElement("a");
-              tagLink.href = tag.permalink;
+              tagElement.dataset.href = tag.permalink;
+              tagElement.addEventListener("click", function () {
+                window.location.href = this.dataset.href;
+              });
 
               var tagNameElement = document.createElement("span");
               tagNameElement.classList.add("tag-name");
               tagNameElement.innerHTML = tag.name;
-              tagLink.appendChild(tagNameElement);
 
-              tagElement.appendChild(tagLink);
+              
+              tagElement.appendChild(tagNameElement);
+
               searchResults.appendChild(tagElement);
             });
           }
@@ -135,14 +145,18 @@ document.addEventListener("DOMContentLoaded", function () {
           if (data.glossary_terms.length > 0) {
             var glossaryHeading = document.createElement("h4");
             glossaryHeading.textContent = "Glossario";
+            var glossarioIcon = document.createElement("i");
+            glossarioIcon.classList.add("fas", "fa-book");
+            glossaryHeading.prepend(glossarioIcon);
             searchResults.appendChild(glossaryHeading);
           
             data.glossary_terms.forEach((glossary_term) => {
               var glossaryTermElement = document.createElement("li");
               glossaryTermElement.classList.add("post-row");
-            
-              var glossaryTermLink = document.createElement("a");
-              glossaryTermLink.href = glossary_term.permalink;
+              glossaryTermElement.dataset.href = glossary_term.permalink;
+              glossaryTermElement.addEventListener("click", function () {
+                window.location.href = this.dataset.href;
+              });
             
               var imgElement = document.createElement("img");
               imgElement.classList.add("featured");
@@ -152,15 +166,14 @@ document.addEventListener("DOMContentLoaded", function () {
               } else {
                 imgElement.style.display = "none";
               }
-              glossaryTermLink.appendChild(imgElement);
-            
-              glossaryTermElement.appendChild(glossaryTermLink);
             
               var titleElement = document.createElement("h2");
               titleElement.classList.add("title");
               titleElement.innerHTML = glossary_term.title;
-              glossaryTermLink.appendChild(titleElement);
             
+              glossaryTermElement.appendChild(imgElement);
+              glossaryTermElement.appendChild(titleElement);
+
               searchResults.appendChild(glossaryTermElement);
             });
             
