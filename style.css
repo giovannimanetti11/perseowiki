@@ -1597,12 +1597,12 @@ header {
   color: #3E92A2;
 }
 
-.featured-post .entry-title {
+.latest-post .entry-title {
   font-size: 24px;
   font-weight: bold;
 }
 
-.featured-post .entry-summary {
+.latest-post .entry-summary {
   font-size: 16px;
   padding: 0 20px;
 }
@@ -1685,7 +1685,34 @@ header {
   text-decoration: none;
   color: #0A2944;
 }
-  
+
+.blog-card:not(.latest-post) article {
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.blog-card:not(.latest-post) .post-thumbnail img {
+  width: 150px;
+  height: auto;
+}
+
+.blog-card:not(.latest-post) .entry-summary {
+  display: none;
+}
+
+.blog-card:not(.latest-post) .post-thumbnail {
+  width: auto;
+  height: auto;
+}
+
+.blog-card:not(.latest-post) .entry-header {
+  margin-top: 0;
+}
+
 
 
 /* 
@@ -2073,6 +2100,10 @@ footer {
 
   .blog-card .entry-title {
     font-size: 18px;
+  }
+
+  .blog-card:not(.latest-post) .entry-date, .blog-card:not(.latest-post) .entry-title {
+    margin: 0 15px;
   }
 
   .blog-card .entry-header  {

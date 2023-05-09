@@ -23,7 +23,7 @@ get_header();
 
                     // Aggiungi una classe personalizzata per i primi 3 post
                     if ( $post_counter <= 3 ) {
-                        $column_classes .= ' featured-post';
+                        $column_classes .= ' latest-post';
                     }
                     ?>
                     <div class="<?php echo $column_classes; ?> blog-card">
@@ -42,7 +42,7 @@ get_header();
                                         <?php the_title(); ?>
                                     </h2>
                                     <div class="entry-date">
-                                        <?php the_time('j F Y'); ?>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i> <?php the_time('j F Y'); ?>
                                     </div>
                                 </div>
 
