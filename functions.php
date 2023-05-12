@@ -195,6 +195,7 @@ function perseowiki_nav_menus() {
 add_action( 'init', 'perseowiki_nav_menus' );
 
 
+
 /*
  * 
  * Add custom styles and scripts.
@@ -780,65 +781,15 @@ function save_tossica_metabox_data($post_id) {
  *
  */
 
-    function get_posts_by_letter() {
-      $letter = $_GET['letter'];
-      add_filter( 'posts_where', 'search_by_letter', 10, 2 );
-      $args = array(
-          'post_type' => 'post',
-          'posts_per_page' => -1,
-          'orderby' => 'title',
-          'order' => 'ASC',
-      );
-      $posts = new WP_Query($args);
-      remove_filter( 'posts_where', 'search_by_letter', 10, 2 );
-      $output = '';
-      $count = 0; // counter for posts
-      $output .= '<div class="card-deck">';
-      while ($posts->have_posts()) {
-        $posts->the_post();
-        $title = get_the_title();
-        $link = get_permalink();
-        $image = get_the_post_thumbnail_url(null, 'medium');
-        $alt = get_the_title();
-        $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
-        $tossica = get_post_meta(get_the_ID(), '_tossica', true);
-    
-        // Add a new card
-        $output .= '<a href="' . $link . '" class="card-link">';
-        $output .= '<div class="card">';
-        $output .= '<img class="card-img-top" src="' . $image . '" alt="' . $alt . '">';
-        $output .= '<div class="card-body">';
-        $output .= '<h3 class="card-title">' . $title . '</h3>';
-        $output .= '<h4 class="card-scientific-name">' . $nome_scientifico . '</h4>'; 
-        if (!empty($tossica)) {
-          $output .= '<i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>';
-    
-        }
-        $output .= '</div></div>';
-        $output .= '</a>';
-        $count ++;
-        
-        }
-        $output .= '</div>';
-  
-  
-      wp_reset_postdata();
-      echo json_encode(array(
-        'data' => $output,
-        'count' => $count,
-      ));
-      wp_die();
+ function title_starts_with_char($where, &$wp_query) {
+    global $wpdb;
+    if ($start_char = $wp_query->get('start_char')) {
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . $start_char . '%\'';
     }
-    
-  function search_by_letter($where, &$query) {
-      global $wpdb;
-      $letter = $_GET['letter'];
-      $where .= " AND $wpdb->posts.post_title LIKE '$letter%'";
-      return $where;
-  }
-    
-  add_action('wp_ajax_get_posts_by_letter', 'get_posts_by_letter');
-  add_action('wp_ajax_nopriv_get_posts_by_letter', 'get_posts_by_letter');
+    return $where;
+}
+add_filter('posts_where', 'title_starts_with_char', 10, 2);
+
 
   
 /*
@@ -895,13 +846,6 @@ function get_therapeutic_properties_and_herbs() {
 
     return $results;
 }
-
-function ajax_get_therapeutic_properties_and_herbs() {
-    $data = get_therapeutic_properties_and_herbs();
-    wp_send_json($data);
-}
-add_action('wp_ajax_get_properties_and_herbs', 'ajax_get_therapeutic_properties_and_herbs');
-add_action('wp_ajax_nopriv_get_properties_and_herbs', 'ajax_get_therapeutic_properties_and_herbs');
 
 
 

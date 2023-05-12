@@ -851,7 +851,6 @@ header {
   display: flex;
   flex-wrap: wrap;
   max-width: 70%;
-  gap: 0.25rem;
   align-items: center;
   flex-grow: 1;
 }
@@ -1049,6 +1048,11 @@ header {
 
 .post-content-text {
   margin-top: 100px;
+}
+
+.post-content-text h4 {
+  font-size: 16px;
+  color: #3E92A2;
 }
 
 .post-content-module {
@@ -2141,7 +2145,8 @@ footer {
 
   .filterButtons .btn {
     padding: 5px 10px;
-    width: 160px;
+    width: auto;
+    min-width: 160px;
   }
 
   #subscribe-form #nome {
@@ -2266,11 +2271,7 @@ footer {
     margin-top: 0;
     padding: 15px;
   }
-
-  .post-container {
-    padding: 0 ;
-  }
-
+  
   .post-content-module {
     width: 100%;
     margin-bottom: 35px;

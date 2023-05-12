@@ -83,9 +83,9 @@
                 $data_pubblicazione = get_the_date();
                 $data_ultimo_aggiornamento = get_the_modified_date();
                 if ($data_pubblicazione != $data_ultimo_aggiornamento) {
-                echo "Voce pubblicata il $data_pubblicazione e aggiornata il $data_ultimo_aggiornamento";
+                echo "Articolo pubblicato il $data_pubblicazione e aggiornato il $data_ultimo_aggiornamento";
                 } else {
-                echo "Voce pubblicata il $data_pubblicazione";
+                echo "Articolo pubblicato il $data_pubblicazione";
                 }
             ?>
             </div>

@@ -140,13 +140,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Aggiunge un ID a Riferimenti
   const section11 = document.getElementById('section-11');
   if (section11) {
-      const content = section11.parentNode.innerHTML;
-      const searchPattern = /(section-11.+?)(Riferimenti)/s;
-      const replacement = '$1<p id="section-12">Riferimenti</p>';
-
-      section11.parentNode.innerHTML = content.replace(searchPattern, replacement);
+      let currentNode = section11.nextSibling; 
+      while (currentNode !== null) {
+         
+          if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.textContent.includes('Riferimenti')) {
+              currentNode.id = 'section-12'; 
+              break;
+          }
+          currentNode = currentNode.nextSibling;
+      }
   }
-
 });
 
 

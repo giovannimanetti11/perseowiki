@@ -1,4 +1,4 @@
-# WordPress Wiki Theme
+# WordPress Encyclopedia Theme
 ===============================
 
 Version: 0.1.2

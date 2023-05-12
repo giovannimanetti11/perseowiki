@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Aggiungi event listener ai pulsanti
+  // Add a event listener to buttons
     alphabeticOrderBtn.addEventListener("click", function () {
         switchContainers(true);
     });
@@ -278,66 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switchContainers(false);
     });
 
-
-  // AJAX get therapeutic properties and herbs
-
-  function loadTherapeuticPropertiesAndHerbs() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/wp-admin/admin-ajax.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            const data = JSON.parse(this.responseText);
-            const propertiesColumn = document.querySelector(".properties-column");
-            const herbsColumn = document.querySelector(".herbs-column");
-
-            let counter = 0;
-            data.forEach((item) => {
-              const propertyHerbsRow = document.createElement("div");
-              propertyHerbsRow.classList.add("property-herbs-row");
-              if (counter % 2 === 0) {
-                propertyHerbsRow.classList.add("even-row");
-              } else {
-                propertyHerbsRow.classList.add("odd-row");
-              }
-              counter++;
-
-              const propertyName = document.createElement("a");
-              propertyName.classList.add("property-name");
-              propertyName.href = `/tag/${item.property}`; 
-              propertyName.textContent = item.property;
-              propertyHerbsRow.appendChild(propertyName);
-            
-              const herbsList = document.createElement("div");
-              herbsList.classList.add("herbs-list");
-            
-              const herbsArray = item.herbs.split(", ");
-              herbsArray.forEach((herb, index) => {
-                const herbLink = document.createElement("a");
-                herbLink.href = `${herb}`;
-                herbLink.textContent = herb.trim();
-
-                const herbSpan = document.createElement("span");
-                herbSpan.appendChild(herbLink);
-
-                if (index < herbsArray.length - 1) {
-                  const comma = document.createTextNode(", ");
-                  herbSpan.appendChild(comma);
-                }
-
-                herbsList.appendChild(herbSpan);
-              });
-
-            
-              propertyHerbsRow.appendChild(herbsList);
-              propertiesContainer.appendChild(propertyHerbsRow);
-            });
-        }
-    };
-    xhr.send("action=get_properties_and_herbs");
-  }
-
-  // Modifica l'event listener del pulsante propertiesList per caricare i dati quando viene premuto
+  // Edit even listener of propertiesList button to load data when it's clicked
   function onClickPropertiesListBtn() {
     switchContainers(false);
     loadTherapeuticPropertiesAndHerbs();
@@ -351,39 +292,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const alphabetLinks = document.querySelectorAll('.alphabet-link');
-  const postsContainer = document.querySelector('#posts-container');
+  const postsContainers = document.querySelectorAll('.posts-container');
   const postsInfo = document.querySelector('#posts-info');
 
   alphabetLinks.forEach(link => {
     link.addEventListener('click', event => {
+      // Previeni lo scrolling in alto quando si clicca su un link dell'alfabeto.
       event.preventDefault();
+
+      const letter = link.dataset.letter;
+      const targetContainer = document.querySelector('#posts-container-' + letter);
+      const count = targetContainer.getElementsByClassName('card-link').length;
+
       alphabetLinks.forEach(link => link.classList.remove('active'));
       link.classList.add('active');
-      const letter = link.dataset.letter;
-      const ajaxUrl = myAjax.ajax_url;
-      const urlParams = new URLSearchParams({
-        action: 'get_posts_by_letter',
-        letter: letter,
-      });
-      const xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          postsContainer.innerHTML = response.data;
-          const count = response.count;
+
+      postsContainers.forEach(container => {
+        if (container.id === 'posts-container-' + letter) {
+          container.style.display = 'block';
           const noun = count === 1 ? "erba" : "erbe";
           const verb = count === 1 ? "inizia" : "iniziano";
           postsInfo.innerHTML = `<p>${count} ${noun} che ${verb} per ${letter}</p>`;
+        } else {
+          container.style.display = 'none';
         }
-      };
-      xhr.open('GET', ajaxUrl + '?' + urlParams.toString());
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.setRequestHeader('Accept', 'application/json');
-      xhr.send();
+      });
     });
   });
-  
+
   const defaultLink = document.querySelector('.alphabet-link[data-letter="A"]');
   defaultLink.classList.add('active');
   defaultLink.click();
 });
+
+
