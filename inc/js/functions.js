@@ -237,27 +237,43 @@ document.addEventListener('DOMContentLoaded', function () {
       tooltip.remove();
       tooltip = null;
     }
-
+  
     if (!isTouchDevice()) {
       tooltip = document.createElement('div');
       tooltip.classList.add('tooltip-term-excerpt');
       tooltip.innerHTML = excerpt;
-
+  
+      const linkRect = event.target.getBoundingClientRect();
+      const linkMid = linkRect.top + linkRect.height / 2;
+  
+      if (linkMid < window.innerHeight / 2) { // Se il link è nella metà superiore della pagina
+        tooltip.classList.add('tooltip-down');
+      } else { // Se il link è nella metà inferiore della pagina
+        tooltip.classList.add('tooltip-up');
+      }
+  
       document.body.appendChild(tooltip);
-
+  
       const tooltipRect = tooltip.getBoundingClientRect();
       const tooltipHeight = tooltipRect.height;
-
-      const linkRect = event.target.getBoundingClientRect();
       const scrollX = window.pageXOffset;
       const scrollY = window.pageYOffset;
-      const tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
-      const tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
-
+  
+      let tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
+      let tooltipY;
+  
+      if (linkMid < window.innerHeight / 2) { // Se il link è nella metà superiore della pagina
+        tooltipY = linkRect.bottom + scrollY + 10; // 10 px sotto il link
+      } else { // Se il link è nella metà inferiore della pagina
+        tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
+      }
+  
       tooltip.style.left = `${tooltipX}px`;
       tooltip.style.top = `${tooltipY}px`;
     }
   }
+  
+  
 
   function hideTooltip() {
     if (tooltip) {

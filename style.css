@@ -163,13 +163,22 @@ body {
 .tooltip-term-excerpt::before {
   content: "";
   position: absolute;
-  top: 100%; 
   left: 50%;
   margin-left: -15px;
   border-width: 15px;
   border-style: solid;
-  border-color: #0A2944 transparent transparent transparent;
   z-index: 999;
+}
+
+.tooltip-term-excerpt.tooltip-up::before {
+  top: 100%; 
+  border-color: #0A2944 transparent transparent transparent;
+}
+
+.tooltip-term-excerpt.tooltip-down::before {
+  
+  bottom: 100%; 
+  border-color: transparent transparent #0A2944 transparent;
 }
 
 .link-with-excerpt:hover {
@@ -496,10 +505,6 @@ header {
   padding-top: 50px;
 }
 
-#searchResults {
-  padding-top: 15px;
-}
-
 .search, #searchResults {
   text-align: center;
   position: relative;
@@ -512,14 +517,22 @@ header {
   background: #fff;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  padding-left: 0;
-  padding-bottom: 15px;
+  padding: 15px 0;
   position: absolute;
   left: 30%;
   z-index: 30;
   -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53); 
   box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
   flex-direction: column;
+}
+
+#searchResults .tag-name {
+  font-weight: bold;
+}
+
+#searchResults .tag-name:hover {
+  color: #0A2944;
+  cursor: pointer;
 }
 
 #searchResults h4 {
