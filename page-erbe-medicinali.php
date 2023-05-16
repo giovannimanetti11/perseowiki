@@ -31,13 +31,16 @@
                 echo '<div class="letter-group">';
                 echo '<div class="letter-title">' . $current_letter . '</div>';
             }
-            echo '<div class="term-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></div>';
+            $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
+            echo '<div class="name-scientific-name"><h3 class="post-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+            echo '<h4 class="card-scientific-name">(' . $nome_scientifico . ')</h4></div>';
         endwhile;
         echo '</div>'; 
         echo '</div>'; 
     else :
         echo '<p>Nessun termine trovato.</p>';
     endif;
+    
 
     wp_reset_postdata();
     ?>

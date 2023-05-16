@@ -1583,6 +1583,31 @@ header {
   color: #3E92A2; 
 }
 
+.alphabetical-list .name-scientific-name {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.alphabetical-list .name-scientific-name a {
+  color: #0A2944; 
+  text-decoration: none; 
+  margin-left: 20px;
+}
+
+.alphabetical-list .name-scientific-name a:hover {
+  color: #3E92A2; 
+}
+
+.alphabetical-list .name-scientific-name .post-title {
+  font-size: 20px;
+}
+
+.alphabetical-list .name-scientific-name .card-scientific-name {
+  font-size: 15px;
+}
 
 /* 
 *
