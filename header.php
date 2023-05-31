@@ -85,6 +85,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
     </nav>
     
     <div class="call-to-action">
+        <button id="contact-popup-btn" class="btn btn-sm" type="button">Contatti</button>
         <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Mailing List</button>
     </div>
 
@@ -106,11 +107,21 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 <div class="alert alert-danger hidden" role="alert" id="mailingList-error-message">
                     Compila i campi per completare la tua iscrizione.
                 </div>
-
+                
                 <button type="submit" id="subscribe-btn" class="btn">Iscriviti</button>
             </form>
         </div>
     </div>
+    <!-- CONTACT POPUP -->
+    <div id="contact-popup" class="popup">
+        <div class="popup-content">
+            <a href="#" id="contact-popup-close-btn"><i class="fa fa-times"></i></a>
+            <p>Contatta WikiHerbalist</p>
+            <span>Per qualsiasi domanda, suggerimento o feedback, scrivici compilando il form sottostante.</span>
+            <?php echo do_shortcode('[contact-form-7 id="1417" title="WikiHerbalist"]'); ?>
+        </div>
+    </div>
+
     <!-- LOGIN POPUP 
     <div id="login-popup" class="popup">
         <div class="popup-content">

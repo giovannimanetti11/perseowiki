@@ -31,9 +31,11 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// Mailing List Popup
+
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Mailing List Popup
 
   function toggleElementVisibility(element, show) {
     if (show) {
@@ -118,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   popupBtn.addEventListener("click", () => {
     popup.style.display = "block";
+    contactPopup.style.display = "none";
   });
 
   mobilePopupBtn.addEventListener("click", () => {
@@ -156,10 +159,32 @@ document.addEventListener('DOMContentLoaded', () => {
     return { nomeValid, cognomeValid, emailValid, errors };
   }
   
+  // Contacts popup
   
-  
+  const contactPopupBtn = document.getElementById("contact-popup-btn");
+  const contactPopup = document.getElementById("contact-popup");
+  const contactCloseBtn = document.getElementById("contact-popup-close-btn");
+
+  contactPopupBtn.addEventListener("click", () => {
+    contactPopup.style.display = "block";
+    // Close the mailing list popup
+    popup.style.display = "none";
+  });
+
+  contactCloseBtn.addEventListener("click", () => {
+    contactPopup.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === contactPopup) {
+      contactPopup.style.display = "none";
+    }
+  });
 
 });
+
+
+
 
 
 

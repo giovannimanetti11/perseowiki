@@ -12,7 +12,6 @@ Text Domain: perseowiki
 */
 
 
-
 /* 
 *
 *  RESET
@@ -338,15 +337,11 @@ header {
   opacity: 0;
 }
 
-#mailingList-popup, #login-popup, #signup-popup {
+#mailingList-popup, #login-popup, #signup-popup, #contact-popup {
   margin-top: 100px;
 }
 
-#mailingList-popup-close-btn, #login-popup-close-btn, #signup-popup-close-btn {
-  float: right;
-}
-
-#mailingList-popup p {
+#mailingList-popup p, #contact-popup p {
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -373,7 +368,7 @@ header {
   margin-top: 15px;
 }
 
-#mailingList-popup h2 {
+#mailingList-popup h2, #contact-popup h2 {
   font-size: 16px;
   margin-bottom: 25px;
   font-weight: bold;
@@ -393,11 +388,12 @@ header {
   text-decoration: none;
 }
 
-#mailingList-popup-close-btn, #login-popup-close-btn, #signup-popup-close-btn {
+#mailingList-popup-close-btn, #login-popup-close-btn, #signup-popup-close-btn, #contact-popup-close-btn {
   color: #0A2944;
+  float: right;
 }
 
-#subscribe-form input, #login-form input, #signup-form input {
+#subscribe-form input, #login-form input, #signup-form input, #contact-popup input, #contact-popup textarea {
   padding: 10px;
   border: 2px solid #3E92A2;
   border-radius: 4px;
@@ -412,17 +408,17 @@ header {
   margin: 5px 0;
 }
 
-#subscribe-btn, #login-btn, #signup-btn {
-  background: #3E92A2;
-  color: #fff;
-  border: 1px solid #3E92A2;
+#subscribe-btn, #login-btn, #signup-btn, #contact-btn {
+  background: #3E92A2 !important;
+  color: #fff !important;
+  border: 1px solid #3E92A2 !important;
   margin-top: 25px;
 }
 
-#subscribe-btn:hover, #login-btn:hover, #signup-btn:hover {
-  border: 1px solid #fff;
-  background: #0A2944;
-  color: #fff;
+#subscribe-btn:hover, #login-btn:hover, #signup-btn:hover, #contact-btn:hover {
+  border: 1px solid #fff !important;
+  background: #0A2944 !important;
+  color: #fff !important;
 }
 
 #mailingList-error-message, #mailingList-success-message {
@@ -484,6 +480,10 @@ header {
 .social-login-buttons {
   display: flex;
   flex-direction: column;
+}
+
+.contact-form-container {
+  margin-top: 25px;
 }
 
 
