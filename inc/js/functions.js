@@ -51,12 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const nome = document.getElementById("nome").value;
     const cognome = document.getElementById("cognome").value;
     const email = document.getElementById("email").value;
-
-    const { nomeValid, cognomeValid, emailValid } = validateInputs(nome, cognome, email);
-
+  
+    const { nomeValid, cognomeValid, emailValid, errors } = validateInputs(nome, cognome, email);
+  
     if (!nomeValid || !cognomeValid || !emailValid) {
       toggleElementVisibility(errorMessage, true);
       toggleElementVisibility(successMessage, false);
+      errorMessage.innerHTML = errors.join("<br/>"); 
       event.preventDefault();
     } else {
       const data = {
@@ -134,11 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function validateInputs(nome, cognome, email) {
-    const nomeValid = nome.trim() !== "";
-    const cognomeValid = cognome.trim() !== "";
-    const emailValid = email.trim() !== "" && /\S+@\S+\.\S+/.test(email);
-    return { nomeValid, cognomeValid, emailValid };
+    let errors = [];
+  
+    const nomeValid = nome.trim().length >= 2 && nome.trim().length <= 50 && /^[a-zA-Z\u00C0-\u00FF\- ]+$/.test(nome) && nome.trim().split(' ').some(part => part.length > 1);
+    if (!nomeValid) {
+      errors.push("Nome non valido");
+    }
+  
+    const cognomeValid = cognome.trim().length >= 2 && cognome.trim().length <= 50 && /^[a-zA-Z\u00C0-\u00FF\- ]+$/.test(cognome) && cognome.trim().split(' ').some(part => part.length > 1);
+    if (!cognomeValid) {
+      errors.push("Cognome non valido");
+    }
+  
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    const emailValid = email.trim() !== "" && emailRegex.test(email);
+    if (!emailValid) {
+      errors.push("Email non valida");
+    }
+  
+    return { nomeValid, cognomeValid, emailValid, errors };
   }
+  
+  
+  
 
 });
 

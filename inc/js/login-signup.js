@@ -1,5 +1,7 @@
   // Login Popup
 
+  document.addEventListener("DOMContentLoaded", () => {
+
   const loginPopupBtn = document.getElementById("login-popup-btn");
   const loginCloseBtn = document.getElementById("login-popup-close-btn");
   const signupPopup = document.getElementById("signup-popup");
