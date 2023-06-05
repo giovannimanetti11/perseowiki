@@ -164,11 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactPopupBtn = document.getElementById("contact-popup-btn");
   const contactPopup = document.getElementById("contact-popup");
   const contactCloseBtn = document.getElementById("contact-popup-close-btn");
+  const mobileContactBtn = document.getElementById("contact-popup-btn-mobile");
 
   contactPopupBtn.addEventListener("click", () => {
     contactPopup.style.display = "block";
     // Close the mailing list popup
     popup.style.display = "none";
+  });
+
+  mobileContactBtn.addEventListener("click", () => {
+    contactPopup.style.display = "block";
   });
 
   contactCloseBtn.addEventListener("click", () => {

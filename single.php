@@ -141,6 +141,10 @@
         </div>
 
         <div class="post-content-text">
+
+            
+            <div id="classification-container"></div>
+
             <div class="index">
             
             </div>
@@ -175,7 +179,9 @@
 
             <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
             <?php if (!empty($meta_box_value)) : ?>
-                <div class="meta-box-nome-scientifico"><h3>Nome scientifico</h3> <?php echo esc_html( $meta_box_value ); ?></div>
+                <div class="meta-box-nome-scientifico" data-scientific-name="<?php echo esc_html( $meta_box_value ); ?>">
+                    <h3>Nome scientifico</h3> <?php echo esc_html( $meta_box_value ); ?>
+                </div>
             <?php endif; ?>
             <br>
             <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-comune', true ); ?>

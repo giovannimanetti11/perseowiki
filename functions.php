@@ -84,6 +84,29 @@ function perseowiki_support() {
 add_action( 'after_setup_theme', 'perseowiki_support' );
 
 
+
+
+
+/*
+ * 
+ * Removes meta tag "generator" and rss feed links and wordpress http headers
+ *
+ */
+
+remove_action('wp_head', 'wp_generator');
+
+remove_action('wp_head', 'feed_links', 2);
+remove_action('wp_head', 'feed_links_extra', 3);
+
+function remove_x_pingback($headers) {
+    unset($headers['X-Pingback']);
+    return $headers;
+}
+add_filter('wp_headers', 'remove_x_pingback');
+
+
+
+
 /*
  * 
  * Add custom meta box for additional images.

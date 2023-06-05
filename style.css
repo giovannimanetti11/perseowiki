@@ -1195,6 +1195,23 @@ header {
   background-color:rgba(62, 146, 162, 0.3);
 }
 
+#classification-container {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #0A2944;
+}
+
+#classification-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+#classification-container li {
+  margin-bottom: 10px;
+  color: #0A2944;
+  text-decoration: none;
+}
+
 .index {
   display: flex;
   flex-wrap: wrap;
@@ -2076,7 +2093,15 @@ footer {
 
 @media only screen and (max-width: 360px) {
 
-
+  #contact-popup, #mailingList-popup {
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    margin: 0 auto;
+    top: 50px;
+    z-index: 9999;
+  }
 
   .blog-card .btn-card {
     display: none;

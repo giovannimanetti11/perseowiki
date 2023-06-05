@@ -1,3 +1,61 @@
+// Plant classification
+
+document.addEventListener('DOMContentLoaded', function() {
+  const scientificNameElements = document.querySelectorAll('.meta-box-nome-scientifico');
+  scientificNameElements.forEach(element => {
+    const scientificName = element.dataset.scientificName;
+    console.log('Nome scientifico:', scientificName);
+
+    if (scientificName) {
+        fetchClassification(scientificName);
+    }
+  });
+
+
+  function fetchClassification(speciesName) {
+    fetch(`https://api.gbif.org/v1/species/match?name=${speciesName}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Dati da GBIF:', data);  // Linea di debug
+            displayClassification(data);
+        })
+        .catch(error => console.error('Si è verificato un errore:', error));
+  }
+
+  function displayClassification(classification) {
+    const classificationContainer = document.querySelector('#classification-container');
+  
+    const taxonomyMap = {
+      kingdom: 'Regno',
+      phylum: 'Phylum',
+      class: 'Classe',
+      order: 'Ordine',
+      family: 'Famiglia',
+      genus: 'Genere',
+      species: 'Specie',
+    };
+  
+    const htmlParts = [];
+  
+    for (const key in taxonomyMap) {
+      if (classification.hasOwnProperty(key)) {
+        const link = `https://it.wikipedia.org/wiki/${encodeURIComponent(classification[key])}`;
+        const linkedName = key === 'species'
+          ? classification[key]
+          : `<a href="${link}" target="_blank">${classification[key]}</a>`;
+        htmlParts.push(`<li>${taxonomyMap[key]}: ${linkedName}</li>`);
+      }
+    }
+  
+    const html = '<ul>' + htmlParts.join('') + '</ul>';
+  
+    classificationContainer.innerHTML = html;
+  }
+  
+
+});
+
+
 // Manage hover and clics on additional images
 
 document.addEventListener("DOMContentLoaded", function () {
