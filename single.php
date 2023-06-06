@@ -142,12 +142,21 @@
 
         <div class="post-content-text">
 
-            <div class="plant-details">
-                <div id="classification-container"></div>
+        <div class="plant-details">
+            <div id="classification-container"></div>
+            
+            <div class="map-container">
                 <div id="map" class="map">
                     <img id="loading" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
                 </div>
+                <div id="observation-info">
+                    Numero di osservazioni umane nel mondo per
+                    <span id="plant-name"></span>.
+                    Credits: <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
+                </div>
             </div>
+        </div>
+
 
             <div class="index">
             

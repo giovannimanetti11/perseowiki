@@ -1008,7 +1008,7 @@ header {
 */
 
 .map {
-  width: 500px;
+  width: 100%;
   height: 250px;
   position: relative;
   max-width: 100%;
@@ -1029,7 +1029,8 @@ header {
 }
 
 .ol-viewport canvas {
-  border-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
 }
 
 .plant-details {
@@ -1051,6 +1052,30 @@ header {
   color: #0A2944;
   text-decoration: none;
 }
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#observation-info {
+  background-color: #f5f5f5; 
+  padding: 10px;
+  font-size: 12px; 
+  align-self: flex-end;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#observation-info #plant-name {
+  font-weight: bold; 
+}
+
+#observation-info a {
+  color: #0066cc;
+}
+
 
 .article-title {
   display: flex;
