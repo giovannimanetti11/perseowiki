@@ -1007,6 +1007,51 @@ header {
 *
 */
 
+.map {
+  width: 500px;
+  height: 250px;
+  position: relative;
+  max-width: 100%;
+}
+
+#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  display: none;
+}
+
+.ol-attribution {
+  display: none !important;
+}
+
+.ol-viewport canvas {
+  border-radius: 10px !important;
+}
+
+.plant-details {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #0A2944;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+}
+
+#classification-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 25px;
+}
+
+#classification-container li {
+  margin-bottom: 10px;
+  color: #0A2944;
+  text-decoration: none;
+}
+
 .article-title {
   display: flex;
 }
@@ -1193,23 +1238,6 @@ header {
 
 .post-buttons button:hover {
   background-color:rgba(62, 146, 162, 0.3);
-}
-
-#classification-container {
-  margin-bottom: 25px;
-  border-bottom: 1px solid #0A2944;
-}
-
-#classification-container ul {
-  list-style-type: none;
-  padding: 0;
-  margin-bottom: 0;
-}
-
-#classification-container li {
-  margin-bottom: 10px;
-  color: #0A2944;
-  text-decoration: none;
 }
 
 .index {
@@ -2093,6 +2121,10 @@ footer {
 
 @media only screen and (max-width: 360px) {
 
+  .plant-details {
+    flex-direction: column;
+  }
+
   #contact-popup, #mailingList-popup {
     max-height: 100vh;
     overflow-y: auto;
@@ -2113,6 +2145,14 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+
+  .post-container {
+    padding: 0;
+  }
+
+  .plant-details {
+    flex-direction: column;
+  }
 
   #popup-menu ul li {
     padding: 5px 0;
@@ -2231,7 +2271,7 @@ footer {
 
   .breadcrumbs {
     width: 95%;
-    padding: 5px;
+    padding: 15px 0;
     font-size: 13px;
   }
 

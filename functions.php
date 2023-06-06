@@ -263,6 +263,25 @@ function perseowiki_enqueue_home_scripts() {
 add_action('wp_enqueue_scripts', 'perseowiki_enqueue_home_scripts');
 
 
+function enqueue_observations_map_scripts() {
+    if ( ! is_single() ) {
+        return;
+    }
+
+    wp_enqueue_style( 'openlayers-css', 'https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css', array(), null, 'all' );
+
+    wp_enqueue_script( 'polyfill', 'https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL', array(), null, true );
+    wp_script_add_data( 'polyfill', 'defer', true );
+
+    wp_enqueue_script( 'openlayers', 'https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js', array(), null, true );
+    wp_script_add_data( 'openlayers', 'defer', true );
+
+    wp_enqueue_script( 'observationsMap', get_template_directory_uri() . '/inc/js/observationsMap.js', array( 'polyfill', 'openlayers' ), '1.0.0', true );
+    wp_script_add_data( 'observationsMap', 'defer', true );
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_observations_map_scripts' );
+
+
 
 function enqueue_admin_scripts() {
     if (is_admin()) {
@@ -274,7 +293,11 @@ add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
 
 
 
-// Extract config.php API keys
+/*
+ * 
+ * Extract config.php API keys
+ *
+ */ 
 
 function get_aws_credentials() {
     $config_file_path = get_stylesheet_directory() . '/inc/config.php';
@@ -293,7 +316,12 @@ function get_aws_credentials() {
     }
 }
 
-// Add Amazon SDK and Custom JS and add Amazon API keys to it
+/*
+ * 
+ * Add Amazon SDK and Custom JS and add Amazon API keys to it
+ *
+ */
+
 
 function enqueue_aws_sdk_and_custom_scripts() {
     if (is_single() || is_page_template('single-termine.php') || is_tag()) {

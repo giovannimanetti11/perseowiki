@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const scientificNameElements = document.querySelectorAll('.meta-box-nome-scientifico');
   scientificNameElements.forEach(element => {
     const scientificName = element.dataset.scientificName;
-    console.log('Nome scientifico:', scientificName);
-
+    
     if (scientificName) {
         fetchClassification(scientificName);
     }
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch(`https://api.gbif.org/v1/species/match?name=${speciesName}`)
         .then(response => response.json())
         .then(data => {
-            console.log('Dati da GBIF:', data);  // Linea di debug
             displayClassification(data);
         })
         .catch(error => console.error('Si è verificato un errore:', error));
