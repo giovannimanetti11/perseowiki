@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 image: new ol.style.Circle({
                     radius: getRadius(size),
                     stroke: new ol.style.Stroke({
-                        color: '#fff'
+                        color: '#0A2944'
                     }),
                     fill: new ol.style.Fill({
                         color: getColor(size)
@@ -65,11 +65,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 text: new ol.style.Text({
                     text: size.toString(),
                     fill: new ol.style.Fill({
-                        color: '#fff'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: '#000',
-                        width: 1
+                        color: '#0A2944'
                     })
                 })
             });
@@ -79,14 +75,14 @@ document.addEventListener("DOMContentLoaded", async function() {
     };
 
     const getTaxonKey = async (scientificName) => {
-        const response = await fetch(`https://api.gbif.org/v1/species/match?name=${encodeURIComponent(scientificName)}`);
+        const response = await fetch(`https://api.gbif.org/v1/species/match?name=${encodeURIComponent(scientificName)}`, {cache: "no-store"});
         const data = await response.json();
         return data.usageKey;
     };
-
+    
     const getOccurrences = async (taxonKey, basisOfRecord, offset) => {
-        let url = `https://api.gbif.org/v1/occurrence/search?taxon_key=${taxonKey}&limit=300&offset=${offset}&basisOfRecord=${basisOfRecord}&year=2022,2023&hasCoordinate=true`;
-        const response = await fetch(url);
+        let url = `https://api.gbif.org/v1/occurrence/search?taxon_key=${taxonKey}&limit=300&offset=${offset}&basisOfRecord=${basisOfRecord}&year=2023&hasCoordinate=true`;
+        const response = await fetch(url, {cache: "no-store"});
         const jsonData = await response.json();
         return jsonData.results;
     };
@@ -107,15 +103,35 @@ document.addEventListener("DOMContentLoaded", async function() {
     };
 
     const fetchRecords = async (taxonKey, basisOfRecord) => {
-        for (let i = 0; i < 10; i++) {
-            const offset = i * 300;
+        const limit = 300;
+        const maxRequests = 20;
+        let isFirstBatch = true;
+    
+        const loadRecords = async (offset) => {
             const records = await getOccurrences(taxonKey, basisOfRecord, offset);
-
-            if (records.length > 0) {
-                renderOccurrences(records, basisOfRecord);
+            renderOccurrences(records, basisOfRecord);
+    
+            // If it's the first batch of data, initialize the map
+            if (isFirstBatch) {
+                initMap();
+                map.updateSize();
+                isFirstBatch = false;
             }
-        }
+    
+            if (offset + limit < maxRequests * limit) {
+                // Continue loading more records recursively
+                loadRecords(offset + limit);
+            }
+        };
+    
+        await loadRecords(0);
     };
+    
+    
+    
+    
+    
+    
 
     const initMap = () => {
         if (!map) { 
@@ -145,21 +161,14 @@ document.addEventListener("DOMContentLoaded", async function() {
         loading.style.display = "block";
         const taxonKey = await getTaxonKey(scientificName);
         const basisOfRecord = 'HUMAN_OBSERVATION';
-
+    
         document.getElementById('plant-name').textContent = scientificName;
-
+    
         await fetchRecords(taxonKey, basisOfRecord);
-
-        await new Promise(resolve => {
-            setTimeout(() => {
-                initMap();
-                map.updateSize();
-                resolve();
-            }, 1000);
-        });
-
+        
         loading.style.display = "none";
     };
+    
 
     renderMap();
 });

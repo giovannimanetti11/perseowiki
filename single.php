@@ -150,9 +150,9 @@
                     <img id="loading" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
                 </div>
                 <div id="observation-info">
-                    Numero di osservazioni umane nel mondo per
-                    <span id="plant-name"></span>.
-                    Credits: <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
+                    Numero di osservazioni umane nel mondo di
+                    <span id="plant-name"></span> nel 2023.
+                    <em>Credits:</em> <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
                 </div>
             </div>
         </div>
