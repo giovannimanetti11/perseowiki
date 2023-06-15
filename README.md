@@ -1,4 +1,4 @@
-# WordPress Encyclopedia Theme
+# WikiHerbalist WordPress theme
 ===============================
 
 Version: 0.1.2
@@ -9,9 +9,9 @@ Giovanni Manetti ( [@GioManetti11](http://twitter.com/GioManetti11) / [perseodes
 
 ## Summary
 
-Perseowiki is a clean and lightweight WordPress theme developed by Giovanni Manetti, designed to provide a wiki-like experience. The theme does not use any boilerplate, which ensures no unused JavaScript is included. Additionally, it avoids using page builders for a more streamlined and efficient performance.
+Perseowiki is a clean, lightweight WordPress theme designed and developed by Giovanni Manetti. It is purpose-built for WikiHerbalist.com to deliver the best possible encyclopedia experience. This theme does not use any boilerplate, ensuring that no unnecessary JavaScript is included. In addition, it avoids using page builders, enhancing its streamlined performance and efficiency.
 
-Please note that using this theme may require a considerable amount of customization. While I may not always be available to provide support for the installation, feel free to contact me at giovanni[at]perseodesign.com for any questions or concerns.
+Feel free to use this theme in whole or in part, but be aware that significant customization might be necessary. While I may not always be available to provide installation support, don't hesitate to contact me at giovanni[at]perseodesign.com with any questions or concerns.
 
 Getting Started
 ---------------
