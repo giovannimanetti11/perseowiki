@@ -512,6 +512,118 @@ function aggiungi_taxonomy() {
 }
 add_action( 'init', 'aggiungi_taxonomy' );
 
+
+
+
+/*
+ * 
+ * Add CPT members
+ *
+ */
+
+add_action('init', 'create_members_cpt');
+
+function create_members_cpt() {
+  $labels = array(
+    'name' => _x('Members', 'Post Type General Name', 'textdomain'),
+    'singular_name' => _x('Member', 'Post Type Singular Name', 'textdomain'),
+    'menu_name' => __('Members', 'textdomain'),
+    'all_items' => __('All Members', 'textdomain'),
+  );
+
+  $args = array(
+    'label' => __('Member', 'textdomain'),
+    'description' => __('Members of the scientific committee', 'textdomain'),
+    'labels' => $labels,
+    'supports' => array('title', 'editor', 'thumbnail'),
+    'public' => true,
+    'show_ui' => true,
+    'show_in_menu' => true,
+    'menu_position' => 5,
+    'menu_icon' => 'dashicons-groups',
+    'show_in_admin_bar' => true,
+    'can_export' => true,
+    'has_archive' => true,
+    'exclude_from_search' => false,
+    'publicly_queryable' => true,
+    'capability_type' => 'post',
+  );
+
+  register_post_type('members', $args);
+}
+
+add_action( 'init', 'create_member_category', 0 );
+
+function create_member_category() {
+
+  $labels = array(
+    'name' => _x( 'Member Categories', 'taxonomy general name', 'textdomain' ),
+    'singular_name' => _x( 'Member Category', 'taxonomy singular name', 'textdomain' ),
+    'search_items' =>  __( 'Search Member Categories', 'textdomain' ),
+    'all_items' => __( 'All Member Categories', 'textdomain' ),
+    'parent_item' => __( 'Parent Member Category', 'textdomain' ),
+    'parent_item_colon' => __( 'Parent Member Category:', 'textdomain' ),
+    'edit_item' => __( 'Edit Member Category', 'textdomain' ), 
+    'update_item' => __( 'Update Member Category', 'textdomain' ),
+    'add_new_item' => __( 'Add New Member Category', 'textdomain' ),
+    'new_item_name' => __( 'New Member Category Name', 'textdomain' ),
+    'menu_name' => __( 'Member Categories', 'textdomain' ),
+  );  
+
+  register_taxonomy('member_category',array('members'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'member-category' ),
+  ));
+}
+
+
+
+add_action('add_meta_boxes', 'add_affiliation_metabox');
+
+function add_affiliation_metabox() {
+  add_meta_box(
+    'affiliation_metabox', 
+    'Affiliation',
+    'affiliation_metabox_callback', 
+    'members', 
+    'normal', 
+    'high' 
+  );
+}
+
+function affiliation_metabox_callback($post) {
+  
+  wp_nonce_field(basename(__FILE__), 'affiliation_nonce');
+  
+  
+  $affiliation_value = get_post_meta($post->ID, '_affiliation', true);
+  
+  
+  echo '<input type="text" name="affiliation" value="' . esc_attr($affiliation_value) . '" class="widefat">';
+}
+
+
+add_action('save_post', 'save_affiliation_metabox', 10, 2);
+
+function save_affiliation_metabox($post_id, $post) {
+  
+  if(!isset($_POST['affiliation_nonce']) || !wp_verify_nonce($_POST['affiliation_nonce'], basename(__FILE__)))
+    return $post_id;
+  
+  
+  if(!current_user_can('edit_post', $post_id))
+    return $post_id;
+  
+  
+  $new_affiliation_value = (isset($_POST['affiliation']) ? sanitize_text_field($_POST['affiliation']) : '');
+  update_post_meta($post_id, '_affiliation', $new_affiliation_value);
+}
+
+
 /*
  * 
  * Add svg support .
@@ -826,13 +938,108 @@ function save_tossica_metabox_data($post_id) {
     }
 }
 
+
+
+/*
+ *
+ * ADD custom metabox Reviews
+ *
+ */
+
+// Add metabox to posts and cpt termine
+function wikiherbalist_add_custom_metabox() {
+    add_meta_box(
+        'wikiherbalist_revision_metabox', 
+        'Dettagli Revisione', 
+        'wikiherbalist_revision_metabox_callback', 
+        ['post', 'termine'], 
+        'side', 
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'wikiherbalist_add_custom_metabox');
+
+// Metabox callback
+function wikiherbalist_revision_metabox_callback($post) {
+    wp_nonce_field(basename(__FILE__), 'wikiherbalist_nonce');
+    
+    $stored_revisori = get_post_meta($post->ID, 'revisori', true);  
+    $stored_date = get_post_meta($post->ID, 'date_revisioni', true);
+
+    // Recupera tutti i membri
+    $members = get_posts(['post_type' => 'members', 'numberposts' => -1]);
+
+    echo '<label for="revisori">Revisori:</label>';
+    echo '<div id="revisori-list">';
+    if (!empty($stored_revisori)) {
+        foreach ($stored_revisori as $revisore_id) {
+            $revisore = get_post($revisore_id);
+            echo '<div class="revisore-item">' . esc_html($revisore->post_title) . ' (' . esc_html($stored_date) . ') <span class="remove-revisore">x</span></div>';
+            echo '<input type="hidden" name="revisori[]" value="' . esc_attr($revisore_id) . '">';
+        }
+    }
+    echo '</div>';
+
+    echo '<select id="add-revisore-dropdown">';
+    echo '<option value="">Aggiungi un revisore...</option>';
+    foreach ($members as $member) {
+        echo '<option value="' . $member->ID . '">' . $member->post_title . '</option>';
+    }
+    echo '</select>';
+    echo '<div>';
+    echo '<label for="date_revisioni">Data di Revisione</label>';
+    echo '<br>';
+    echo '<input type="date" name="date_revisioni" value="' . esc_attr($stored_date) . '">';
+    echo '</div>';
+}
+
+
+
+
+// Save metadata
+function wikiherbalist_save_post_meta($post_id) {
+    if (!isset($_POST['wikiherbalist_nonce']) || !wp_verify_nonce($_POST['wikiherbalist_nonce'], basename(__FILE__))) {
+        return $post_id;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $post_id;
+    }
+
+    if ('post' === $_POST['post_type'] || 'termine' === $_POST['post_type']) {
+        if (!current_user_can('edit_post', $post_id)) {
+            return $post_id;
+        }
+    }
+
+    $data = [
+        'revisori' => isset($_POST['revisori']) ? $_POST['revisori'] : [], 
+        'date_revisioni' => sanitize_text_field($_POST['date_revisioni'])
+    ];
+
+    foreach ($data as $key => $value) {
+        if (get_post_meta($post_id, $key, false)) {
+            update_post_meta($post_id, $key, $value);
+        } else {
+            add_post_meta($post_id, $key, $value);
+        }
+        if (!$value) {
+            delete_post_meta($post_id, $key);
+        }
+    }
+}
+
+add_action('save_post', 'wikiherbalist_save_post_meta');
+
+
+
 /*
  * 
  * AJAX get posts by letter [homepage]
  *
  */
 
- function title_starts_with_char($where, &$wp_query) {
+ function title_starts_with_char($where, $wp_query) {
     global $wpdb;
     if ($start_char = $wp_query->get('start_char')) {
         $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . $start_char . '%\'';

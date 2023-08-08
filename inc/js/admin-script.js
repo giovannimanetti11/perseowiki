@@ -86,3 +86,47 @@ document.addEventListener("DOMContentLoaded", function () {
     const removeButtons = document.querySelectorAll(".remove-image-button");
     removeButtons.forEach(button => button.addEventListener('click', removeImage));
 });
+
+
+// Funzione per gestire l'aggiunta e la rimozione dei revisori
+document.addEventListener('DOMContentLoaded', function() {
+  const dropdown = document.getElementById('add-revisore-dropdown');
+  const revisoriList = document.getElementById('revisori-list');
+  const dateInput = document.querySelector('input[name="date_revisioni"]');
+
+  // Aggiungi stili CSS per la "x" e il cursore
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .remove-revisore {
+      color: red;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+  `;
+  document.head.appendChild(style);
+
+
+  dropdown.addEventListener('change', function() {
+      if (this.value) {
+          const revisoreName = this.options[this.selectedIndex].text;
+          const selectedDate = dateInput.value;
+          const div = document.createElement('div');
+          div.className = 'revisore-item';
+          div.innerHTML = revisoreName + ' (' + selectedDate + ') <span class="remove-revisore">x</span>';
+          revisoriList.appendChild(div);
+
+          // Add hidden input for the selected revisore
+          const hiddenInput = document.createElement('input');
+          hiddenInput.type = 'hidden';
+          hiddenInput.name = 'revisori[]';
+          hiddenInput.value = this.value;
+          div.appendChild(hiddenInput);  
+      }
+  });
+
+  revisoriList.addEventListener('click', function(e) {
+      if (e.target && e.target.classList.contains('remove-revisore')) {
+          e.target.parentNode.remove();
+      }
+  });
+});

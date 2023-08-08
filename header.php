@@ -119,7 +119,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             <a href="#" id="contact-popup-close-btn"><i class="fa fa-times"></i></a>
             <p>Contatta WikiHerbalist</p>
             <span>Per qualsiasi domanda, suggerimento o feedback, scrivici compilando il form sottostante.</span>
-            <?php echo do_shortcode('[contact-form-7 id="1417" title="WikiHerbalist"]'); ?>
+            <?php echo do_shortcode('[contact-form-7 id="1424" title="WikiHerbalistMainContact"]'); ?>
         </div>
     </div>
 

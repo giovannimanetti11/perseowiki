@@ -8,7 +8,7 @@
 
 
 <div id="content" class="container">
-    <h1 class="page-title">Erbe medicinali</h1>
+    <h1 class="page-title">Piante medicinali</h1>
 
     <?php
     $terms_alphabetical = new WP_Query(array(

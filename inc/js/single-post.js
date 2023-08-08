@@ -56,14 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Manage hover and clics on additional images
 
-document.addEventListener("DOMContentLoaded", function () {
-  setTimeout(function () {
+window.onload = function () { 
+setTimeout(function () {
     const featuredImage = document.getElementById("featured-image");
     const additionalImageThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
     let originalFeaturedImageSrc = featuredImage.src;
 
-    // Add featured image to the list of additional image thumbnails
     const additionalImages = document.querySelectorAll(".additional-images-thumbnails img[src]:not(#featured-image)");
     if (additionalImages.length > 0) {
       const featuredImageThumbnail = document.createElement("img");
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
       featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
       document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
     }
-
 
     const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
@@ -94,38 +92,33 @@ document.addEventListener("DOMContentLoaded", function () {
         featuredImage.src = fullImageUrl;
         originalFeaturedImageSrc = fullImageUrl;
 
-        // Remove "selected" class from other thumbnails
         document.querySelectorAll(".additional-image-thumbnail.selected").forEach((selectedThumbnail) => {
           selectedThumbnail.classList.remove("selected");
         });
 
-        // Add "selected" class to clicked thumbnail
         thumbnail.classList.add("selected");
       });
     });
   }, 550);
-});
 
-
-// Create custom lightbox
-
-document.addEventListener('DOMContentLoaded', function() {
+  const images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
+  let currentIndex = 0;
+  
   function initLightbox() {
     const parent = document.querySelector('#post-content');
   
     parent.addEventListener('click', function(e) {
       const target = e.target;
       if (target.closest('.additional-images-thumbnails')) {
-        // Prevent lightbox for images inside additional-images-thumbnails
         e.stopPropagation();
         return;
       }
       if (target.tagName === 'IMG' && window.innerWidth > 768) {
+        currentIndex = images.indexOf(target);
         openLightbox(target);
       }
     });
   }
-  
   
   function openLightbox(img) {
     const srcset = img.getAttribute('srcset');
@@ -138,7 +131,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const lightbox = document.createElement('div');
     lightbox.classList.add('custom-lightbox', 'active');
-    lightbox.innerHTML = `<div class="image-wrapper"><img src="${largeImageSrc}" alt="${img.alt}" /></div>`;
+    lightbox.innerHTML = `<div class="image-wrapper">
+                            <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
+                            <div class="lightbox-arrow left">←</div>
+                            <div class="lightbox-arrow right">→</div>
+                          </div>`;
+    
+    lightbox.querySelector('.left').addEventListener('click', () => {
+      currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+      lightbox.querySelector('img').src = images[currentIndex].src;
+    });
+
+    lightbox.querySelector('.right').addEventListener('click', () => {
+      currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+      lightbox.querySelector('img').src = images[currentIndex].src;
+    });
     
     lightbox.addEventListener('click', (e) => {
       if (e.target !== lightbox.querySelector('img')) {
@@ -153,10 +160,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });    
     
     document.body.appendChild(lightbox);
-}
+  }
 
   initLightbox();
-});
+};
 
 // Create index and romboids
 

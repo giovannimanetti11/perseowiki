@@ -93,16 +93,47 @@
 
         <div class="article-info">
             <div class="post-date">
-            <?php
-                $data_pubblicazione = get_the_date();
-                $data_ultimo_aggiornamento = get_the_modified_date();
-                if ($data_pubblicazione != $data_ultimo_aggiornamento) {
-                echo "Voce pubblicata il $data_pubblicazione e aggiornata il $data_ultimo_aggiornamento";
-                } else {
-                echo "Voce pubblicata il $data_pubblicazione";
-                }
-            ?>
+                <?php
+                    $data_pubblicazione = get_the_date('j F Y');
+                    $data_ultimo_aggiornamento = get_the_modified_date('j F Y');
+                    if ($data_pubblicazione != $data_ultimo_aggiornamento) {
+                        echo "Voce pubblicata il $data_pubblicazione e aggiornata il $data_ultimo_aggiornamento";
+                    } else {
+                        echo "Voce pubblicata il $data_pubblicazione";
+                    }
+
+                    $post_id = get_the_ID();
+                    $revisori = get_post_meta($post_id, 'revisori', true);
+                    $date_revisioni = get_post_meta($post_id, 'date_revisioni', true);
+
+                    // Assicuriamoci che entrambi siano array
+                    if (!is_array($revisori)) {
+                        $revisori = [$revisori];
+                    }
+                    if (!is_array($date_revisioni)) {
+                        $date_revisioni = [$date_revisioni];
+                    }
+
+                    // Verifica che ci siano effettivamente dei revisori e delle date di revisione
+                    if (!empty($revisori) && $revisori[0] && !empty($date_revisioni)) {
+                        // Ordina le revisioni per data
+                        array_multisort($date_revisioni, SORT_DESC, $revisori);
+
+                        // Visualizza l'ultima revisione
+                        $ultimo_revisore = get_post($revisori[0]);
+                        if ($ultimo_revisore) {
+                            $formatted_date = date_i18n('j F Y', strtotime($date_revisioni[0]));
+                            echo '<p>Revisionato da <u>' . esc_html($ultimo_revisore->post_title) . '</u> il ' . esc_html($formatted_date) . '</p>';
+                        }
+                    }
+                ?>
             </div>
+
+
+
+
+
+
             <?php
             $words_per_minute = 200;
             $content = get_post_field( 'post_content', $post->ID );

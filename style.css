@@ -403,6 +403,15 @@ header {
   outline: none;
 }
 
+#contact-popup input, #contact-popup textarea {
+  width: 100%;
+  font-weight: normal;
+}
+
+.popup-content form {
+  margin-top: 25px;
+}
+
 #login-form input, #signup-form input {
   width: 95%;
   margin: 5px 0;
@@ -1534,10 +1543,9 @@ header {
   font-style: normal;
 }
 
-/* post id 897 */
+/* post table */
 
-.postid-897 table {
-  font-family: Arial, sans-serif;
+.post-table {
   border-collapse: collapse;
   width: 100%;
   max-width: 800px;
@@ -1545,25 +1553,25 @@ header {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.postid-897 thead {
+.post-table thead {
   background-color: #f2f2f2;
 }
 
-.postid-897 th,
-.postid-897 td {
+.post-table th,
+.post-table td {
   text-align: left;
   padding: 8px;
 }
 
-.postid-897 tr:nth-child(even) {
+.post-table tr:nth-child(even) {
   background-color: #f8f8f8;
 }
 
-.postid-897 tr:hover {
+.post-table tr:hover {
   background-color: #f2f2f2;
 }
 
-.postid-897 td:first-child {
+.post-table td:first-child {
   font-weight: bold;
 }
 
@@ -2024,6 +2032,78 @@ header {
 }
 
 
+/* 
+*
+*  SCIENTIFIC COMMITTEE PAGE
+*
+*/
+
+
+.about-container {
+  text-align: justify;
+  margin: 0 auto;
+  margin-top: 50px;
+  max-width: 1400px;
+}
+
+.members-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-title {
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.members-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1400px;
+}
+
+.member-card {
+  display: flex;
+  width: 300px;
+  max-width: 300px;
+  min-width: 300px;
+  margin-bottom: 20px;
+  vertical-align: top;
+  border: 1px solid #d3d3d3;
+  -webkit-box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  box-shadow: 5px 5px 15px -2px rgba(7,28,46,0.53);
+  height: 425px;
+  border-radius: 10px;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.member-image img {
+  padding: 5px;
+  margin: 0 auto;
+  max-width: 260px;
+  height: auto;
+}
+
+.member-name {
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .member-card {
+    width: 90%;
+  }
+}
+
+
 
 /* 
 *
@@ -2076,6 +2156,10 @@ footer {
 
 .footerLinks a:hover {
   color: #fff;
+}
+
+.wpml-ls-statics-footer {
+  display: none;
 }
 
 
@@ -2138,6 +2222,7 @@ footer {
 
 
 
+
 /* 
 *
 *  MEDIA QUERIES
@@ -2170,6 +2255,14 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+
+  .about-container {
+    padding: 50px;
+  }
+
+  .member-card {
+    flex: 0 1 100%;
+  }
 
   .post-container {
     padding: 0;
@@ -2514,6 +2607,10 @@ footer {
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
 
+  .about-container {
+    padding: 50px;
+  }
+
   .properties-container {
     width: 95%;
   }
@@ -2541,10 +2638,6 @@ footer {
     margin-left: 0;
   }
 
-  header {
-    padding: 0 25px;
-  }
-
   .home-content {
     width: 80%;
   }
@@ -2569,11 +2662,46 @@ footer {
     max-width: 80%;
   }
 
+  .call-to-action button, #popup-menu button {
+    width: auto;
+  }
+
+  .call-to-action {
+    display: flex;
+  }
+
+  header {
+    padding: 0 5px;
+  }
+
+  .menu {
+    margin-left: 25px;
+  }
+
+  .menu li {
+    padding: 0 5px;
+  }
+
 }
 
 @media only screen and (min-width: 993px) and (max-width: 1441px) {
 
+  header {
+    padding: 0 15px;
+  }
 
+  .call-to-action button, #popup-menu button {
+    width: auto;
+  }
+
+  .about-container {
+    padding: 50px;
+  }
+
+  .member-card {
+    flex: 0 1 calc(50% - 40px);
+  }
+  
   .post-content, .home-content, .breadcrumbs, .card-deck {
     width: 70%;
   }

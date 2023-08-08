@@ -210,8 +210,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const contentElements = document.querySelectorAll('#post-content, .content-area, .home-content');
       contentElements.forEach(element => {
         const childNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE && !['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(node.tagName));
+
         childNodes.forEach(child => {
-          linkifyContent(child, titlesAndLinks, currentURL, currentPostID);
+          if (!child.closest('.meta-box-nome-scientifico, #classification-container, #scientificName')) {
+            linkifyContent(child, titlesAndLinks, currentURL, currentPostID);
+          }
         });
       });
     });
@@ -251,10 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     element.innerHTML = newHTML;
+
     
-
-  
-
     // Inizializza i tooltip per tutti i link
     
     const linksWithExcerpt = document.querySelectorAll('.link-with-excerpt');
