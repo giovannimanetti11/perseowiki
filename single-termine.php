@@ -123,7 +123,7 @@
                         $ultimo_revisore = get_post($revisori[0]);
                         if ($ultimo_revisore) {
                             $formatted_date = date_i18n('j F Y', strtotime($date_revisioni[0]));
-                            echo '<p>Revisionato da <u>' . esc_html($ultimo_revisore->post_title) . '</u> il ' . esc_html($formatted_date) . '</p>';
+                            echo '<p>Revisionata da <u>' . esc_html($ultimo_revisore->post_title) . '</u> il ' . esc_html($formatted_date) . '</p>';
                         }
                     }
                 ?>
