@@ -46,7 +46,7 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 20px;
-    border-radius: 10px;
+    min-width: auto;
 }
 
 #wikiherbalist_revision_metabox label {
@@ -65,7 +65,7 @@
 }
 
 #wikiherbalist_revision_metabox #revisions-list {
-    padding: 10px;
+    padding: 10px 0;
     border-top: 1px solid #ddd;
     margin-top: 10px;
 }
@@ -78,7 +78,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -87,15 +87,21 @@
 }
 
 #wikiherbalist_revision_metabox #revisions-list .revision-item button.remove-revision {
-    background-color: #FF6666;
+    background-color: #dc3232;
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
+    margin-left: 5px;
+}
+
+#wikiherbalist_revision_metabox #revisions-list .revision-item button.remove-revision:hover, #wikiherbalist_revision_metabox button#add-revision:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 #wikiherbalist_revision_metabox button#add-revision {
-    background-color: #007BFF;
+    background-color: #2271b1;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -104,7 +110,7 @@
 
 /* Stile per il messaggio di errore */
 #wikiherbalist_revision_metabox .error-message {
-    color: #FF6666;
+    color: #dc3232;
     font-weight: bold;
 }
 
