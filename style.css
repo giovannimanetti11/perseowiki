@@ -1187,6 +1187,7 @@ header {
 
 .additional-images-thumbnails img {
   width: 50px !important;
+  max-height: 50px;
   margin: 0 3px !important;
   border-radius: 5px;
 }
@@ -1523,7 +1524,7 @@ header {
   border: 0;
 }
 
-.postid-196 .fa-volume-up, .postid-829 .fa-volume-up {
+.postid-196 .fa-volume-up, .postid-829 .fa-volume-up, .postid-1624 .fa-volume-up {
   display: none;
 }
 

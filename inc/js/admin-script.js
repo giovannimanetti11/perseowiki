@@ -88,45 +88,65 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Funzione per gestire l'aggiunta e la rimozione dei revisori
+
+// Gestisce le revisioni nel backend di WP
+
 document.addEventListener('DOMContentLoaded', function() {
-  const dropdown = document.getElementById('add-revisore-dropdown');
-  const revisoriList = document.getElementById('revisori-list');
-  const dateInput = document.querySelector('input[name="date_revisioni"]');
+  const addRevisionButton = document.getElementById('add-revision');
+  const revisionsList = document.getElementById('revisions-list');
+  const memberList = document.getElementById('member-list');
+  const revisionDate = document.getElementById('revision-date');
 
-  // Aggiungi stili CSS per la "x" e il cursore
-  const style = document.createElement('style');
-  style.innerHTML = `
-    .remove-revisore {
-      color: red;
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  `;
-  document.head.appendChild(style);
+  addRevisionButton.addEventListener('click', function() {
+      const selectedMemberId = memberList.value;
+      const selectedMemberText = memberList.options[memberList.selectedIndex].text;
+      const selectedDate = revisionDate.value;
 
+      if (selectedMemberId && selectedDate) {
+          const revisionItem = document.createElement('div');
+          revisionItem.className = 'revision-item';
+          revisionItem.dataset.memberId = selectedMemberId;
+          revisionItem.dataset.date = selectedDate;
 
-  dropdown.addEventListener('change', function() {
-      if (this.value) {
-          const revisoreName = this.options[this.selectedIndex].text;
-          const selectedDate = dateInput.value;
-          const div = document.createElement('div');
-          div.className = 'revisore-item';
-          div.innerHTML = revisoreName + ' (' + selectedDate + ') <span class="remove-revisore">x</span>';
-          revisoriList.appendChild(div);
+          const revisionText = document.createElement('span');
+          revisionText.textContent = selectedMemberText + ' ' + selectedDate;
+          revisionItem.appendChild(revisionText);
 
-          // Add hidden input for the selected revisore
-          const hiddenInput = document.createElement('input');
-          hiddenInput.type = 'hidden';
-          hiddenInput.name = 'revisori[]';
-          hiddenInput.value = this.value;
-          div.appendChild(hiddenInput);  
+          const removeButton = document.createElement('button');
+          removeButton.textContent = 'X';
+          removeButton.className = 'remove-revision';
+          removeButton.addEventListener('click', function() {
+              revisionsList.removeChild(revisionItem);
+          });
+          revisionItem.appendChild(removeButton);
+
+          revisionsList.appendChild(revisionItem);
       }
   });
 
-  revisoriList.addEventListener('click', function(e) {
-      if (e.target && e.target.classList.contains('remove-revisore')) {
-          e.target.parentNode.remove();
-      }
+  const postForm = document.getElementById('post');
+  postForm.addEventListener('submit', function(event) {
+      const revisions = [];
+      const revisionItems = document.querySelectorAll('.revision-item');
+      revisionItems.forEach(function(revisionItem) {
+          const memberId = revisionItem.dataset.memberId;
+          const date = revisionItem.dataset.date;
+          revisions.push({memberId, date});
+      });
+
+      const revisionsInput = document.createElement('input');
+      revisionsInput.type = 'hidden';
+      revisionsInput.name = 'revisions';
+      revisionsInput.value = JSON.stringify(revisions);
+      postForm.appendChild(revisionsInput);
   });
+
+  const removeButtons = document.querySelectorAll('.remove-revision');
+  removeButtons.forEach(function(removeButton) {
+      removeButton.addEventListener('click', function() {
+          const revisionItem = removeButton.parentElement;
+          revisionsList.removeChild(revisionItem);
+      });
+  });
+
 });

@@ -6,9 +6,9 @@
                 </div>
                 <div class="footerLinks">
                     <ul>
-                        <li><a href="https://www.wikiherbalist.com/cookie-policy/">Cookie Policy</a></li> <li>|</li>
-                        <li><a href="https://www.wikiherbalist.com/privacy-policy/">Privacy Policy</a></li> <li>|</li>
-                        <li><a href="https://www.wikiherbalist.com/diclaimer/">Disclaimer</a></li>
+                        <li><a href="https://www.wikiherbalist.com/cookie-policy">Cookie Policy</a></li> <li>|</li>
+                        <li><a href="https://www.wikiherbalist.com/privacy-policy">Privacy Policy</a></li> <li>|</li>
+                        <li><a href="https://www.wikiherbalist.com/diclaimer">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>

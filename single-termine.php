@@ -101,31 +101,23 @@
                     } else {
                         echo "Voce pubblicata il $data_pubblicazione";
                     }
-
-                    $post_id = get_the_ID();
-                    $revisori = get_post_meta($post_id, 'revisori', true);
-                    $date_revisioni = get_post_meta($post_id, 'date_revisioni', true);
-
-                    // Assicuriamoci che entrambi siano array
-                    if (!is_array($revisori)) {
-                        $revisori = [$revisori];
-                    }
-                    if (!is_array($date_revisioni)) {
-                        $date_revisioni = [$date_revisioni];
-                    }
-
-                    // Verifica che ci siano effettivamente dei revisori e delle date di revisione
-                    if (!empty($revisori) && $revisori[0] && !empty($date_revisioni)) {
-                        // Ordina le revisioni per data
-                        array_multisort($date_revisioni, SORT_DESC, $revisori);
-
-                        // Visualizza l'ultima revisione
-                        $ultimo_revisore = get_post($revisori[0]);
-                        if ($ultimo_revisore) {
-                            $formatted_date = date_i18n('j F Y', strtotime($date_revisioni[0]));
-                            echo '<p>Revisionata da <u>' . esc_html($ultimo_revisore->post_title) . '</u> il ' . esc_html($formatted_date) . '</p>';
+                    echo "<br>";
+                    
+                    $revision_data = get_post_meta(get_the_ID(), '_wikiherbalist_revision_data', true);
+                    if ($revision_data) {
+                        echo '<p>Revisionata da ';
+                        $revisions = [];
+                        foreach ($revision_data as $revision) {
+                            $member = get_post($revision->memberId);
+                            $date = date("d-m-Y", strtotime($revision->date));
+                            $revisions[] = $member->post_title . ' il ' . $date;
                         }
+                        echo implode(', ', $revisions);
+                        echo '</p>';
                     }
+
+
+                    
                 ?>
             </div>
 

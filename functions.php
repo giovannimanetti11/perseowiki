@@ -285,11 +285,19 @@ add_action( 'wp_enqueue_scripts', 'enqueue_observations_map_scripts' );
 
 function enqueue_admin_scripts() {
     if (is_admin()) {
-        wp_enqueue_script('custom-admin-script', get_template_directory_uri() . '/inc/js/admin-script.js');
+        wp_enqueue_script('custom-admin-script', get_template_directory_uri() . '/inc/js/admin-script.js', null, null, true);
         wp_enqueue_style('custom_admin_css', get_stylesheet_directory_uri() . '/admin.css');
+        wp_localize_script('custom-admin-script', 'wikiherbalistAjax', array(
+            'url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wikiherbalist_save_revisions'),
+        ));
     }
 }
 add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
+
+
+
+
 
 
 
@@ -946,8 +954,7 @@ function save_tossica_metabox_data($post_id) {
  *
  */
 
-// Add metabox to posts and cpt termine
-function wikiherbalist_add_custom_metabox() {
+ function wikiherbalist_add_custom_metabox() {
     add_meta_box(
         'wikiherbalist_revision_metabox', 
         'Dettagli Revisione', 
@@ -959,77 +966,69 @@ function wikiherbalist_add_custom_metabox() {
 }
 add_action('add_meta_boxes', 'wikiherbalist_add_custom_metabox');
 
-// Metabox callback
 function wikiherbalist_revision_metabox_callback($post) {
-    wp_nonce_field(basename(__FILE__), 'wikiherbalist_nonce');
-    
-    $stored_revisori = get_post_meta($post->ID, 'revisori', true);  
-    $stored_date = get_post_meta($post->ID, 'date_revisioni', true);
+    wp_nonce_field( basename(__FILE__), 'wikiherbalist_revisions_nonce' );
+    $wikiherbalist_stored_meta = get_post_meta($post->ID, '_wikiherbalist_revision_data', true);
 
-    // Recupera tutti i membri
     $members = get_posts(['post_type' => 'members', 'numberposts' => -1]);
-
-    echo '<label for="revisori">Revisori:</label>';
-    echo '<div id="revisori-list">';
-    if (!empty($stored_revisori)) {
-        foreach ($stored_revisori as $revisore_id) {
-            $revisore = get_post($revisore_id);
-            echo '<div class="revisore-item">' . esc_html($revisore->post_title) . ' (' . esc_html($stored_date) . ') <span class="remove-revisore">x</span></div>';
-            echo '<input type="hidden" name="revisori[]" value="' . esc_attr($revisore_id) . '">';
+    ?>
+    <div>
+        <label for="member-list">Membri</label>
+        <select name="member" id="member-list">
+            <option value="">Seleziona un Membro</option>
+            <?php foreach($members as $member) { ?>
+                <option value="<?php echo $member->ID; ?>"><?php echo $member->post_title; ?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <div>
+        <label for="revision-date">Data</label>
+        <input type="date" id="revision-date" name="revision-date">
+    </div>
+    <div>
+        <button type="button" id="add-revision">Aggiungi</button>
+    </div>
+    <div id="revisions-list">
+        <h4>Revisioni</h4>
+        <?php
+        if ($wikiherbalist_stored_meta) {
+            foreach ($wikiherbalist_stored_meta as $revision) {
+                $member = get_post($revision->memberId);
+                $date = date("d-m-Y", strtotime($revision->date));
+                echo '<div class="revision-item" data-member-id="' . $member->ID . '" data-date="' . $revision->date . '">';
+                echo '<span>' . $member->post_title . ' ' . $date . '</span>';
+                echo '<button class="remove-revision">X</button>';
+                echo '</div>';
+            }
         }
-    }
-    echo '</div>';
-
-    echo '<select id="add-revisore-dropdown">';
-    echo '<option value="">Aggiungi un revisore...</option>';
-    foreach ($members as $member) {
-        echo '<option value="' . $member->ID . '">' . $member->post_title . '</option>';
-    }
-    echo '</select>';
-    echo '<div>';
-    echo '<label for="date_revisioni">Data di Revisione</label>';
-    echo '<br>';
-    echo '<input type="date" name="date_revisioni" value="' . esc_attr($stored_date) . '">';
-    echo '</div>';
+        ?>
+    </div>
+    <?php
 }
 
-
-
-
-// Save metadata
-function wikiherbalist_save_post_meta($post_id) {
-    if (!isset($_POST['wikiherbalist_nonce']) || !wp_verify_nonce($_POST['wikiherbalist_nonce'], basename(__FILE__))) {
+function wikiherbalist_save_revision($post_id) {
+    if (!isset($_POST['wikiherbalist_revisions_nonce'])) {
         return $post_id;
     }
-
+    $nonce = $_POST['wikiherbalist_revisions_nonce'];
+    if (!wp_verify_nonce($nonce, basename(__FILE__))) {
+        return $post_id;
+    }
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
     }
 
-    if ('post' === $_POST['post_type'] || 'termine' === $_POST['post_type']) {
-        if (!current_user_can('edit_post', $post_id)) {
-            return $post_id;
-        }
+    $revision_data = array();
+    if (isset($_POST['revisions'])) {
+        $revision_data = json_decode(stripslashes($_POST['revisions']));
     }
 
-    $data = [
-        'revisori' => isset($_POST['revisori']) ? $_POST['revisori'] : [], 
-        'date_revisioni' => sanitize_text_field($_POST['date_revisioni'])
-    ];
-
-    foreach ($data as $key => $value) {
-        if (get_post_meta($post_id, $key, false)) {
-            update_post_meta($post_id, $key, $value);
-        } else {
-            add_post_meta($post_id, $key, $value);
-        }
-        if (!$value) {
-            delete_post_meta($post_id, $key);
-        }
-    }
+    update_post_meta($post_id, '_wikiherbalist_revision_data', $revision_data);
 }
+add_action('save_post', 'wikiherbalist_save_revision');
 
-add_action('save_post', 'wikiherbalist_save_post_meta');
+
+
 
 
 

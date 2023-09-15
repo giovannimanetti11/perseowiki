@@ -1,4 +1,6 @@
-.widget-sintesi li a:before {
+/* widget sintesi */
+
+.remove-revision-button .widget-sintesi li a:before {
     font-family: "dashicons";
     margin-right: 5px;
     margin-left: 10px;
@@ -18,3 +20,91 @@
 .widget-sintesi .widget-sintesi-commenti a:before {
     content: "\f101" !important;
 }
+
+
+
+/* Metabox revisioni */
+
+/* Stili per il metabox */
+.meta-row {
+    display: flex;
+    margin: 10px 0;
+}
+
+.meta-th {
+    width: 30%;
+}
+
+.meta-td {
+    width: 70%;
+}
+
+/* Stili per la lista delle revisioni */
+
+/* Stile per il Metabox */
+#wikiherbalist_revision_metabox {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#wikiherbalist_revision_metabox label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#wikiherbalist_revision_metabox select,
+#wikiherbalist_revision_metabox input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#wikiherbalist_revision_metabox #revisions-list {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+#wikiherbalist_revision_metabox #revisions-list h4 {
+    margin-top: 0;
+}
+
+#wikiherbalist_revision_metabox #revisions-list .revision-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#wikiherbalist_revision_metabox #revisions-list .revision-item:last-child {
+    border-bottom: none;
+}
+
+#wikiherbalist_revision_metabox #revisions-list .revision-item button.remove-revision {
+    background-color: #FF6666;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#wikiherbalist_revision_metabox button#add-revision {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Stile per il messaggio di errore */
+#wikiherbalist_revision_metabox .error-message {
+    color: #FF6666;
+    font-weight: bold;
+}
+
