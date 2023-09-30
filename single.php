@@ -127,6 +127,19 @@
                 } else {
                 echo "Scheda pubblicata il $data_pubblicazione";
                 }
+
+                $revision_data = get_post_meta(get_the_ID(), '_wikiherbalist_revision_data', true);
+                if ($revision_data) {
+                    echo '<p>Revisionata da ';
+                    $revisions = [];
+                    foreach ($revision_data as $revision) {
+                        $member = get_post($revision->memberId);
+                        $date = date("d-m-Y", strtotime($revision->date));
+                        $revisions[] = $member->post_title . ' il ' . $date;
+                    }
+                    echo implode(', ', $revisions);
+                    echo '</p>';
+                }
             ?>
             </div>
             <?php

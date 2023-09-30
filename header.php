@@ -84,7 +84,7 @@ $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             ));
         ?>
     </nav>
-    
+
     <div class="call-to-action">
         <button id="contact-popup-btn" class="btn btn-sm" type="button">Contatti</button>
         <button id="mailingList-popup-btn" class="btn btn-sm" type="button">Mailing List</button>

@@ -285,7 +285,12 @@ add_action( 'wp_enqueue_scripts', 'enqueue_observations_map_scripts' );
 
 function enqueue_admin_scripts() {
     if (is_admin()) {
-        wp_enqueue_script('custom-admin-script', get_template_directory_uri() . '/inc/js/admin-script.js', null, null, true);
+        wp_enqueue_script(
+            'wikiherbalist-admin-script',
+            get_template_directory_uri() . '/inc/js/admin-script.js',
+            array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n', 'wp-data' ),
+            filemtime( get_template_directory() . '/inc/js/admin-script.js' )
+        );
         wp_enqueue_style('custom_admin_css', get_stylesheet_directory_uri() . '/admin.css');
         wp_localize_script('custom-admin-script', 'wikiherbalistAjax', array(
             'url' => admin_url('admin-ajax.php'),
@@ -967,9 +972,10 @@ function save_tossica_metabox_data($post_id) {
 add_action('add_meta_boxes', 'wikiherbalist_add_custom_metabox');
 
 function wikiherbalist_revision_metabox_callback($post) {
+    
     wp_nonce_field( basename(__FILE__), 'wikiherbalist_revisions_nonce' );
     $wikiherbalist_stored_meta = get_post_meta($post->ID, '_wikiherbalist_revision_data', true);
-
+    error_log(print_r($wikiherbalist_stored_meta, true));
     $members = get_posts(['post_type' => 'members', 'numberposts' => -1]);
     ?>
     <div>
@@ -1007,6 +1013,9 @@ function wikiherbalist_revision_metabox_callback($post) {
 }
 
 function wikiherbalist_save_revision($post_id) {
+    error_log('wikiherbalist_save_revision called');
+    error_log(print_r($_POST, true));
+
     if (!isset($_POST['wikiherbalist_revisions_nonce'])) {
         return $post_id;
     }
@@ -1026,6 +1035,7 @@ function wikiherbalist_save_revision($post_id) {
     update_post_meta($post_id, '_wikiherbalist_revision_data', $revision_data);
 }
 add_action('save_post', 'wikiherbalist_save_revision');
+
 
 
 

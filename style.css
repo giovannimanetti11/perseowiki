@@ -269,6 +269,8 @@ header {
 
 .call-to-action {
   margin-left: auto;
+  display: flex; 
+  align-items: center;
 }
 
 .call-to-action button, #popup-menu button {
@@ -494,7 +496,6 @@ header {
 .contact-form-container {
   margin-top: 25px;
 }
-
 
 
 /* 
@@ -1524,7 +1525,7 @@ header {
   border: 0;
 }
 
-.postid-196 .fa-volume-up, .postid-829 .fa-volume-up, .postid-1624 .fa-volume-up {
+.postid-196 .fa-volume-up, .postid-829 .fa-volume-up, .postid-1462 .fa-volume-up {
   display: none;
 }
 
@@ -2257,6 +2258,14 @@ footer {
 
 @media only screen and (max-width: 768px) {
 
+  .alphabetical-list .letter-title {
+    border-radius: 0;
+  }
+
+  .card-wrapper {
+    margin-top: 25px;
+  }
+
   .about-container {
     padding: 50px;
   }
@@ -2473,11 +2482,11 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
   }
 
   .card-deck .card {
-    width: 250px;
+    width: 100%;
     margin: 0 auto;
     margin-top: 20px !important;
     border: 1px solid #d3d3d3 !important;
@@ -2545,7 +2554,7 @@ footer {
   }
 
   .category .card {
-    margin: 0 auto;
+    margin: 0 20px auto;
     margin-bottom: 20px;
   }
 

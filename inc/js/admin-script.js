@@ -125,21 +125,28 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   const postForm = document.getElementById('post');
-  postForm.addEventListener('submit', function(event) {
-      const revisions = [];
-      const revisionItems = document.querySelectorAll('.revision-item');
-      revisionItems.forEach(function(revisionItem) {
-          const memberId = revisionItem.dataset.memberId;
-          const date = revisionItem.dataset.date;
-          revisions.push({memberId, date});
-      });
 
-      const revisionsInput = document.createElement('input');
-      revisionsInput.type = 'hidden';
-      revisionsInput.name = 'revisions';
-      revisionsInput.value = JSON.stringify(revisions);
-      postForm.appendChild(revisionsInput);
-  });
+  if (postForm) {
+      postForm.addEventListener('submit', function(event) {
+          const revisions = [];
+          const revisionItems = document.querySelectorAll('.revision-item');
+          revisionItems.forEach(function(revisionItem) {
+              const memberId = revisionItem.dataset.memberId;
+              const date = revisionItem.dataset.date;
+              revisions.push({memberId, date});
+          });
+
+          const revisionsInput = document.createElement('input');
+          revisionsInput.type = 'hidden';
+          revisionsInput.name = 'revisions';
+          revisionsInput.value = JSON.stringify(revisions);
+          postForm.appendChild(revisionsInput);
+
+          console.log('Form submitted with revisions:', revisions);
+      });
+  } else {
+      console.error('postForm is null');
+  }
 
   const removeButtons = document.querySelectorAll('.remove-revision');
   removeButtons.forEach(function(removeButton) {
