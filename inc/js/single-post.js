@@ -56,13 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Manage hover and clics on additional images
 
-window.onload = function () { 
-setTimeout(function () {
+// ensure the DOM is fully loaded
+window.onload = function () {
+  // Delay the execution of the code to give time for images to load
+  setTimeout(function () {
     const featuredImage = document.getElementById("featured-image");
-    const additionalImageThumbnails = document.querySelectorAll(".additional-image-thumbnail");
-
     let originalFeaturedImageSrc = featuredImage.src;
 
+    // Create an additional thumbnail for the featured image
     const additionalImages = document.querySelectorAll(".additional-images-thumbnails img[src]:not(#featured-image)");
     if (additionalImages.length > 0) {
       const featuredImageThumbnail = document.createElement("img");
@@ -75,6 +76,7 @@ setTimeout(function () {
 
     const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
+    // Attach mouseenter and mouseleave events for thumbnail hover
     updatedThumbnails.forEach((thumbnail) => {
       thumbnail.addEventListener("mouseenter", function () {
         const fullImageUrl = thumbnail.dataset.fullImageUrl;
@@ -87,6 +89,7 @@ setTimeout(function () {
         featuredImage.setAttribute('srcset', originalFeaturedImageSrc + '');
       });
 
+      // Attach click event for selecting a thumbnail
       thumbnail.addEventListener("click", function () {
         const fullImageUrl = thumbnail.dataset.fullImageUrl;
         featuredImage.src = fullImageUrl;
@@ -103,11 +106,13 @@ setTimeout(function () {
 
   const images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
   let currentIndex = 0;
-  
+
+  // Initialize lightbox
   function initLightbox() {
     const parent = document.querySelector('#post-content');
-  
-    parent.addEventListener('click', function(e) {
+
+    // Attach click event for opening lightbox
+    parent.addEventListener('click', function (e) {
       const target = e.target;
       if (target.closest('.additional-images-thumbnails')) {
         e.stopPropagation();
@@ -119,49 +124,45 @@ setTimeout(function () {
       }
     });
   }
-  
+
+  // Open lightbox and display image
   function openLightbox(img) {
     const srcset = img.getAttribute('srcset');
     let largeImageSrc;
+
+    // Handle srcset if available
     if (srcset) {
-        const sources = srcset.split(', ');
-        largeImageSrc = sources[sources.length - 1].split(' ')[0];
+      const sources = srcset.split(', ');
+      largeImageSrc = sources[sources.length - 1].split(' ')[0];
     } else {
-        largeImageSrc = img.getAttribute('src');
+      largeImageSrc = img.getAttribute('src');
     }
+
+    // Create lightbox
     const lightbox = document.createElement('div');
     lightbox.classList.add('custom-lightbox', 'active');
     lightbox.innerHTML = `<div class="image-wrapper">
                             <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
-                            <div class="lightbox-arrow left">←</div>
-                            <div class="lightbox-arrow right">→</div>
                           </div>`;
-    
-    lightbox.querySelector('.left').addEventListener('click', () => {
-      currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-      lightbox.querySelector('img').src = images[currentIndex].src;
-    });
 
-    lightbox.querySelector('.right').addEventListener('click', () => {
-      currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-      lightbox.querySelector('img').src = images[currentIndex].src;
-    });
-    
+    // Close lightbox on click outside of image
     lightbox.addEventListener('click', (e) => {
       if (e.target !== lightbox.querySelector('img')) {
         lightbox.remove();
       }
     });
 
-    document.addEventListener('keydown', function(e) {
+    // Close lightbox on pressing 'Escape' key
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' || e.keyCode === 27) {
         lightbox.remove();
       }
-    });    
-    
+    });
+
     document.body.appendChild(lightbox);
   }
 
+  // Initialize the lightbox
   initLightbox();
 };
 
@@ -371,4 +372,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
