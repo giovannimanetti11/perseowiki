@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var popupMenu = document.getElementById("popup-menu");
   var isClicked = false;
 
+  // Toggle menu icon and visibility when clicked
 
   menuIcon.addEventListener("click", function() {
     if (!isClicked) {
@@ -32,10 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
+// Initialize the mailing list popup and other features
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Mailing List Popup
 
   function toggleElementVisibility(element, show) {
     if (show) {
@@ -45,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Handle mailing list subscription form
   const form = document.getElementById("subscribe-form");
   const successMessage = document.getElementById("mailingList-success-message");
   const errorMessage = document.getElementById("mailingList-error-message");
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       errorMessage.innerHTML = errors.join("<br/>"); 
       event.preventDefault();
     } else {
+      // Prepare data to send
       const data = {
         email_address: email,
         status: "subscribed",
@@ -113,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault(); 
     }
   });
+
+  // Initialize mailing list popup
+
   const mobilePopupBtn = document.getElementById("mailingList-popup-btn-mobile");
   const popupBtn = document.getElementById("mailingList-popup-btn");
   const popup = document.getElementById("mailingList-popup");
@@ -131,12 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
     popup.style.display = "none";
   });
 
+  // Close popup if clicked outside
   window.addEventListener("click", (event) => {
     if (event.target === popup) {
       popup.style.display = "none";
     }
   });
 
+  // Input validation function for the subscription form
   function validateInputs(nome, cognome, email) {
     let errors = [];
   
@@ -159,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return { nomeValid, cognomeValid, emailValid, errors };
   }
   
-  // Contacts popup
+  // Initialize contact popup
   
   const contactPopupBtn = document.getElementById("contact-popup-btn");
   const contactPopup = document.getElementById("contact-popup");
@@ -180,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     contactPopup.style.display = "none";
   });
 
+  // Close contact popup if clicked outside
   window.addEventListener("click", (event) => {
     if (event.target === contactPopup) {
       contactPopup.style.display = "none";
@@ -283,47 +290,59 @@ document.addEventListener('DOMContentLoaded', function () {
   let tooltip = null;
 
   function showTooltip(excerpt, event) {
-    if (tooltip) {
-      tooltip.remove();
-      tooltip = null;
-    }
-  
-    if (!isTouchDevice()) {
-      tooltip = document.createElement('div');
-      tooltip.classList.add('tooltip-term-excerpt');
-      tooltip.innerHTML = excerpt;
-  
-      const linkRect = event.target.getBoundingClientRect();
-      const linkMid = linkRect.top + linkRect.height / 2;
-  
-      if (linkMid < window.innerHeight / 2) { // Se il link è nella metà superiore della pagina
-        tooltip.classList.add('tooltip-down');
-      } else { // Se il link è nella metà inferiore della pagina
-        tooltip.classList.add('tooltip-up');
-      }
-  
-      document.body.appendChild(tooltip);
-  
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const tooltipHeight = tooltipRect.height;
-      const scrollX = window.pageXOffset;
-      const scrollY = window.pageYOffset;
-  
-      let tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150; // Sposta il tooltip 150px a sinistra
-      let tooltipY;
-  
-      if (linkMid < window.innerHeight / 2) { // Se il link è nella metà superiore della pagina
-        tooltipY = linkRect.bottom + scrollY + 10; // 10 px sotto il link
-      } else { // Se il link è nella metà inferiore della pagina
-        tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10 px sopra il link e spostato in alto in base all'altezza del tooltip
-      }
-  
-      tooltip.style.left = `${tooltipX}px`;
-      tooltip.style.top = `${tooltipY}px`;
-    }
+  // Remove existing tooltip if any
+  if (tooltip) {
+    tooltip.remove();
+    tooltip = null;
   }
+
+  // Check if the device is not a touch device
+  if (!isTouchDevice()) {
+    // Create a new tooltip element
+    tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip-term-excerpt');
+    tooltip.innerHTML = excerpt;
+
+    // Get the dimensions of the link that triggered the tooltip
+    const linkRect = event.target.getBoundingClientRect();
+    const linkMid = linkRect.top + linkRect.height / 2;
+
+    // Determine tooltip position based on link's vertical position in the viewport
+    if (linkMid < window.innerHeight / 2) { // If the link is in the upper half of the page
+      tooltip.classList.add('tooltip-down');
+    } else { // If the link is in the lower half of the page
+      tooltip.classList.add('tooltip-up');
+    }
+
+    // Append tooltip to the document body
+    document.body.appendChild(tooltip);
+
+    // Get the dimensions of the tooltip
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const tooltipHeight = tooltipRect.height;
+    
+    // Get the current scroll position
+    const scrollX = window.pageXOffset;
+    const scrollY = window.pageYOffset;
+
+    // Calculate tooltip's x-coordinate (Shift tooltip 150px to the left)
+    let tooltipX = linkRect.left + scrollX + (linkRect.width / 2) - 150;
+    let tooltipY;
+
+    // Calculate tooltip's y-coordinate based on link's vertical position
+    if (linkMid < window.innerHeight / 2) { // If the link is in the upper half of the page
+      tooltipY = linkRect.bottom + scrollY + 10; // 10px below the link
+    } else { // If the link is in the lower half of the page
+      tooltipY = linkRect.top + scrollY - 10 - tooltipHeight; // 10px above the link and shifted up based on tooltip height
+    }
+
+    // Set tooltip's position
+    tooltip.style.left = `${tooltipX}px`;
+    tooltip.style.top = `${tooltipY}px`;
+  }
+}
   
-  
+  // hide tooltip
 
   function hideTooltip() {
     if (tooltip) {
