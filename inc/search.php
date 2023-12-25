@@ -111,7 +111,10 @@ if ($result_glossary_terms->num_rows > 0) {
 
 $combined_results = array_merge($response["posts"], $response["tags"], $response["glossary_terms"]);
 usort($combined_results, function ($a, $b) {
-  return strcmp($a["title"], $b["title"]);
+  $titleA = isset($a["title"]) ? $a["title"] : '';
+  $titleB = isset($b["title"]) ? $b["title"] : '';
+
+  return strcmp($titleA, $titleB);
 });
 
 $total_results = count($combined_results);
