@@ -1224,6 +1224,14 @@ header {
   width: 100%;
 }
 
+.tags-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .post-tags-list li:hover {
   cursor: pointer;
   background-color:rgba(62, 146, 162, 0.3);
@@ -1231,7 +1239,7 @@ header {
 
 .post-tags-list li {
   list-style-type: none;
-  margin: 3px;
+  margin: 5px;
   text-align: center;
   border-radius: 5px;
   border: 1px solid #e5e5e5;

@@ -191,12 +191,14 @@
                     <?php if ($post_tags) : ?>
                         <ul class="post-tags-list">
                         <h3>Proprietà terapeutiche</h3>
+                        <div class="tags-container">
                         <?php foreach ($post_tags as $tag) : ?>
                             <li>
                             <?php $tag_link = get_term_link($tag); ?>
                             <?php printf('<a href="%s">%s</a>', esc_url($tag_link), esc_html(ucfirst($tag->name))); ?>
                             </li>
                         <?php endforeach; ?>
+                        </div>
                         </ul>
                     <?php endif; ?>
                 </div>
