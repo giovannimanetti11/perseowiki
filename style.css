@@ -50,13 +50,12 @@ dd {
 /* Set core root defaults */
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 /* Set core body defaults */
 body {
-  min-height: 100vh;
   text-rendering: optimizeSpeed;
-  line-height: 1.5;
 }
 
 /* Remove list styles on ul, ol elements with a class attribute */
@@ -1106,6 +1105,8 @@ header {
   background: #f2f2f2;
   width: 100% !important;
   padding: 25px 0;
+  height: 100%;
+  position: relative;
 }
 
 .article-info {
@@ -1149,12 +1150,6 @@ header {
 }
 
 .post-content-module {
-  float: right;
-  border: 1px solid #e5e5e5;
-  padding: 10px;
-  margin-left: 10px;
-  text-align: center;
-  border-radius: 10px;
   position: relative;
   z-index: 10;
 }
@@ -1242,6 +1237,7 @@ header {
   border: 1px solid #e5e5e5;
   z-index: 49;
   position: relative;
+  width: 150px;
 }
 
 .post-tags .alert {
@@ -1322,6 +1318,10 @@ header {
 .index-item a:hover .romboid {
   background-color: #3E92A2;
   color: #0A2944;
+}
+
+.pubmed-count-container {
+  margin-bottom: 25px;
 }
 
 .romboid {
@@ -2121,6 +2121,7 @@ footer {
   min-height: 100px;
   text-align: center;
   color: #fff;
+  position: relative;
 }
 
 #footer {

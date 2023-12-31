@@ -768,6 +768,44 @@ function save_custom_meta_box($post_id, $post, $update)
 
 add_action("save_post", "save_custom_meta_box", 10, 3);
 
+/*
+ * Integrate PubMed API to fetch the publication count based on the scientific name
+ */
+
+ function fetch_pubmed_publications_count($scientific_name) {
+    $api_key = 'bb4a4fd9b7035c08fbaf115a3099b7c07408'; // Replace with your actual API key
+    // Construct the URL for PubMed API request
+    $url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=" . urlencode($scientific_name) . "&retmode=json&api_key=" . $api_key;
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    error_log('URL della richiesta: ' . $url);
+
+    $response = curl_exec($ch);
+    if ($response === false) {
+        error_log('CURL Error: ' . curl_error($ch)); // Log cURL error
+        curl_close($ch);
+        return 'Nd'; // Return Nd in case of error
+    } else {
+        error_log('Risposta API: ' . $response); // Log API response
+    }
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+    error_log('PubMed API Response: ' . print_r($data, true)); // Log the response for debugging
+
+    // Extract and return the publication count from the API response
+    $count = isset($data['esearchresult']['count']) ? $data['esearchresult']['count'] : 0;
+
+    return $count;
+}
+
+
+
+
+
 
 /*
  * ADD custom field "Nome comune"

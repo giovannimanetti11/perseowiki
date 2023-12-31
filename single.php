@@ -155,22 +155,28 @@
 
         <div class="post-content-text">
 
-        <div class="plant-details">
-            <div id="classification-container"></div>
-            
-            <div class="map-container">
-                <div id="map" class="map">
-                    <img id="loading" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
+            <?php
+            $scientific_name = get_post_meta(get_the_ID(), "meta-box-nome-scientifico", true);
+            $publication_count = fetch_pubmed_publications_count($scientific_name);
+            echo '<p>Pubblicazioni su PubMed per ' . esc_html($scientific_name) . ': ' . esc_html($publication_count) . '</p>';
+            ?>
+
+            <div class="plant-details">
+                <div id="classification-container"></div>
+                
+                <div class="map-container">
+                    <div id="map" class="map">
+                        <img id="loading" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
+                    </div>
+                    <div id="observation-info">
+                        Numero di osservazioni umane nel mondo di
+                        <span id="plant-name"></span> nel 2023.
+                        <em>Credits:</em> <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
+                    </div>
                 </div>
-                <div id="observation-info">
-                    Numero di osservazioni umane nel mondo di
-                    <span id="plant-name"></span> nel 2023.
-                    <em>Credits:</em> <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
-                </div>
+                
             </div>
-        </div>
-
-
+            
             <div class="index">
             
             </div>
@@ -184,7 +190,7 @@
                     <?php $post_tags = wp_get_post_tags(get_the_ID()); ?>
                     <?php if ($post_tags) : ?>
                         <ul class="post-tags-list">
-                        <h3>Proprietà</h3>
+                        <h3>Proprietà terapeutiche</h3>
                         <?php foreach ($post_tags as $tag) : ?>
                             <li>
                             <?php $tag_link = get_term_link($tag); ?>
