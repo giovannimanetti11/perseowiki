@@ -162,7 +162,8 @@
             ?>
 
             <div class="plant-details">
-                <div id="classification-container"></div>
+                <div id="classification-container">
+                </div>
                 
                 <div class="map-container">
                     <div id="map" class="map">

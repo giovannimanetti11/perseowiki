@@ -1065,6 +1065,7 @@ header {
 .map-container {
   display: flex;
   flex-direction: column;
+  max-width: 550px;
 }
 
 #observation-info {
@@ -1245,7 +1246,7 @@ header {
   border: 1px solid #e5e5e5;
   z-index: 49;
   position: relative;
-  width: 150px;
+  width: 180px;
 }
 
 .post-tags .alert {
