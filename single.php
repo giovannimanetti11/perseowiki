@@ -156,10 +156,25 @@
         <div class="post-content-text">
 
             <?php
-            $scientific_name = get_post_meta(get_the_ID(), "meta-box-nome-scientifico", true);
-            $publication_count = fetch_pubmed_publications_count($scientific_name);
-            echo '<p>Pubblicazioni su PubMed per ' . esc_html($scientific_name) . ': ' . esc_html($publication_count) . '</p>';
+                $scientific_name = get_post_meta(get_the_ID(), "meta-box-nome-scientifico", true);
+                $publication_count = fetch_pubmed_publications_count($scientific_name);
+                $parts = explode(' ', $scientific_name);
+                $binomial_name = $parts[0] . ' ' . $parts[1];
+
+                $pubmed_query_url = "https://pubmed.ncbi.nlm.nih.gov/?term=" . urlencode($binomial_name);
+
+                echo '<div class="pubmed-logo">
+                        <a href="' . esc_url($pubmed_query_url) . '" target="_blank">
+                            <img src="' . get_stylesheet_directory_uri() . '/img/pubmed_logo.png" alt="PubMed logo" />
+                        </a>
+                        <span><a href="' . esc_url($pubmed_query_url) . '" target="_blank">' . esc_html(number_format($publication_count, 0, '.', '.')) . '</a> pubblicazioni</span>
+                    </div>';
             ?>
+
+
+
+
+
 
             <div class="plant-details">
                 <div id="classification-container">

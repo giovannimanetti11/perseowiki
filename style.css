@@ -1333,6 +1333,27 @@ header {
   margin-bottom: 25px;
 }
 
+.pubmed-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.pubmed-logo span {
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-bottom: 0;
+}
+
+.pubmed-logo img {
+  max-width: 100px;
+}
+
+.pubmed-logo img:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 .romboid {
   display: inline-flex;
   justify-content: center;

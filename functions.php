@@ -774,8 +774,13 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
 
  function fetch_pubmed_publications_count($scientific_name) {
     $api_key = 'bb4a4fd9b7035c08fbaf115a3099b7c07408'; // Replace with your actual API key
+
+    // Estrai solo le prime due parole dal nome scientifico
+    $parts = explode(' ', $scientific_name);
+    $binomial_name = $parts[0] . ' ' . $parts[1];
+
     // Construct the URL for PubMed API request
-    $url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=" . urlencode($scientific_name) . "&retmode=json&api_key=" . $api_key;
+    $url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=" . urlencode($binomial_name) . "&retmode=json&api_key=" . $api_key;
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -801,6 +806,7 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
 
     return $count;
 }
+
 
 
 
