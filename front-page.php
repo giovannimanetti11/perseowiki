@@ -77,7 +77,7 @@ if (isset($_GET['keywords'])) {
                                 $link = get_permalink();
                                 $image = get_the_post_thumbnail_url(null, 'medium');
                                 $alt = get_the_title();
-                                $scientific_name = get_post_meta(get_the_ID(), 'meta-box-scientific-name', true);
+                                $scientific_name = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
                                 $toxic = get_post_meta(get_the_ID(), '_toxic', true);
                         ?>
                         <a href="<?php echo $link; ?>" class="card-link">
