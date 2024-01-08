@@ -1,7 +1,7 @@
 <?php 
-// Verifica se l'utente ha eseguito una ricerca
+// Check if the user has performed a search
 if (isset($_GET['keywords'])) {
-    // Includi il file di ricerca
+    // Include the search file
     get_template_part( 'inc/search' );
 } else {
     get_header(); 
@@ -10,7 +10,7 @@ if (isset($_GET['keywords'])) {
     <main>
         <div class="homepage-hero">
             <div class="search">
-                <input type="search" class="searchBar" placeholder="Cerca in WikiHerbalist..">
+                <input type="search" class="searchBar" placeholder="Search in WikiHerbalist..">
                 <i class="fas fa-times" id="clearSearch"></i>
                 <i class="fas fa-search" id="iconSearch"></i>
             </div>
@@ -32,10 +32,10 @@ if (isset($_GET['keywords'])) {
             $home_id = get_option('page_on_front');
             $home_content = get_post($home_id);
 
-            // Conta il numero totale di post pubblicati
+            // Count the total number of published posts
             $count_posts = wp_count_posts()->publish;
 
-            // Sostituisci [count_total] con il numero totale di post
+            // Replace [count_total] with the total number of posts
             $home_content->post_content = str_replace('[count_total]', $count_posts, $home_content->post_content);
 
             echo apply_filters('the_content', $home_content->post_content);
@@ -44,7 +44,7 @@ if (isset($_GET['keywords'])) {
         </div>
         <div id="filterType">
             <div class="filterButtons">
-                <button class="btn btn-active" id="alphabeticOrder">Ordine alfabetico</button>
+                <button class="btn btn-active" id="alphabeticOrder">Erbe medicinali</button>
                 <button class="btn" id="propertiesList">Proprietà terapeutiche</button>
             </div>
         </div>
@@ -61,7 +61,7 @@ if (isset($_GET['keywords'])) {
                 <div id="posts-container-<?php echo $char; ?>" class="posts-container" style="display: <?php echo $char === 'A' ? 'block' : 'none'; ?>">
                     <div class="card-deck">
                         <?php
-                            // Esegui la query per ciascuna lettera
+                            // Execute the query for each letter
                             $args = array(
                                 'post_type' => 'post',
                                 'posts_per_page' => -1,
@@ -71,23 +71,23 @@ if (isset($_GET['keywords'])) {
                             );
                             $query = new WP_Query($args);
 
-                            // Fornisci l'output per ciascun post
+                            // Provide the output for each post
                             while($query->have_posts()) : $query->the_post();
                                 $title = get_the_title();
                                 $link = get_permalink();
                                 $image = get_the_post_thumbnail_url(null, 'medium');
                                 $alt = get_the_title();
-                                $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
-                                $tossica = get_post_meta(get_the_ID(), '_tossica', true);
+                                $scientific_name = get_post_meta(get_the_ID(), 'meta-box-scientific-name', true);
+                                $toxic = get_post_meta(get_the_ID(), '_toxic', true);
                         ?>
                         <a href="<?php echo $link; ?>" class="card-link">
                             <div class="card">
                                 <img class="card-img-top" src="<?php echo $image; ?>" alt="<?php echo $alt; ?>">
                                 <div class="card-body">
                                     <h3 class="card-title"><?php echo $title; ?></h3>
-                                    <h4 class="card-scientific-name"><?php echo $nome_scientifico; ?></h4>
-                                    <?php if (!empty($tossica)) : ?>
-                                        <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Pianta tossica"></i>
+                                    <h4 class="card-scientific-name"><?php echo $scientific_name; ?></h4>
+                                    <?php if (!empty($toxic)) : ?>
+                                        <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
                                     <?php endif; ?>
                                 </div>
                             </div>

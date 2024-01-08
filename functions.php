@@ -1148,7 +1148,7 @@ function get_therapeutic_properties_and_herbs() {
         INNER JOIN wh_term_taxonomy tt ON t.term_id = tt.term_id
         INNER JOIN wh_term_relationships tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
         INNER JOIN wh_posts p ON tr.object_id = p.ID
-        WHERE tt.taxonomy = 'post_tag'
+        WHERE tt.taxonomy = 'post_tag' AND p.post_status = 'publish'
         GROUP BY t.term_id
         ORDER BY t.name
     ";
