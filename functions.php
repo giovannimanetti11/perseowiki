@@ -269,17 +269,15 @@ function enqueue_observations_map_scripts() {
     }
 
     wp_enqueue_style( 'openlayers-css', 'https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css', array(), null, 'all' );
-
     wp_enqueue_script( 'polyfill', 'https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL', array(), null, true );
     wp_script_add_data( 'polyfill', 'defer', true );
-
     wp_enqueue_script( 'openlayers', 'https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js', array(), null, true );
     wp_script_add_data( 'openlayers', 'defer', true );
-
     wp_enqueue_script( 'observationsMap', get_template_directory_uri() . '/inc/js/observationsMap.js', array( 'polyfill', 'openlayers' ), '1.0.0', true );
     wp_script_add_data( 'observationsMap', 'defer', true );
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_observations_map_scripts' );
+
 
 
 

@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function() {
     var map;
     const scientificNameElement = document.getElementById("scientificName");
-    const scientificName = scientificNameElement.getAttribute("data-scientific-name");
+    const scientificName = scientificNameElement ? scientificNameElement.getAttribute("data-scientific-name") : '';
+    if (!scientificName) return;
 
-    const recordCount = document.getElementById('record-count');
     const loading = document.getElementById('loading');
     const vectorSource = new ol.source.Vector();
     const clusterSource = new ol.source.Cluster({
@@ -126,12 +126,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     
         await loadRecords(0);
     };
-    
-    
-    
-    
-    
-    
+
 
     const initMap = () => {
         if (!map) { 
@@ -160,6 +155,10 @@ document.addEventListener("DOMContentLoaded", async function() {
     const renderMap = async () => {
         loading.style.display = "block";
         const taxonKey = await getTaxonKey(scientificName);
+        if (!taxonKey) {
+            loading.style.display = "none";
+            return;
+        }
         const basisOfRecord = 'HUMAN_OBSERVATION';
     
         document.getElementById('plant-name').textContent = scientificName;

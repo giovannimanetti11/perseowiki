@@ -1061,7 +1061,7 @@ header {
 }
 
 #classification-container li {
-  background: #f0f0f0;
+  background: #f5f5f5;
   color: #0A2944;
   margin-bottom: 10px;
   padding: 5px 10px;
@@ -1104,7 +1104,6 @@ header {
 .map-container {
   display: flex;
   flex-direction: column;
-  max-width: 550px;
 }
 
 #observation-info {
@@ -1403,21 +1402,34 @@ header {
   display: flex;
   align-items: center;
   margin-bottom: 25px;
+  transition: transform 0.3s;
 }
 
 .pubmed-logo span {
   margin-top: 5px;
   margin-left: 10px;
   margin-bottom: 0;
+  color: #2C3E50; 
+}
+
+.pubmed-logo a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.pubmed-logo a:hover {
+  color: #0056b3;
 }
 
 .pubmed-logo img {
   max-width: 100px;
+  transition: opacity 0.3s;
 }
 
 .pubmed-logo img:hover {
   opacity: 0.8;
-  cursor: pointer;
 }
 
 .post-content .aligncenter {
