@@ -168,30 +168,32 @@ window.onload = function () {
   initLightbox();
 };
 
-// Create index and romboids
+// Create index and rhomboids
 
 document.addEventListener('DOMContentLoaded', function() {
   var indexDiv = document.querySelector('.index');
   var h3Elements = document.querySelectorAll('.post-content-text h3');
   var indexCounter = 1;
 
-  // Crea un contenitore per il titolo dell'indice
+  // Create a container for the index title
   var indexTitleContainer = document.createElement('div');
   indexTitleContainer.classList.add('index-title');
-  indexTitleContainer.innerHTML = '<i class="fa-solid fa-list"></i> Indice';
+  indexTitleContainer.innerHTML = '<i class="fa-solid fa-list"></i> Index';
   indexDiv.appendChild(indexTitleContainer);
 
-  // Crea un contenitore per gli elementi dell'indice
+  // Create a container for the index items
   var indexItemsContainer = document.createElement('div');
   indexItemsContainer.classList.add('index-items');
   indexDiv.appendChild(indexItemsContainer);
 
   h3Elements.forEach(function(h3) {
+      // Create a rhomboid shape for visual effect
       var romboid = document.createElement('div');
       romboid.classList.add('romboid');
       romboid.innerText = indexCounter;
       h3.prepend(romboid);
   
+      // Create and append an index item for each header
       var indexItem = document.createElement('div');
       indexItem.classList.add('index-item');
   
@@ -199,11 +201,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
       indexItemsContainer.appendChild(indexItem);
   
+      // Set an ID for each header for navigation
       h3.id = 'section-' + indexCounter;
       indexCounter++;
   });
 
-  // Aggiunge un ID a Riferimenti
+
+
+  // Adds a ID to Riferimenti
   const section11 = document.getElementById('section-11');
   if (section11) {
       let currentNode = section11.nextSibling; 
