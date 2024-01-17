@@ -1,6 +1,6 @@
 // Plant classification
 
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', async function() {
   const scientificNameElements = document.querySelectorAll('.meta-box-nome-scientifico');
   scientificNameElements.forEach(element => {
     const scientificName = element.dataset.scientificName;

@@ -171,11 +171,6 @@
                     </div>';
             ?>
 
-
-
-
-
-
             <div class="plant-details">
                 <div id="classification-container">
                 </div>
@@ -190,6 +185,7 @@
                         <em>Credits:</em> <a href="https://www.gbif.org/">GBIF</a> | <a href="https://www.openstreetmap.org/" rel="nofollow">OpenStreetMap</a>.
                     </div>
                 </div>
+
                 
             </div>
             
