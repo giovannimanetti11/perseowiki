@@ -61,47 +61,49 @@ window.onload = function () {
   // Delay the execution of the code to give time for images to load
   setTimeout(function () {
     const featuredImage = document.getElementById("featured-image");
-    let originalFeaturedImageSrc = featuredImage.src;
+    if (featuredImage) {
+      let originalFeaturedImageSrc = featuredImage.src;
 
-    // Create an additional thumbnail for the featured image
-    const additionalImages = document.querySelectorAll(".additional-images-thumbnails img[src]:not(#featured-image)");
-    if (additionalImages.length > 0) {
-      const featuredImageThumbnail = document.createElement("img");
-      featuredImageThumbnail.src = featuredImage.src;
-      featuredImageThumbnail.dataset.fullImageUrl = featuredImage.dataset.fullImageUrl;
-      featuredImageThumbnail.alt = featuredImage.alt;
-      featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
-      document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
-    }
+      // Create an additional thumbnail for the featured image
+      const additionalImages = document.querySelectorAll(".additional-images-thumbnails img[src]:not(#featured-image)");
+      if (additionalImages.length > 0) {
+        const featuredImageThumbnail = document.createElement("img");
+        featuredImageThumbnail.src = featuredImage.src;
+        featuredImageThumbnail.dataset.fullImageUrl = featuredImage.dataset.fullImageUrl;
+        featuredImageThumbnail.alt = featuredImage.alt;
+        featuredImageThumbnail.classList.add("additional-image-thumbnail", "selected");
+        document.querySelector(".additional-images-thumbnails").prepend(featuredImageThumbnail);
+      }
 
-    const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
+      const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
-    // Attach mouseenter and mouseleave events for thumbnail hover
-    updatedThumbnails.forEach((thumbnail) => {
-      thumbnail.addEventListener("mouseenter", function () {
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-        featuredImage.setAttribute('srcset', fullImageUrl + '');
-      });
-
-      thumbnail.addEventListener("mouseleave", function () {
-        featuredImage.src = originalFeaturedImageSrc;
-        featuredImage.setAttribute('srcset', originalFeaturedImageSrc + '');
-      });
-
-      // Attach click event for selecting a thumbnail
-      thumbnail.addEventListener("click", function () {
-        const fullImageUrl = thumbnail.dataset.fullImageUrl;
-        featuredImage.src = fullImageUrl;
-        originalFeaturedImageSrc = fullImageUrl;
-
-        document.querySelectorAll(".additional-image-thumbnail.selected").forEach((selectedThumbnail) => {
-          selectedThumbnail.classList.remove("selected");
+      // Attach mouseenter and mouseleave events for thumbnail hover
+      updatedThumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener("mouseenter", function () {
+          const fullImageUrl = thumbnail.dataset.fullImageUrl;
+          featuredImage.src = fullImageUrl;
+          featuredImage.setAttribute('srcset', fullImageUrl + '');
         });
 
-        thumbnail.classList.add("selected");
+        thumbnail.addEventListener("mouseleave", function () {
+          featuredImage.src = originalFeaturedImageSrc;
+          featuredImage.setAttribute('srcset', originalFeaturedImageSrc + '');
+        });
+
+        // Attach click event for selecting a thumbnail
+        thumbnail.addEventListener("click", function () {
+          const fullImageUrl = thumbnail.dataset.fullImageUrl;
+          featuredImage.src = fullImageUrl;
+          originalFeaturedImageSrc = fullImageUrl;
+
+          document.querySelectorAll(".additional-image-thumbnail.selected").forEach((selectedThumbnail) => {
+            selectedThumbnail.classList.remove("selected");
+          });
+
+          thumbnail.classList.add("selected");
+        });
       });
-    });
+    }
   }, 550);
 
   const images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
