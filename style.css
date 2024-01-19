@@ -690,35 +690,6 @@ header {
   position: relative;
 }
 
-#iconLeftArrow {
-  display: none;
-  position: absolute;
-  top: -7px;
-  left: 20px;
-  width: 35px;
-  height: 35px;
-}
-
-#iconRightArrow {
-  display: none;
-  position: absolute;
-  top: -7px;
-  right: 20px;
-  width: 35px;
-  height: 35px;
-}
-
-#iconRightArrow i, #iconLeftArrow i {
-  font-size: 30px;
-  color: #fff;
-  background: #0A2944;
-  padding: 5px;
-}
-
-#iconRightArrow:hover, #iconLeftArrow:hover {
-  cursor: pointer;
-}
-
 #menu-categorie {
   display: flex;
   flex-wrap: nowrap;

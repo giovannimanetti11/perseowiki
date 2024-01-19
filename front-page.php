@@ -17,12 +17,7 @@ if (isset($_GET['keywords'])) {
             <ul id="searchResults"></ul>
             <div class="category-menu">
                 <?php wp_nav_menu( array( 'theme_location' => 'perseowiki-category-menu' ) ); ?>
-                <div class="" id="iconLeftArrow">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-                <div class="" id="iconRightArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
+
             </div>
         </div>
 

@@ -35,8 +35,7 @@ $offset = ($page - 1) * $limit;
 $sql_posts = "SELECT wh_posts.*, wh_postmeta.meta_value AS meta_box_nome_scientifico
 FROM wh_posts
 LEFT JOIN wh_postmeta ON (wh_posts.ID = wh_postmeta.post_id AND wh_postmeta.meta_key = 'meta-box-nome-scientifico')
-WHERE (SOUNDEX(wh_posts.post_title) = SOUNDEX('{$keywords}') OR wh_posts.post_title LIKE '%{$keywords}%' 
-OR SOUNDEX(wh_posts.post_content) = SOUNDEX('{$keywords}') OR wh_posts.post_content LIKE '%{$keywords}%')
+WHERE MATCH(wh_posts.post_title, wh_posts.post_content) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
 AND (wh_posts.post_status = 'publish')
 AND (wh_posts.post_type = 'post')
 GROUP BY wh_posts.ID
@@ -49,18 +48,18 @@ ORDER BY wh_posts.post_title ASC";
 $sql_tags = "SELECT wh_terms.term_id, wh_terms.name, wh_terms.slug
 FROM wh_terms
 INNER JOIN wh_term_taxonomy ON (wh_terms.term_id = wh_term_taxonomy.term_id)
-WHERE (SOUNDEX(wh_terms.name) = SOUNDEX('{$keywords}') OR wh_terms.name LIKE '%{$keywords}%')
+WHERE MATCH(wh_terms.name) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
 AND (wh_term_taxonomy.taxonomy = 'post_tag')
-ORDER BY wh_terms.name ASC";
+ORDER BY MATCH(wh_terms.name) AGAINST ('{$keywords}') DESC";
 
 
 // Query to search in glossario (termine) CPT
 $sql_glossary_terms = "SELECT wh_posts.*
 FROM wh_posts
-WHERE (SOUNDEX(wh_posts.post_title) = SOUNDEX('{$keywords}') OR wh_posts.post_title LIKE '%{$keywords}%')
+WHERE MATCH(wh_posts.post_title) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
 AND (wh_posts.post_status = 'publish')
 AND (wh_posts.post_type = 'termine')
-ORDER BY wh_posts.post_title ASC";
+ORDER BY MATCH(wh_posts.post_title) AGAINST ('{$keywords}') DESC";
 
 
 $result_posts = $conn->query($sql_posts);
