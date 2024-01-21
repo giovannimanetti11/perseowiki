@@ -343,7 +343,7 @@ header {
 }
 
 #mailingList-popup, #login-popup, #signup-popup, #contact-popup {
-  margin-top: 100px;
+  margin-top: 55px;
 }
 
 #mailingList-popup p, #contact-popup p {
@@ -1481,11 +1481,11 @@ header {
 }
 
 .custom-lightbox .left-arrow {
-  left: 35px;
+  left: 50px;
 }
 
 .custom-lightbox .right-arrow {
-  right: 35px;
+  right: 50px;
 }
 
 
@@ -1500,12 +1500,12 @@ header {
 
 .custom-lightbox .left-arrow::before {
   transform: rotate(-135deg);
-  margin-left: 0;
+  margin-left: 2px;
 }
 
 .custom-lightbox .right-arrow::before {
   transform: rotate(45deg);
-  margin-right: -0;
+  margin-right: 2px;
 }
 
 
