@@ -1282,10 +1282,8 @@ add_action('wp_dashboard_setup', 'custom_dashboard_widget');
 }
 add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
 
-
- function perseowiki_schema_markup_post() {
+function perseowiki_schema_markup_post() {
     if (is_single()) {
-
         $schema = 'https://schema.org/';
         $type = 'MedicalWebPage';
         $url = get_permalink();
@@ -1295,6 +1293,10 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
         $dateModified = get_the_modified_date('c');
         $author = "Redazione WikiHerbalist";
         $image = get_the_post_thumbnail_url();
+
+        if (!$title || !$url) {
+            return;
+        }
 
         $sections = array(
             array(
@@ -1372,13 +1374,12 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
             
         );
 
-        echo '<script type="application/ld+json">';
-        echo json_encode(array(
+        $json_ld = array(
             '@context' => $schema,
             '@type' => $type,
-            'about'=> array(
+            'about' => array(
                 '@type' => 'Substance',
-                'name'=> $title,
+                'name' => $title,
             ),
             'url' => $url,
             'image' => $image,
@@ -1405,38 +1406,42 @@ add_filter('wpseo_json_ld_output', 'disable_yoast_json_ld_for_single_and_tag');
                 '@type' => 'ReadAction',
                 'target' => $url
             ),
-        ));
-        echo '</script>';
+        );
+        echo '<script type="application/ld+json">' . json_encode($json_ld) . '</script>';
     }
 }
 
-    function perseowiki_schema_markup_tag() {
-        if (is_tag()) {
+// Creates markup schema for properties
+function perseowiki_schema_markup_tag() {
+    if (is_tag()) {
+        $schema = 'https://schema.org/';
+        $type = ['CollectionPage', 'MedicalWebPage'];
+        $url = get_tag_link(get_queried_object()->term_id);
+        $title = single_tag_title('', false);
+        $description = tag_description(get_queried_object()->term_id);
+        $image = get_the_post_thumbnail_url();
 
-            $schema = 'https://schema.org/';
-            $type = ['CollectionPage', 'MedicalWebPage'];
-            $url = get_tag_link(get_queried_object()->term_id);
-            $title = single_tag_title('', false);
-            $description = tag_description(get_queried_object()->term_id);
-            $image = get_the_post_thumbnail_url();
-    
-            echo '<script type="application/ld+json">';
-            echo json_encode(array(
-                '@context' => $schema,
-                '@type' => $type,
-                'name' => $title,
-                'description' => $description,
-                'url' => $url,
-                'image' => $image,
-                'mainEntity' => array(
-                    '@type' => 'MedicalEntity',
-                    'name' => $title
-                ),
-                'inLanguage' => 'it'
-            ));
-            echo '</script>';
+        if (!$title || !$url) {
+            return;
         }
+
+        $json_ld = array(
+            '@context' => $schema,
+            '@type' => $type,
+            'name' => $title,
+            'description' => $description,
+            'url' => $url,
+            'image' => $image,
+            'mainEntity' => array(
+                '@type' => 'MedicalEntity',
+                'name' => $title
+            ),
+            'inLanguage' => 'it'
+        );
+
+        echo '<script type="application/ld+json">' . json_encode($json_ld) . '</script>';
     }
+}
     
 
 add_action('wp_head', 'perseowiki_schema_markup_tag');
