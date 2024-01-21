@@ -240,6 +240,7 @@ add_action('wp_enqueue_scripts', 'perseowiki_styles');
 function enqueue_single_post_scripts() {
     if (is_single() || is_page_template('single-termine.php')) {
         wp_enqueue_script( 'single-post', get_template_directory_uri() . '/inc/js/single-post.js');
+        wp_script_add_data( 'single-post', 'defer', true );
     }
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_single_post_scripts' );

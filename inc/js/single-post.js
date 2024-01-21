@@ -56,10 +56,11 @@ window.addEventListener('load', async function() {
 
 // Manage hover and clics on additional images
 
-// ensure the DOM is fully loaded
 window.onload = function () {
+
   // Delay the execution of the code to give time for images to load
   setTimeout(function () {
+
     const featuredImage = document.getElementById("featured-image");
     if (featuredImage) {
       let originalFeaturedImageSrc = featuredImage.src;
@@ -77,8 +78,9 @@ window.onload = function () {
 
       const updatedThumbnails = document.querySelectorAll(".additional-image-thumbnail");
 
-      // Attach mouseenter and mouseleave events for thumbnail hover
-      updatedThumbnails.forEach((thumbnail) => {
+      // Attach mouseenter, mouseleave, and click events for thumbnail
+      updatedThumbnails.forEach((thumbnail, index) => {
+
         thumbnail.addEventListener("mouseenter", function () {
           const fullImageUrl = thumbnail.dataset.fullImageUrl;
           featuredImage.src = fullImageUrl;
@@ -90,7 +92,6 @@ window.onload = function () {
           featuredImage.setAttribute('srcset', originalFeaturedImageSrc + '');
         });
 
-        // Attach click event for selecting a thumbnail
         thumbnail.addEventListener("click", function () {
           const fullImageUrl = thumbnail.dataset.fullImageUrl;
           featuredImage.src = fullImageUrl;
@@ -112,6 +113,10 @@ window.onload = function () {
   // Initialize lightbox
   function initLightbox() {
     const parent = document.querySelector('#post-content');
+
+    if (!parent) {
+      return;
+    }
 
     // Attach click event for opening lightbox
     parent.addEventListener('click', function (e) {
@@ -167,6 +172,7 @@ window.onload = function () {
   // Initialize the lightbox
   initLightbox();
 };
+
 
 // Create index and rhomboids
 
