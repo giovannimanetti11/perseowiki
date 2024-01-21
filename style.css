@@ -263,11 +263,11 @@ header {
 .menu a, .login a {
   color: #fff;
   text-decoration: none;
-  transition: all .3s ease;
+  transition: color 0.3s ease-in-out;
 }
 
 .menu a:hover, .login a:hover {
-  text-decoration: underline;
+  color: #3E92A2;
 }
 
 .call-to-action {
@@ -709,11 +709,13 @@ header {
   text-decoration: none;
   font-size: 16px;
   white-space: nowrap;
+  transition: color 0.3s ease-in-out;
 }
 
 #menu-categorie a:hover {
-  text-decoration: underline;
+  color: #3E92A2;
 }
+
 
 /* 
 *
