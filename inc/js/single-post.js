@@ -132,6 +132,26 @@ window.onload = function () {
     });
   }
 
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateLightboxImage();
+  }
+
+  function previousImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateLightboxImage();
+  }
+
+  function updateLightboxImage() {
+    const newImage = images[currentIndex];
+    const lightboxImage = document.querySelector('.lightbox-image');
+
+    const highResImageUrl = newImage.dataset.fullImageUrl || newImage.src;
+
+    lightboxImage.src = highResImageUrl;
+    lightboxImage.alt = newImage.alt;
+  }
+
   // Open lightbox and display image
   function openLightbox(img) {
     const srcset = img.getAttribute('srcset');
@@ -148,13 +168,21 @@ window.onload = function () {
     // Create lightbox
     const lightbox = document.createElement('div');
     lightbox.classList.add('custom-lightbox', 'active');
-    lightbox.innerHTML = `<div class="image-wrapper">
-                            <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
-                          </div>`;
+    lightbox.innerHTML = `
+    <div class="image-wrapper">
+      <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
+    </div>
+    <div class="lightbox-arrow left-arrow"></div>
+    <div class="lightbox-arrow right-arrow"></div>`;
+
+    lightbox.querySelector('.left-arrow').addEventListener('click', previousImage);
+    lightbox.querySelector('.right-arrow').addEventListener('click', nextImage);
+  
+
 
     // Close lightbox on click outside of image
     lightbox.addEventListener('click', (e) => {
-      if (e.target !== lightbox.querySelector('img')) {
+      if (!e.target.classList.contains('lightbox-arrow') && e.target !== lightbox.querySelector('img')) {
         lightbox.remove();
       }
     });
@@ -214,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  // Adds a ID to Riferimenti
+// Adds a ID to Riferimenti
   const section11 = document.getElementById('section-11');
   if (section11) {
       let currentNode = section11.nextSibling; 
@@ -284,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   }
 
-  // Chiude il popup quando si fa clic al di fuori del contenuto del popup
+  // Close popup when you click outside of the popup div
   document.addEventListener('click', function(event) {
     var popup = document.getElementById('share-popup');
     var popupContent = document.querySelector('.popup-content');
@@ -373,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('.citation-button').addEventListener('click', openCitationPopup);
 
-  // Chiude il popup quando si fa clic al di fuori del contenuto del popup
+  // Close popup when you click outside of it
   document.addEventListener('click', function(event) {
     var popup = document.getElementById('citation-popup');
     var popupContent = document.querySelector('.popup-content');

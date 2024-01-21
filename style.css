@@ -708,7 +708,6 @@ header {
   color: #fff;
   text-decoration: none;
   font-size: 16px;
-  white-space: nowrap;
   transition: color 0.3s ease-in-out;
 }
 
@@ -763,11 +762,11 @@ header {
 
 .filterButtons .btn {
   background: #3E92A2;
-  transition: all .3s ease;
   color: #fff;
   padding: 3px 20px;
   margin: 0 5px;
   width: 210px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .filterButtons .btn:hover {
@@ -881,6 +880,7 @@ header {
   color: #0A2944;
   text-decoration: underline;
   font-weight: bold;
+  transition: color 0.3s ease-in-out;
 }
 
 #alphabet a:hover {
@@ -1459,6 +1459,55 @@ header {
   max-width: 80%;
   max-height: 80%;
 }
+
+.custom-lightbox .lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: #fff; 
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.custom-lightbox .lightbox-arrow:hover {
+  opacity: 1;
+}
+
+.custom-lightbox .left-arrow {
+  left: 35px;
+}
+
+.custom-lightbox .right-arrow {
+  right: 35px;
+}
+
+
+.custom-lightbox .lightbox-arrow::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #333; 
+  border-right: 2px solid #333; 
+}
+
+.custom-lightbox .left-arrow::before {
+  transform: rotate(-135deg);
+  margin-left: 0;
+}
+
+.custom-lightbox .right-arrow::before {
+  transform: rotate(45deg);
+  margin-right: -0;
+}
+
 
 /* 
 *
