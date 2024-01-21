@@ -2,9 +2,32 @@
 // Check if the user has performed a search
 if (isset($_GET['keywords'])) {
     // Include the search file
-    get_template_part( 'inc/search' );
+    get_template_part('inc/search');
 } else {
-    get_header(); 
+    get_header();
+
+    $all_posts_data = [];
+    foreach (range('A', 'Z') as $char) {
+        $args = [
+            'post_type' => 'post',
+            'posts_per_page' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'start_char' => $char,
+        ];
+        $query = new WP_Query($args);
+        while ($query->have_posts()) : $query->the_post();
+            $all_posts_data[$char][] = [
+                'title' => get_the_title(),
+                'link' => esc_url(get_permalink()),
+                'image' => get_the_post_thumbnail_url(null, 'medium'),
+                'alt' => get_the_title(),
+                'scientific_name' => esc_html(get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true)),
+                'toxic' => get_post_meta(get_the_ID(), '_toxic', true),
+            ];
+        endwhile;
+        wp_reset_postdata();
+    }
     ?>
 
     <main>
@@ -45,49 +68,29 @@ if (isset($_GET['keywords'])) {
         </div>
         <div class="alphabetic-container">
             <div id="alphabet">
-                <?php foreach(range('A', 'Z') as $char): ?>
-                    <a href="#" class="alphabet-link" data-letter="<?php echo $char; ?>"><?php echo $char; ?></a>
+                <?php foreach (range('A', 'Z') as $char): ?>
+                    <a href="#" class="alphabet-link" data-letter="<?php echo esc_attr($char); ?>"><?php echo $char; ?></a>
                 <?php endforeach; ?>
             </div>
             <div id="posts-info">
             </div>
-            <?php foreach(range('A', 'Z') as $char): ?>
-                
+            <?php foreach (range('A', 'Z') as $char): ?>
                 <div id="posts-container-<?php echo $char; ?>" class="posts-container" style="display: <?php echo $char === 'A' ? 'block' : 'none'; ?>">
                     <div class="card-deck">
-                        <?php
-                            // Execute the query for each letter
-                            $args = array(
-                                'post_type' => 'post',
-                                'posts_per_page' => -1,
-                                'orderby' => 'title',
-                                'order' => 'ASC',
-                                'start_char' => $char,
-                            );
-                            $query = new WP_Query($args);
-
-                            // Provide the output for each post
-                            while($query->have_posts()) : $query->the_post();
-                                $title = get_the_title();
-                                $link = get_permalink();
-                                $image = get_the_post_thumbnail_url(null, 'medium');
-                                $alt = get_the_title();
-                                $scientific_name = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
-                                $toxic = get_post_meta(get_the_ID(), '_toxic', true);
-                        ?>
-                        <a href="<?php echo $link; ?>" class="card-link">
-                            <div class="card">
-                                <img class="card-img-top" src="<?php echo $image; ?>" alt="<?php echo $alt; ?>">
-                                <div class="card-body">
-                                    <h3 class="card-title"><?php echo $title; ?></h3>
-                                    <h4 class="card-scientific-name"><?php echo $scientific_name; ?></h4>
-                                    <?php if (!empty($toxic)) : ?>
-                                        <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
-                                    <?php endif; ?>
+                        <?php foreach ($all_posts_data[$char] as $data): ?>
+                            <a href="<?php echo $data['link']; ?>" class="card-link">
+                                <div class="card">
+                                    <img class="card-img-top" src="<?php echo $data['image']; ?>" alt="<?php echo $data['alt']; ?>">
+                                    <div class="card-body">
+                                        <h3 class="card-title"><?php echo $data['title']; ?></h3>
+                                        <h4 class="card-scientific-name"><?php echo $data['scientific_name']; ?></h4>
+                                        <?php if (!empty($data['toxic'])) : ?>
+                                            <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    <?php endwhile; wp_reset_postdata(); ?>
+                            </a>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -228,81 +228,84 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // HOME filter
 document.addEventListener('DOMContentLoaded', () => {
-    // Seleziona i pulsanti e i contenitori
-    const alphabeticOrderBtn = document.getElementById("alphabeticOrder");
-    const propertiesListBtn = document.getElementById("propertiesList");
-    const alphabeticContainer = document.querySelector(".alphabetic-container");
-    const propertiesContainer = document.querySelector(".properties-container");
+  // Select the buttons and containers
+  const alphabeticOrderBtn = document.getElementById("alphabeticOrder");
+  const propertiesListBtn = document.getElementById("propertiesList");
+  const alphabeticContainer = document.querySelector(".alphabetic-container");
+  const propertiesContainer = document.querySelector(".properties-container");
 
-    // Funzione per gestire il cambio dei contenitori e l'aggiornamento delle classi dei pulsanti
-    function switchContainers(showAlphabetic) {
-        if (showAlphabetic) {
-            alphabeticContainer.style.display = "block";
-            propertiesContainer.style.display = "none";
-            alphabeticOrderBtn.classList.add("btn-active");
-            propertiesListBtn.classList.remove("btn-active");
-        } else {
-            alphabeticContainer.style.display = "none";
-            propertiesContainer.style.display = "flex";
-            alphabeticOrderBtn.classList.remove("btn-active");
-            propertiesListBtn.classList.add("btn-active");
-        }
-    }
+  // Function to handle the switch of containers and update button classes
+  function switchContainers(showAlphabetic) {
+      if (showAlphabetic) {
+          alphabeticContainer.style.display = "block";
+          propertiesContainer.style.display = "none";
+          alphabeticOrderBtn.classList.add("btn-active");
+          propertiesListBtn.classList.remove("btn-active");
+          // Ensure the default alphabet link is active and clicked
+          if (!document.querySelector('.alphabet-link.active')) {
+              const defaultLink = document.querySelector('.alphabet-link[data-letter="A"]');
+              defaultLink.classList.add('active');
+              defaultLink.click();
+          }
+      } else {
+          alphabeticContainer.style.display = "none";
+          propertiesContainer.style.display = "flex";
+          alphabeticOrderBtn.classList.remove("btn-active");
+          propertiesListBtn.classList.add("btn-active");
+      }
+  }
 
-  // Add a event listener to buttons
-    alphabeticOrderBtn.addEventListener("click", function () {
-        switchContainers(true);
-    });
+  // Add an event listener to buttons
+  alphabeticOrderBtn.addEventListener("click", function () {
+      switchContainers(true);
+  });
 
-    propertiesListBtn.addEventListener("click", function () {
-        switchContainers(false);
-    });
+  propertiesListBtn.addEventListener("click", function () {
+      switchContainers(false);
+  });
 
-  // Edit even listener of propertiesList button to load data when it's clicked
+  // Edit event listener of propertiesList button to load data when it's clicked
   function onClickPropertiesListBtn() {
-    switchContainers(false);
-    loadTherapeuticPropertiesAndHerbs();
-    propertiesListBtn.removeEventListener('click', onClickPropertiesListBtn); // rimuove l'event listener dopo il primo clic
+      switchContainers(false);
+      loadTherapeuticPropertiesAndHerbs();
+      propertiesListBtn.removeEventListener('click', onClickPropertiesListBtn);
   }
   propertiesListBtn.addEventListener("click", onClickPropertiesListBtn);
-
 });
 
-// AJAX get posts alphabetically
-
+// AJAX to get posts alphabetically
 document.addEventListener('DOMContentLoaded', () => {
   const alphabetLinks = document.querySelectorAll('.alphabet-link');
   const postsContainers = document.querySelectorAll('.posts-container');
   const postsInfo = document.querySelector('#posts-info');
 
   alphabetLinks.forEach(link => {
-    link.addEventListener('click', event => {
-      // Previeni lo scrolling in alto quando si clicca su un link dell'alfabeto.
-      event.preventDefault();
+      link.addEventListener('click', event => {
+          // Prevent scrolling to the top when clicking an alphabet link
+          event.preventDefault();
 
-      const letter = link.dataset.letter;
-      const targetContainer = document.querySelector('#posts-container-' + letter);
-      const count = targetContainer.getElementsByClassName('card-link').length;
+          const letter = link.dataset.letter;
+          const targetContainer = document.querySelector('#posts-container-' + letter);
+          const count = targetContainer.getElementsByClassName('card-link').length;
 
-      alphabetLinks.forEach(link => link.classList.remove('active'));
-      link.classList.add('active');
+          alphabetLinks.forEach(link => link.classList.remove('active'));
+          link.classList.add('active');
 
-      postsContainers.forEach(container => {
-        if (container.id === 'posts-container-' + letter) {
-          container.style.display = 'block';
+          postsContainers.forEach(container => {
+              container.style.display = container.id === 'posts-container-' + letter ? 'block' : 'none';
+          });
+
           const noun = count === 1 ? "erba" : "erbe";
           const verb = count === 1 ? "inizia" : "iniziano";
           postsInfo.innerHTML = `<p>${count} ${noun} che ${verb} per ${letter}</p>`;
-        } else {
-          container.style.display = 'none';
-        }
       });
-    });
   });
 
+  // Automatically click the default alphabet link 'A'
   const defaultLink = document.querySelector('.alphabet-link[data-letter="A"]');
   defaultLink.classList.add('active');
   defaultLink.click();
 });
+
 
 
