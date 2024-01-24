@@ -646,6 +646,10 @@ header {
   border-bottom-right-radius: 0;
 }
 
+.highlight {
+  background-color: yellow;
+}
+
 
 .title {
   font-size: 20px;
@@ -1044,6 +1048,7 @@ header {
   list-style-type: none;
   padding: 0;
   margin-bottom: 25px;
+  z-index: 99;
 }
 
 #classification-container li {
@@ -2780,6 +2785,52 @@ footer {
   .social-login-buttons .btn-apple {
     width: 100%;
     margin-left: 0;
+  }
+
+  .alphabetical-list .name-scientific-name a {
+    margin-left: 10px;
+  }
+
+  .alphabetical-list .name-scientific-name .post-title {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+  .alphabetical-list .name-scientific-name .card-scientific-name {
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+
+  .alphabetical-list .name-scientific-name {
+    transition: background-color 0.3s ease; 
+    margin-bottom: 0;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .alphabetical-list .name-scientific-name:nth-child(odd) {
+    background-color: #f0f0f0;
+  }
+
+  .alphabetical-list .name-scientific-name:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  .alphabetical-list .name-scientific-name:hover {
+    background-color: #e0e0e0; 
+  }
+
+  .alphabetical-list .letter-title {
+    padding: 0 10px;
+  }
+
+  .alphabetical-list .term-title {
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+
+  .alphabetical-list .term-title a {
+    margin-left: 10px;
   }
 
 }

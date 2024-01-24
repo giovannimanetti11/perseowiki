@@ -30,16 +30,19 @@ $page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
+// Function to count matches for sorting
+function countMatches($string, $keyword) {
+  return substr_count(strtolower($string), strtolower($keyword));
+}
 
 // Query to search in posts
 $sql_posts = "SELECT wh_posts.*, wh_postmeta.meta_value AS meta_box_nome_scientifico
 FROM wh_posts
 LEFT JOIN wh_postmeta ON (wh_posts.ID = wh_postmeta.post_id AND wh_postmeta.meta_key = 'meta-box-nome-scientifico')
-WHERE MATCH(wh_posts.post_title, wh_posts.post_content) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
+WHERE (wh_posts.post_title LIKE '%{$keywords}%' OR wh_posts.post_content LIKE '%{$keywords}%')
 AND (wh_posts.post_status = 'publish')
 AND (wh_posts.post_type = 'post')
-GROUP BY wh_posts.ID
-ORDER BY wh_posts.post_title ASC";
+GROUP BY wh_posts.ID";
 
 
 
@@ -48,18 +51,16 @@ ORDER BY wh_posts.post_title ASC";
 $sql_tags = "SELECT wh_terms.term_id, wh_terms.name, wh_terms.slug
 FROM wh_terms
 INNER JOIN wh_term_taxonomy ON (wh_terms.term_id = wh_term_taxonomy.term_id)
-WHERE MATCH(wh_terms.name) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
-AND (wh_term_taxonomy.taxonomy = 'post_tag')
-ORDER BY MATCH(wh_terms.name) AGAINST ('{$keywords}') DESC";
+WHERE wh_terms.name LIKE '%{$keywords}%'
+AND (wh_term_taxonomy.taxonomy = 'post_tag')";
 
 
 // Query to search in glossario (termine) CPT
 $sql_glossary_terms = "SELECT wh_posts.*
 FROM wh_posts
-WHERE MATCH(wh_posts.post_title) AGAINST ('{$keywords}' IN NATURAL LANGUAGE MODE)
+WHERE wh_posts.post_title LIKE '%{$keywords}%'
 AND (wh_posts.post_status = 'publish')
-AND (wh_posts.post_type = 'termine')
-ORDER BY MATCH(wh_posts.post_title) AGAINST ('{$keywords}') DESC";
+AND (wh_posts.post_type = 'termine')";
 
 
 $result_posts = $conn->query($sql_posts);
@@ -73,9 +74,11 @@ $response = array("posts" => array(), "tags" => array(), "glossary_terms" => arr
 if ($result_posts->num_rows > 0) {
   while ($row = $result_posts->fetch_assoc()) {
       $post_content = strip_tags($row["post_content"]);
+      $matchCount = countMatches($post_content, $keywords) + countMatches($row["post_title"], $keywords);
       $post = array(
         "title" => $row["post_title"],
         "content" => $post_content,
+        "matches" => $matchCount,
         "meta_box_nome_scientifico" => $row["meta_box_nome_scientifico"], 
         "featured_image" => get_the_post_thumbnail_url($row["ID"], 'medium'),
         "permalink" => get_permalink($row["ID"]) 
@@ -87,8 +90,10 @@ if ($result_posts->num_rows > 0) {
 // Show tag search results
 if ($result_tags->num_rows > 0) {
   while ($row = $result_tags->fetch_assoc()) {
+      $matchCount = countMatches($row["name"], $keywords);
       $tag = array(
         "name" => $row["name"],
+        "matches" => $matchCount,
         "slug" => $row["slug"],
         "permalink" => get_term_link(intval($row["term_id"]), 'post_tag')
     );
@@ -99,8 +104,10 @@ if ($result_tags->num_rows > 0) {
 // Show termini search results
 if ($result_glossary_terms->num_rows > 0) {
   while ($row = $result_glossary_terms->fetch_assoc()) {
+      $matchCount = countMatches($row["post_title"], $keywords);
       $glossary_term = array(
         "title" => $row["post_title"],
+        "matches" => $matchCount,
         "featured_image" => get_the_post_thumbnail_url($row["ID"], 'medium'),
         "permalink" => get_permalink($row["ID"])
     );
@@ -110,10 +117,7 @@ if ($result_glossary_terms->num_rows > 0) {
 
 $combined_results = array_merge($response["posts"], $response["tags"], $response["glossary_terms"]);
 usort($combined_results, function ($a, $b) {
-  $titleA = isset($a["title"]) ? $a["title"] : '';
-  $titleB = isset($b["title"]) ? $b["title"] : '';
-
-  return strcmp($titleA, $titleB);
+  return $b['matches'] <=> $a['matches'];
 });
 
 $total_results = count($combined_results);

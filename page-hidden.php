@@ -4,6 +4,16 @@
 // PHP code for Mailchimp integration.
 require_once 'inc/config.php';
 
+// Check if the user's email is already stored in a cookie
+$showContent = false;
+if (isset($_COOKIE['user_email'])) {
+    $email = filter_var($_COOKIE['user_email'], FILTER_VALIDATE_EMAIL);
+    if ($email) {
+        // If the cookie contains a valid email, set a flag to show the content directly
+        $showContent = true;
+    }
+}
+
 // Handle the AJAX request.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -44,6 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Response handling
     if ($httpCode == 200) {
+        // Set a cookie with the email
+        setcookie('user_email', $email, time() + (86400 * 30), "/"); // 30 days expiration
         echo json_encode(['success' => true]);
     } else {
         $errorMessage = 'Errore nella registrazione.';
@@ -60,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 get_header();
 ?>
 
-<div id="popup-overlay">
+<div id="popup-overlay" <?php if($showContent) echo 'style="display:none;"'; ?>>
     <div id="email-popup">
         <form id="email-form">
             <label for="user-email">INSERISCI LA TUA EMAIL</label>
@@ -71,15 +83,12 @@ get_header();
     </div>
 </div>
 
-<main id="content" style="display:none;">
+<main id="content" <?php if(!$showContent) echo 'style="display:none;"'; ?>>
     <h1>Welcome to the page!</h1>
 </main>
 
 <script>
-    // JavaScript for handling the popup, email validation, and submission
     document.addEventListener('DOMContentLoaded', function() {
-        var overlay = document.getElementById('popup-overlay');
-        var content = document.getElementById('content');
         var form = document.getElementById('email-form');
         var emailError = document.getElementById('email-error');
 
@@ -102,8 +111,9 @@ get_header();
                 if (xhr.readyState === 4) {
                     var response = JSON.parse(xhr.responseText);
                     if(xhr.status === 200 && response.success) {
-                        overlay.style.display = 'none';
-                        content.style.display = 'block';
+                        document.cookie = "user_email=" + email + ";path=/;max-age=" + (86400 * 30);
+                        document.getElementById('popup-overlay').style.display = 'none';
+                        document.getElementById('content').style.display = 'block';
                     } else {
                         displayError(response.message || 'Si è verificato un errore nell\'invio dell\'email.');
                     }

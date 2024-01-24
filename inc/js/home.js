@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
   var clearSearch = document.querySelector("#clearSearch");
   var currentPage = 1;
 
+  // Function to highlight search text
+  function highlightText(text, keyword) {
+    const re = new RegExp(keyword, 'gi');
+    return text.replace(re, (match) => `<span class="highlight">${match}</span>`);
+  }
+
   function createPagination(totalResults) {
     var maxResultsPerPage = 10;
     var totalPages = Math.ceil(totalResults / maxResultsPerPage);
@@ -39,7 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
     pagination.appendChild(prevButton);
     pagination.appendChild(nextButton);
     searchResults.insertAdjacentElement('beforeend', pagination);
-  }  
+  }
+
+
 
   searchBar.addEventListener("input", debounce(function() {
     var keywords = searchBar.value;
@@ -79,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             searchResults.appendChild(postsHeading);
 
             posts.forEach((post) => {
+              post.title = highlightText(post.title, keywords);
               var postElement = document.createElement("li");
               postElement.classList.add("post-row");
               postElement.dataset.href = post.permalink;
