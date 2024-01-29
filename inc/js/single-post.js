@@ -54,15 +54,18 @@ window.addEventListener('load', async function() {
 });
 
 
-// Manage hover and clics on additional images
+// Manage hover and clicks on additional images
+let currentIndex = 0;
+let images = [];
 
 window.onload = function () {
-
   // Delay the execution of the code to give time for images to load
   setTimeout(function () {
-
+    images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
     const featuredImage = document.getElementById("featured-image");
+
     if (featuredImage) {
+      images.unshift(featuredImage);
       let originalFeaturedImageSrc = featuredImage.src;
 
       // Create an additional thumbnail for the featured image
@@ -80,7 +83,6 @@ window.onload = function () {
 
       // Attach mouseenter, mouseleave, and click events for thumbnail
       updatedThumbnails.forEach((thumbnail, index) => {
-
         thumbnail.addEventListener("mouseenter", function () {
           const fullImageUrl = thumbnail.dataset.fullImageUrl;
           featuredImage.src = fullImageUrl;
@@ -102,13 +104,17 @@ window.onload = function () {
           });
 
           thumbnail.classList.add("selected");
+
+          currentIndex = images.findIndex(image => image.dataset.fullImageUrl === fullImageUrl);
+          console.log('Selected thumbnail. Current index:', currentIndex);
+
         });
       });
     }
-  }, 550);
 
-  const images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
-  let currentIndex = 0;
+    console.log("Array images:", images);
+  }, 550);
+  
 
   // Initialize lightbox
   function initLightbox() {
@@ -121,24 +127,45 @@ window.onload = function () {
     // Attach click event for opening lightbox
     parent.addEventListener('click', function (e) {
       const target = e.target;
+      console.log("Clicked element:", target); 
+    
       if (target.closest('.additional-images-thumbnails')) {
         e.stopPropagation();
         return;
       }
+    
       if (target.tagName === 'IMG' && window.innerWidth > 768) {
-        currentIndex = images.indexOf(target);
-        openLightbox(target);
+        if (target.id === 'featured-image') {
+         
+          console.log('Lightbox opened. Current index:', currentIndex);
+          openLightbox(images[currentIndex]);
+          
+        } else {
+         
+          let index = images.findIndex(image => image.dataset.fullImageUrl === target.dataset.fullImageUrl);
+          console.log("Found index:", index); 
+    
+          if (index !== -1) {
+            currentIndex = index;
+            console.log('Lightbox opened. Current index:', currentIndex);
+            openLightbox(images[currentIndex]);
+          } else {
+            console.error('Image not found in "images" array');
+          }
+        }
       }
     });
   }
 
   function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
+    console.log('Next image. Current index:', currentIndex);
     updateLightboxImage();
   }
 
   function previousImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
+    console.log('Previous image. Current index:', currentIndex);
     updateLightboxImage();
   }
 
@@ -153,49 +180,39 @@ window.onload = function () {
   }
 
   // Open lightbox and display image
-  function openLightbox(img) {
-    const srcset = img.getAttribute('srcset');
-    let largeImageSrc;
+function openLightbox(img) {
+  let largeImageSrc = img.dataset.fullImageUrl || img.src; 
 
-    // Handle srcset if available
-    if (srcset) {
-      const sources = srcset.split(', ');
-      largeImageSrc = sources[sources.length - 1].split(' ')[0];
-    } else {
-      largeImageSrc = img.getAttribute('src');
-    }
-
-    // Create lightbox
-    const lightbox = document.createElement('div');
-    lightbox.classList.add('custom-lightbox', 'active');
-    lightbox.innerHTML = `
+  // Create lightbox
+  const lightbox = document.createElement('div');
+  lightbox.classList.add('custom-lightbox', 'active');
+  lightbox.innerHTML = `
     <div class="image-wrapper">
       <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
     </div>
     <div class="lightbox-arrow left-arrow"></div>
     <div class="lightbox-arrow right-arrow"></div>`;
 
-    lightbox.querySelector('.left-arrow').addEventListener('click', previousImage);
-    lightbox.querySelector('.right-arrow').addEventListener('click', nextImage);
-  
+  // Attach event listeners for left and right arrows
+  lightbox.querySelector('.left-arrow').addEventListener('click', previousImage);
+  lightbox.querySelector('.right-arrow').addEventListener('click', nextImage);
 
+  // Close lightbox on click outside of image
+  lightbox.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('lightbox-arrow') && e.target !== lightbox.querySelector('img')) {
+      lightbox.remove();
+    }
+  });
 
-    // Close lightbox on click outside of image
-    lightbox.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('lightbox-arrow') && e.target !== lightbox.querySelector('img')) {
-        lightbox.remove();
-      }
-    });
+  // Close lightbox on pressing 'Escape' key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      lightbox.remove();
+    }
+  });
 
-    // Close lightbox on pressing 'Escape' key
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' || e.keyCode === 27) {
-        lightbox.remove();
-      }
-    });
-
-    document.body.appendChild(lightbox);
-  }
+  document.body.appendChild(lightbox);
+}
 
   // Initialize the lightbox
   initLightbox();

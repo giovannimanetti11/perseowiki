@@ -1044,6 +1044,10 @@ header {
   border-radius: 5px;
 }
 
+#classification-container {
+  max-width: 29%;
+}
+
 #classification-container ul {
   list-style-type: none;
   padding: 0;
@@ -1095,6 +1099,7 @@ header {
 .map-container {
   display: flex;
   flex-direction: column;
+  max-width: 69%;
 }
 
 #observation-info {
@@ -2526,11 +2531,6 @@ footer {
     padding: 4px;
   }
 
-  .alphabetical-list .letter-group {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-
   .property-herbs-row {
     flex-direction: column;
   }
@@ -2787,6 +2787,11 @@ footer {
     margin-left: 0;
   }
 
+  .alphabetical-list .letter-group {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
   .alphabetical-list .name-scientific-name a {
     margin-left: 10px;
   }
@@ -2831,6 +2836,10 @@ footer {
 
   .alphabetical-list .term-title a {
     margin-left: 10px;
+  }
+
+  .entry-content p {
+    padding: 10px;
   }
 
 }
