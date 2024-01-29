@@ -637,6 +637,67 @@ function save_affiliation_metabox($post_id, $post) {
 
 
 /*
+ * Add custom field "Author Name" with members dropdown
+ */
+
+ function custom_author_dropdown_meta_box_markup($post) {
+    wp_nonce_field(basename(__FILE__), "meta-box-author-dropdown-nonce");
+
+    $selected_member = get_post_meta($post->ID, "meta-box-author-dropdown", true);
+
+    // Query to retrieve all members
+    $args = array(
+        'post_type' => 'members',
+        'posts_per_page' => -1
+    );
+    $members = new WP_Query($args);
+
+    echo '<select name="meta-box-author-dropdown">';
+    echo '<option value="">Seleziona un membro</option>';
+
+    if ($members->have_posts()) : 
+        while ($members->have_posts()) : $members->the_post();
+            $member_id = get_the_ID();
+            $member_name = get_the_title();
+            echo '<option value="' . esc_attr($member_id) . '"' . selected($selected_member, $member_id, false) . '>' . esc_html($member_name) . '</option>';
+        endwhile;
+    endif;
+
+    wp_reset_postdata();
+    echo '</select>';
+}
+
+function add_custom_author_dropdown_meta_box() {
+    add_meta_box("custom-author-dropdown-meta-box", "Author Name", "custom_author_dropdown_meta_box_markup", "post", "side", "high", null);
+}
+
+add_action("add_meta_boxes", "add_custom_author_dropdown_meta_box");
+
+function save_custom_author_dropdown_meta_box($post_id, $post, $update) {
+    if (!isset($_POST["meta-box-author-dropdown-nonce"]) || !wp_verify_nonce($_POST["meta-box-author-dropdown-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "post";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $meta_box_author_dropdown_value = "";
+    if(isset($_POST["meta-box-author-dropdown"])) {
+        $meta_box_author_dropdown_value = sanitize_text_field($_POST["meta-box-author-dropdown"]);
+    }
+    update_post_meta($post_id, "meta-box-author-dropdown", $meta_box_author_dropdown_value);
+}
+
+add_action("save_post", "save_custom_author_dropdown_meta_box", 10, 3);
+
+
+/*
  * 
  * Add svg support .
  *
@@ -766,6 +827,9 @@ function save_custom_meta_box($post_id, $post, $update)
 }
 
 add_action("save_post", "save_custom_meta_box", 10, 3);
+
+
+
 
 /*
  * Integrate PubMed API to fetch the publication count based on the scientific name

@@ -1207,6 +1207,15 @@ header {
   z-index: 90;
 }
 
+.post-featured-image img:hover {
+  cursor: unset;
+}
+
+.single-post .post-featured-image img:hover {
+  opacity: 0.8;
+  cursor: zoom-in;
+}
+
 .additional-images-thumbnails {
   width: 100%;
   margin-top: 5px;

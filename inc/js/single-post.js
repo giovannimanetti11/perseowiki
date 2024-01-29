@@ -58,7 +58,7 @@ window.addEventListener('load', async function() {
 let currentIndex = 0;
 let images = [];
 
-window.onload = function () {
+document.addEventListener('DOMContentLoaded', function () {
   // Delay the execution of the code to give time for images to load
   setTimeout(function () {
     images = Array.from(document.querySelectorAll('.additional-images-thumbnails img'));
@@ -106,14 +106,12 @@ window.onload = function () {
           thumbnail.classList.add("selected");
 
           currentIndex = images.findIndex(image => image.dataset.fullImageUrl === fullImageUrl);
-          console.log('Selected thumbnail. Current index:', currentIndex);
 
         });
       });
     }
 
-    console.log("Array images:", images);
-  }, 550);
+  }, 600);
   
 
   // Initialize lightbox
@@ -127,7 +125,6 @@ window.onload = function () {
     // Attach click event for opening lightbox
     parent.addEventListener('click', function (e) {
       const target = e.target;
-      console.log("Clicked element:", target); 
     
       if (target.closest('.additional-images-thumbnails')) {
         e.stopPropagation();
@@ -137,17 +134,14 @@ window.onload = function () {
       if (target.tagName === 'IMG' && window.innerWidth > 768) {
         if (target.id === 'featured-image') {
          
-          console.log('Lightbox opened. Current index:', currentIndex);
           openLightbox(images[currentIndex]);
           
         } else {
          
           let index = images.findIndex(image => image.dataset.fullImageUrl === target.dataset.fullImageUrl);
-          console.log("Found index:", index); 
     
           if (index !== -1) {
             currentIndex = index;
-            console.log('Lightbox opened. Current index:', currentIndex);
             openLightbox(images[currentIndex]);
           } else {
             console.error('Image not found in "images" array');
@@ -159,13 +153,11 @@ window.onload = function () {
 
   function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
-    console.log('Next image. Current index:', currentIndex);
     updateLightboxImage();
   }
 
   function previousImage() {
     currentIndex = (currentIndex - 1 + images.length) % images.length;
-    console.log('Previous image. Current index:', currentIndex);
     updateLightboxImage();
   }
 
@@ -216,7 +208,7 @@ function openLightbox(img) {
 
   // Initialize the lightbox
   initLightbox();
-};
+});
 
 
 // Create index and rhomboids

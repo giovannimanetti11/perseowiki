@@ -128,6 +128,16 @@
                 echo "Scheda pubblicata il $data_pubblicazione";
                 }
 
+                $author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+                if ($author_id) {
+                    $author_post = get_post($author_id);
+                    $author_name = $author_post->post_title;
+                    echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
+                }
+
+
+
+
                 $revision_data = get_post_meta(get_the_ID(), '_wikiherbalist_revision_data', true);
                 if ($revision_data) {
                     echo '<p>Revisionata da ';
