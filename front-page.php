@@ -97,7 +97,7 @@ if (isset($_GET['keywords'])) {
         </div>
 
         <?php
-        $properties_and_herbs = get_therapeutic_properties_and_herbs(); // Query in functions.php:829
+        $properties_and_herbs = get_therapeutic_properties_and_herbs(); // Query in functions.php:1205
         ?>
         <div class="properties-container">
             <div class="properties-header">

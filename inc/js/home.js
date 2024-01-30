@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var searchResults = document.querySelector("#searchResults");
   var clearSearch = document.querySelector("#clearSearch");
   var currentPage = 1;
+  var posts = [];
+  var tags = [];
+  var glossary_terms = [];
 
   // Function to highlight search text
   function highlightText(text, keyword) {
