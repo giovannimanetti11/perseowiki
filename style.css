@@ -189,6 +189,7 @@ body {
 
 .breadcrumbs {
   width: 50%;
+  max-width: 1000px;
   margin: 0 auto;
   color: #0A2944;
 }
@@ -242,11 +243,15 @@ header {
   align-items: center;
   padding: 0 10%;
   background: #0A2944;
-  border-bottom: 1px solid #000;
 }
 
 .menu {
   margin-left: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-icon {
+  color: #fff;
 }
 
 .menu ul {
@@ -292,17 +297,25 @@ header {
   border: 1px solid #fff;
 }
 
-.mobileMenu i {
-  color: #fff;
-  display: none;
+#popup-menu {
+  position: fixed;
+  margin-top: 42px;
+  width: 100%;
+  background-color: #0A2944;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.7s ease, opacity 0.7s ease, visibility 0.7s ease;
+  z-index: 1000;
 }
 
-#popup-menu {
- width: 100%;
- background-color: #0A2944;
- text-align: center;
- border-bottom: 1px solid #000;
- padding-bottom: 10px;
+#popup-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
 }
 
 #popup-menu ul {
@@ -314,6 +327,14 @@ header {
 #popup-menu ul li {
   list-style-type: none;
   text-align: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+
+#popup-menu.show ul li {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #popup-menu ul li a {
@@ -326,21 +347,10 @@ header {
   text-decoration: underline;
 }
 
-.mobileMenuPopup, #popup-menu {
-  display: none;
+#popup-menu button {
+  transition: transform 0.7s ease, opacity 0.7s ease;
 }
 
-#menu-icon {
-  transition: opacity 0.3s ease-in-out;
-}
-
-#menu-icon.visible {
-  opacity: 1;
-}
-
-#menu-icon.hidden {
-  opacity: 0;
-}
 
 #mailingList-popup, #login-popup, #signup-popup, #contact-popup {
   margin-top: 55px;
@@ -737,7 +747,7 @@ header {
 .alert-icon {
   float: left;
   color: #9F6000;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 
 .home-content {
@@ -1159,6 +1169,7 @@ header {
 
 .post-content {
   width: 50%;
+  max-width: 1000px;
   margin: 0 auto;
   background: #fff;
   border: 1px solid #bdbdbd;
@@ -1685,6 +1696,15 @@ header {
 
 .fa-volume-high {
   margin: 20px 0 0 15px;
+}
+
+.voice-icon:hover {
+  transition: all 0.6s;
+}
+
+.voice-icon:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .postid-196 .fa-volume-high, .postid-829 .fa-volume-high, .postid-1462 .fa-volume-high {
@@ -2583,11 +2603,6 @@ footer {
     margin-bottom: 15px;
   }
 
-  .article-title i {
-    margin-top: 10px;
-    margin-left: 10px;
-  }
-
   .breadcrumbs {
     width: 95%;
     padding: 15px 0;
@@ -2599,10 +2614,11 @@ footer {
     margin-left: auto;
   }
 
-  .mobileMenu i {
+  .mobileMenu svg {
     display: block;
     transition: all .3s ease;
     margin-top: -30px;
+    color: #fff;
   }
 
   #menu-icon:hover {

@@ -1,36 +1,69 @@
-// Menu toggle
-
 document.addEventListener("DOMContentLoaded", function() {
-  var menuIcon = document.getElementById("menu-icon");
+  var menuIconContainer = document.getElementById("menu-icon-container");
   var popupMenu = document.getElementById("popup-menu");
+  var menuLinks = popupMenu.querySelectorAll('a');
   var isClicked = false;
 
-  // Toggle menu icon and visibility when clicked
+  // Ensure menu elements are present
+  if (!menuIconContainer || !popupMenu) {
+    console.error("Menu elements not found.");
+    return;
+  }
 
-  menuIcon.addEventListener("click", function() {
-    if (!isClicked) {
-      menuIcon.classList.remove("fa-bars");
-      menuIcon.classList.add("fa-xmark");
-      menuIcon.classList.add("hidden");
-      setTimeout(function() {
-        menuIcon.classList.remove("hidden");
-        menuIcon.classList.add("visible");
-      }, 10);
-      popupMenu.style.display = "block";
-      isClicked = true;
-    } else {
-      menuIcon.classList.remove("fa-xmark");
-      menuIcon.classList.add("fa-bars");
-      menuIcon.classList.add("hidden");
-      setTimeout(function() {
-        menuIcon.classList.remove("hidden");
-        menuIcon.classList.add("visible");
-      }, 10);
-      popupMenu.style.display = "none";
+  // Handle click on the menu icon container
+  menuIconContainer.addEventListener("click", function(event) {
+    event.stopPropagation();
+    var menuIcon = document.getElementById("menu-icon");
+
+    // Check if the menu icon is present
+    if (!menuIcon) {
+      console.error("Menu icon not found.");
+      return;
+    }
+
+    isClicked = !isClicked;
+    menuIcon.className = isClicked ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+    popupMenu.classList.toggle("show", isClicked);
+  });
+
+  // Close the menu when clicking outside
+  document.addEventListener("click", function() {
+    if (isClicked) {
+      var menuIcon = document.getElementById("menu-icon");
+      menuIcon.className = "fa-solid fa-bars";
+      popupMenu.classList.remove("show");
       isClicked = false;
     }
   });
+
+  // Function to handle the closing of the menu
+  function closeMenu(target) {
+    popupMenu.classList.remove('show');
+    isClicked = false;
+    setTimeout(function() {
+      window.location.href = target;
+    }, 400); 
+  }
+
+  // Handle click on menu items
+  menuLinks.forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      closeMenu(this.getAttribute('href'));
+    });
+
+    // Add touch event listener for mobile devices
+    link.addEventListener('touchend', function(event) {
+      event.preventDefault();
+      closeMenu(this.getAttribute('href'));
+    });
+  });
 });
+
+
+
+
+
 
 
 // Initialize the mailing list popup and other features

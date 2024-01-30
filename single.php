@@ -37,12 +37,13 @@
             </div>
         </div>
 
-
-
-
         <div class="article-title">
-            <h1><?php the_title(); ?></h1> <i class="fa-solid fa-volume-high" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it"></i>
+            <h1><?php the_title(); ?></h1> 
+            <span class="voice-icon" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it">
+                <i class="fa-solid fa-volume-high"></i>
+            </span>
         </div>
+
 
         <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
         <?php if (!empty($meta_box_value)) : ?>

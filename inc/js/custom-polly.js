@@ -8,6 +8,7 @@ const Polly = new AWS.Polly({
 });
 
 function synthesizeSpeech(text, language) {
+
     const params = {
         OutputFormat: 'mp3',
         Text: text,
@@ -18,12 +19,12 @@ function synthesizeSpeech(text, language) {
 
     Polly.synthesizeSpeech(params, (err, data) => {
         if (err) {
-            console.error(err);
+            console.error('Error in synthesizeSpeech:', err);
             return;
         }
-    
+
         if (data.AudioStream instanceof ArrayBuffer || data.AudioStream instanceof Uint8Array) {
-            const audioBlob = new Blob([data.AudioStream], {type: 'audio/mpeg'});
+            const audioBlob = new Blob([data.AudioStream], { type: 'audio/mpeg' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
             audio.play();
@@ -32,8 +33,13 @@ function synthesizeSpeech(text, language) {
 }
 
 function handleClick(event) {
-    const target = event.target;
-    if (target.classList.contains('fa-volume-up')) {
+    // Check if the clicked element or any of its parents has the 'voice-icon' class.
+    let target = event.target;
+    while (target !== document && !(target.classList && target.classList.contains('voice-icon'))) {
+        target = target.parentNode;
+    }
+
+    if (target !== document) {
         const text = target.getAttribute('data-text');
         const language = target.getAttribute('data-language') || 'it';
         synthesizeSpeech(text, language);
