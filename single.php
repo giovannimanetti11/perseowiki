@@ -41,7 +41,7 @@
 
 
         <div class="article-title">
-            <h1><?php the_title(); ?></h1> <i class="fa-solid fa-volume-up" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it"></i>
+            <h1><?php the_title(); ?></h1> <i class="fa-solid fa-volume-high" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it"></i>
         </div>
 
         <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
@@ -71,7 +71,7 @@
                     <span>Condividi sui social</span>
                     <div class="social-icons">
                         <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-x-twitter"></i></a>
                         <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
                         <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(); return false;"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                         <a href="#" class="social-icon telegram" onclick="shareUrl('https://telegram.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>')"><i class="fab fa-telegram" aria-hidden="true"></i></a>
@@ -225,9 +225,11 @@
                     <?php endif; ?>
                 </div>
                 <?php if ($tossica) : ?>
-                    <a href="#section-10" class="alert alert-danger" role="alert">
-                        Pianta tossica
-                    </a>
+                    <div class="alert-container">
+                        <a href="#section-11" class="alert alert-danger" role="alert">
+                            Pianta tossica
+                        </a>
+                    </div>
                 <?php endif; ?>
             </div>
 

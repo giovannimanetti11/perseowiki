@@ -1336,6 +1336,10 @@ header {
   background-color:rgba(62, 146, 162, 0.3);
 }
 
+.fa-list {
+  margin-right: 10px;
+}
+
 .index {
   display: flex;
   flex-wrap: wrap;
@@ -1589,28 +1593,33 @@ header {
   flex-direction: column;
 }
 
-.facebook i {
+.facebook svg {
   color: #4267B2;
 }
 
-.twitter i {
-  color: #1DA1F2;
+.twitter svg {
+  color: #000;
 }
 
-.linkedin i {
+.linkedin svg {
   color: #0e76a8;
 }
 
-.whatsapp i {
+.whatsapp svg {
   color: #075E54;
 }
 
-.telegram i {
+.telegram svg {
   color: #0088cc;
 }
 
-.facebook i, .twitter i, .linkedin i, .whatsapp i, .telegram i {
+.facebook svg, .twitter svg, .linkedin svg, .whatsapp svg, .telegram svg {
   font-size: 22px;
+  transition: all 0.6s;
+}
+
+.facebook svg:hover, .twitter svg:hover, .linkedin svg:hover, .whatsapp svg:hover, .telegram svg:hover {
+  opacity: 0.8;
 }
 
 .popup-header span {
@@ -1674,7 +1683,11 @@ header {
   border: 0;
 }
 
-.postid-196 .fa-volume-up, .postid-829 .fa-volume-up, .postid-1462 .fa-volume-up {
+.fa-volume-high {
+  margin: 20px 0 0 15px;
+}
+
+.postid-196 .fa-volume-high, .postid-829 .fa-volume-high, .postid-1462 .fa-volume-high {
   display: none;
 }
 

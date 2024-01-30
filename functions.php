@@ -225,11 +225,28 @@ add_action( 'init', 'perseowiki_nav_menus' );
  *
  */
 
+/* Font Awesome Kit Setup */
+if (! function_exists('fa_custom_setup_kit') ) {
+    function fa_custom_setup_kit($kit_url = '') {
+      foreach ( [ 'wp_enqueue_scripts', 'admin_enqueue_scripts', 'login_enqueue_scripts' ] as $action ) {
+        add_action(
+          $action,
+          function () use ( $kit_url ) {
+            wp_enqueue_script( 'font-awesome-kit', $kit_url, [], null );
+          }
+        );
+      }
+    }
+  }
+
+fa_custom_setup_kit('https://kit.fontawesome.com/8ebcfc9d90.js');
+
+  
+
 function perseowiki_styles() {
 
   wp_enqueue_style('perseowiki-style', get_template_directory_uri().'/style.css');
   wp_enqueue_style( 'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css' );
-  wp_enqueue_style( 'font-awesome-free', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css' );
   wp_enqueue_script( 'custom-functions', get_template_directory_uri().'/inc/js/functions.js' );
 
   wp_localize_script( 'custom-functions', 'myAjax', array( 'ajax_url' => admin_url('admin-ajax.php') ) );
