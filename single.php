@@ -82,7 +82,7 @@
                     <span>URL</span>
                     <div class="copy-link">
                         <button class="copy-button" onclick="copyToClipboard()"> <i class="fas fa-copy"></i> </button>
-                        <a href="<?php the_permalink(); ?>" id="article-url"><?php the_permalink(); ?></a>
+                        <?php the_permalink(); ?>
                         <textarea id="hidden-url" readonly><?php the_permalink(); ?></textarea>
                     </div>
                     <div id="copy-message" style="display: none;"></div>

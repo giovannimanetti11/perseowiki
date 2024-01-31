@@ -510,7 +510,6 @@ header {
   margin-top: 25px;
 }
 
-
 /* 
 *
 *  HOMEPAGE HERO
@@ -1326,6 +1325,11 @@ header {
   z-index: 50;
   padding: 5px;
   border-radius: 5px;
+  width: 180px;
+  display: block;
+  text-align: center;
+  margin-left: 5px;
+  padding: 5px;
 }
 
 .post-content h3 {
@@ -1700,9 +1704,6 @@ header {
 
 .voice-icon:hover {
   transition: all 0.6s;
-}
-
-.voice-icon:hover {
   cursor: pointer;
   opacity: 0.8;
 }
@@ -2757,6 +2758,10 @@ footer {
     padding: 25px;
   }
 
+  .social-icons {
+    margin-top: 10px;
+  }
+
   #article-url {
     font-size: 14px;
   }
@@ -2878,6 +2883,23 @@ footer {
 
   .entry-content p {
     padding: 10px;
+  }
+
+  .fa-volume-high {
+    margin: 10px 0 0 15px;
+  }
+
+  .post-content span {
+    margin-bottom: 0;
+  }
+
+  #classification-container, .map-container {
+    max-width: 100%;
+  }
+
+  #observation-info {
+    align-self: normal;
+    max-width: 100%;
   }
 
 }
