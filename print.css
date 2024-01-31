@@ -170,6 +170,10 @@
   *
   */
 
+  .voice-icon, .post-reading-time, #menu-icon {
+    display: none;
+  }
+
   .map-container {
     display: none;
   }
