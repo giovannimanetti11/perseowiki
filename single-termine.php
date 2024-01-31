@@ -11,16 +11,20 @@
         <div class="images-container">
             <div class="post-featured-image">
                 <?php if ( has_post_thumbnail() ) { 
-                        the_post_thumbnail( 'medium' ); 
-                        $thumbnail_id = get_post_thumbnail_id();
-                        $thumbnail = get_post( $thumbnail_id );
-                        $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
-                        if ( ! empty( $description ) ) {
-                            echo '<div class="wp-image-description">' . $description . '</div>';
-                        }
-                    } ?>
+                    $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
+                    $alt_text = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
+                    the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url, 'alt' => $alt_text));
+                    
+                    $thumbnail_id = get_post_thumbnail_id();
+                    $thumbnail = get_post( $thumbnail_id );
+                    $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
+                    if ( ! empty( $description ) ) {
+                        echo '<div class="wp-image-description">' . $description . '</div>';
+                    }
+                } ?>
             </div>
         </div>
+
 
         <div class="article-title">
             <h1><?php the_title(); ?></h1> 
@@ -54,7 +58,7 @@
                         <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-x-twitter"></i></a>
                         <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(); return false;"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(this); return false;" data-url="<?php echo urlencode(get_permalink()); ?>"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                         <a href="#" class="social-icon telegram" onclick="shareUrl('https://telegram.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>')"><i class="fab fa-telegram" aria-hidden="true"></i></a>
                     </div>
 

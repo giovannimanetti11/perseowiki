@@ -178,16 +178,20 @@ function openLightbox(img) {
   // Create lightbox
   const lightbox = document.createElement('div');
   lightbox.classList.add('custom-lightbox', 'active');
+
   lightbox.innerHTML = `
     <div class="image-wrapper">
       <img src="${largeImageSrc}" alt="${img.alt}" class="lightbox-image" />
-    </div>
-    <div class="lightbox-arrow left-arrow"></div>
-    <div class="lightbox-arrow right-arrow"></div>`;
+    </div>`;
+  if (images.length > 1) {
+    lightbox.innerHTML += `
+      <div class="lightbox-arrow left-arrow"></div>
+      <div class="lightbox-arrow right-arrow"></div>`;
 
-  // Attach event listeners for left and right arrows
-  lightbox.querySelector('.left-arrow').addEventListener('click', previousImage);
-  lightbox.querySelector('.right-arrow').addEventListener('click', nextImage);
+    // Attach event listeners for left and right arrows
+    lightbox.querySelector('.left-arrow').addEventListener('click', previousImage);
+    lightbox.querySelector('.right-arrow').addEventListener('click', nextImage);
+  }
 
   // Close lightbox on click outside of image
   lightbox.addEventListener('click', (e) => {
@@ -319,6 +323,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.shareUrl = function(url) {
     window.open(url, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");
     return false;
+  }
+
+  window.shareUrlWhatsApp = function(element) {
+    var url = element.getAttribute('data-url');
+    var whatsappUrl = "https://api.whatsapp.com/send?text=" + url;
+    window.open(whatsappUrl, '_blank').focus();
   }
 
   // Close popup when you click outside of the popup div

@@ -74,7 +74,7 @@
                         <a href="#" class="social-icon facebook" onclick="shareUrl('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>')"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon twitter" onclick="shareUrl('https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-x-twitter"></i></a>
                         <a href="#" class="social-icon linkedin" onclick="shareUrl('https://www.linkedin.com/shareArticle?url=<?php echo urlencode(get_permalink()); ?>')"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(); return false;"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="#" class="social-icon whatsapp" onclick="shareUrlWhatsApp(this); return false;" data-url="<?php echo urlencode(get_permalink()); ?>"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                         <a href="#" class="social-icon telegram" onclick="shareUrl('https://telegram.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>')"><i class="fab fa-telegram" aria-hidden="true"></i></a>
                     </div>
 
