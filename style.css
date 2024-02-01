@@ -351,6 +351,10 @@ header {
   transition: transform 0.7s ease, opacity 0.7s ease;
 }
 
+#menu-icon-container {
+  display: none;
+}
+
 
 #mailingList-popup, #login-popup, #signup-popup, #contact-popup {
   margin-top: 55px;
@@ -2420,6 +2424,10 @@ footer {
 
 @media only screen and (max-width: 360px) {
 
+  #menu-icon-container {
+    display: block;
+  }
+
   .plant-details {
     flex-direction: column;
   }
@@ -2444,6 +2452,10 @@ footer {
 }
 
 @media only screen and (max-width: 768px) {
+
+  #menu-icon-container {
+    display: block;
+  }
 
   .post-table thead {
     display: none;
@@ -2617,7 +2629,6 @@ footer {
 
   .mobileMenu svg {
     display: block;
-    transition: all .3s ease;
     margin-top: -30px;
     color: #fff;
   }
@@ -2904,7 +2915,30 @@ footer {
 
 }
 
+@media only screen and (min-width: 769px) and (max-width: 805px) {
+  .logo h1, .logo span {
+    font-size: 18px !important;
+  }
+}
+
 @media only screen and (min-width: 769px) and (max-width: 992px) {
+
+  #subscribe-form #nome, #subscribe-form #cognome {
+    width: 100%;
+  }
+
+  #subscribe-form #nome {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  #menu-icon-container {
+    display: none;
+  }
+
+  .mobileMenu svg {
+    color: #fff;
+  }
 
   .about-container {
     padding: 50px;
