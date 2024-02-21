@@ -552,6 +552,15 @@ header {
   flex-direction: column;
 }
 
+.notfound {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #cf2e2e;
+  border-radius: 5px;
+  color: #cf2e2e;
+  text-align: left;
+}
+
 #searchResults .tag-name {
   font-weight: bold;
 }
@@ -570,7 +579,7 @@ header {
   text-decoration: underline;
 }
 
-#searchResults h4 i {
+#searchResults h4 svg {
   margin-right: 5px;
 }
 
@@ -605,9 +614,8 @@ header {
 .search #clearSearch {
   position: absolute; 
   right: 60px;
-  top: 65px;
+  top: 60px;
   color: #0e3457;
-  display: none;
 }
 
 .search #clearSearch:hover {

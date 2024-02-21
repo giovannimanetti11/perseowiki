@@ -78,7 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
         
         searchResults.innerHTML = "";
         createPagination(totalResults);
-        
+
+        if (!posts.length && !tags.length && !glossary_terms.length) {
+          displayNoResultsMessage();
+          return;
+        }
 
         if (posts.length > 0 || tags.length > 0 || data.glossary_terms.length > 0) {
           if (posts.length > 0) {
@@ -197,15 +201,23 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           searchResults.style.display = "none";
         }
+
+
+      })
+      .catch(error => {
+        console.error("Error fetching search results:", error);
+        displayNoResultsMessage();
       });
   }, 200));
 
-  clearSearch.addEventListener("click", function () {
-    searchBar.value = "";
-    searchResults.style.display = "none";
-    clearSearch.style.display = "none";
-    searchBar.classList.remove("noradius");
-  });
+  if (clearSearch) {
+      clearSearch.addEventListener("click", function() {
+          searchBar.value = "";
+          searchResults.style.display = "none";
+          this.style.display = "none"; 
+          searchBar.classList.remove("noradius");
+      });
+  }
 
   document.addEventListener("click", function (event) {
     if (
@@ -228,10 +240,14 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  if (posts.length === 0 && tags.length === 0 && glossary_terms.length === 0) {
+  function displayNoResultsMessage() {
     var noResultsMessage = document.createElement("p");
     noResultsMessage.textContent = "Nessun risultato trovato. Prova con parole chiave diverse.";
+    noResultsMessage.className = "notfound";
     searchResults.appendChild(noResultsMessage);
+    searchResults.style.display = "flex";
+    searchBar.classList.add("noradius");
+    clearSearch.style.display = "block";
   }
   
 });

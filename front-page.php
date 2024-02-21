@@ -33,8 +33,10 @@ if (isset($_GET['keywords'])) {
     <main>
         <div class="homepage-hero">
             <div class="search">
-                <input type="search" class="searchBar" placeholder="Search in WikiHerbalist..">
-                <i class="fas fa-times" id="clearSearch"></i>
+                <input type="search" class="searchBar" placeholder="Cerca in WikiHerbalist..">
+                <div id="clearSearch" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </div>
                 <i class="fas fa-search" id="iconSearch"></i>
             </div>
             <ul id="searchResults"></ul>
