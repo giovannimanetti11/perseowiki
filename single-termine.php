@@ -33,11 +33,6 @@
             </span>
         </div>
 
-        <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
-        <?php if (!empty($meta_box_value)) : ?>
-            <div class="meta-box-nome-scientifico"><?php echo esc_html( $meta_box_value ); ?></div>
-        <?php endif; ?>
-
         <div class="post-buttons">
             <button class="button print-button" type="button" onclick="printArticle()"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
             <button class="button share-button" type="button" onclick="openSharePopup()"><i class="fa fa-share-alt" aria-hidden="true"></i> Condividi</button>
@@ -113,17 +108,11 @@
                     }
                     echo "<br>";
                     
-                    $revision_data = get_post_meta(get_the_ID(), '_wikiherbalist_revision_data', true);
-                    if ($revision_data) {
-                        echo '<p>Revisionata da ';
-                        $revisions = [];
-                        foreach ($revision_data as $revision) {
-                            $member = get_post($revision->memberId);
-                            $date = date("d-m-Y", strtotime($revision->date));
-                            $revisions[] = $member->post_title . ' il ' . $date;
-                        }
-                        echo implode(', ', $revisions);
-                        echo '</p>';
+                    $author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+                    if ($author_id) {
+                        $author_post = get_post($author_id);
+                        $author_name = $author_post->post_title;
+                        echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
                     }
 
 
@@ -171,9 +160,26 @@ endif;
 
 </main>
 
+<?php
+
+$author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+$displayAuthor = "WHAdmin"; 
+
+if ($author_id) {
+    $author_post = get_post($author_id);
+    if ($author_post) {
+        $displayAuthor = $author_post->post_title;
+    }
+} else {
+    $displayAuthor = get_the_author();
+}
+
+$displayAuthorJs = esc_js($displayAuthor);
+?>
+
 <script>
-  var authorName = "<?php echo get_the_author(); ?>";
-  var displayAuthor = authorName === "WHAdmin" ? "Editors of WikiHerbalist" : authorName;
+  var displayAuthor = "<?php echo $displayAuthorJs; ?>";
+  displayAuthor = displayAuthor === "WHAdmin" ? "Editors of WikiHerbalist" : displayAuthor;
 
   var articleData = {
     author: displayAuthor,

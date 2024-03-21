@@ -8,12 +8,27 @@
 
     <article class="post-content" id="post-content">
 
-        <h1><?php the_title(); ?></h1>
+        <div class="images-container">
+                <div class="post-featured-image">
+                    <?php if ( has_post_thumbnail() ) { 
+                        $full_image_url = wp_get_attachment_image_url(get_post_thumbnail_id(), 'full');
+                        $alt_text = get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true);
+                        the_post_thumbnail('medium', array('id' => 'featured-image', 'data-full-image-url' => $full_image_url, 'alt' => $alt_text));
+                        
+                        $thumbnail_id = get_post_thumbnail_id();
+                        $thumbnail = get_post( $thumbnail_id );
+                        $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
+                        if ( ! empty( $description ) ) {
+                            echo '<div class="wp-image-description">' . $description . '</div>';
+                        }
+                    } ?>
+                </div>
+            </div>
 
-        <?php $meta_box_value = get_post_meta( get_the_ID(), 'meta-box-nome-scientifico', true ); ?>
-        <?php if (!empty($meta_box_value)) : ?>
-            <div class="meta-box-nome-scientifico"><?php echo esc_html( $meta_box_value ); ?></div>
-        <?php endif; ?>
+
+            <div class="article-title">
+                <h1><?php the_title(); ?></h1>
+            </div>
 
         <div class="post-buttons">
             <button class="button print-button" type="button" onclick="printArticle()"><i class="fa fa-print" aria-hidden="true"></i> Stampa</button>
@@ -87,6 +102,13 @@
                 } else {
                 echo "Articolo pubblicato il $data_pubblicazione";
                 }
+
+                $author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+                if ($author_id) {
+                    $author_post = get_post($author_id);
+                    $author_name = $author_post->post_title;
+                    echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
+                }
             ?>
             </div>
             <?php
@@ -107,20 +129,6 @@
                 
             </div>
 
-            <div class="post-content-module">
-                <div class="post-featured-image">
-                <?php if ( has_post_thumbnail() ) { 
-                    the_post_thumbnail( 'medium' ); 
-                    $thumbnail_id = get_post_thumbnail_id();
-                    $thumbnail = get_post( $thumbnail_id );
-                    $description = !empty( $thumbnail ) ? $thumbnail->post_content : '';
-                    if ( ! empty( $description ) ) {
-                        echo '<div class="wp-image-description">' . $description . '</div>';
-                    }
-                } ?>
-                </div>
-            </div>
-
 
             <?php the_content(); ?>
 
@@ -138,9 +146,27 @@ endif;
 
 </main>
 
+
+<?php
+
+$author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+$displayAuthor = "WHAdmin"; 
+
+if ($author_id) {
+    $author_post = get_post($author_id);
+    if ($author_post) {
+        $displayAuthor = $author_post->post_title;
+    }
+} else {
+    $displayAuthor = get_the_author();
+}
+
+$displayAuthorJs = esc_js($displayAuthor);
+?>
+
 <script>
-  var authorName = "<?php echo get_the_author(); ?>";
-  var displayAuthor = authorName === "WHAdmin" ? "Editors of WikiHerbalist" : authorName;
+  var displayAuthor = "<?php echo $displayAuthorJs; ?>";
+  displayAuthor = displayAuthor === "WHAdmin" ? "Editors of WikiHerbalist" : displayAuthor;
 
   var articleData = {
     author: displayAuthor,

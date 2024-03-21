@@ -670,7 +670,7 @@ function save_affiliation_metabox($post_id, $post) {
     $members = new WP_Query($args);
 
     echo '<select name="meta-box-author-dropdown">';
-    echo '<option value="">Seleziona un membro</option>';
+    echo '<option value="">Seleziona un autore</option>';
 
     if ($members->have_posts()) : 
         while ($members->have_posts()) : $members->the_post();
@@ -685,7 +685,10 @@ function save_affiliation_metabox($post_id, $post) {
 }
 
 function add_custom_author_dropdown_meta_box() {
-    add_meta_box("custom-author-dropdown-meta-box", "Author Name", "custom_author_dropdown_meta_box_markup", "post", "side", "high", null);
+    $post_types = ['post', 'blog', 'termine'];
+    foreach ($post_types as $post_type) {
+        add_meta_box("custom-author-dropdown-meta-box", "Author Name", "custom_author_dropdown_meta_box_markup", $post_type, "side", "high", null);
+    }
 }
 
 add_action("add_meta_boxes", "add_custom_author_dropdown_meta_box");
@@ -700,8 +703,8 @@ function save_custom_author_dropdown_meta_box($post_id, $post, $update) {
     if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
         return $post_id;
 
-    $slug = "post";
-    if($slug != $post->post_type)
+    $slug = $post->post_type;
+    if(!in_array($slug, ['post', 'blog', 'termine']))
         return $post_id;
 
     $meta_box_author_dropdown_value = "";
@@ -1074,95 +1077,6 @@ function save_tossica_metabox_data($post_id) {
         delete_post_meta($post_id, '_tossica');
     }
 }
-
-
-
-/*
- *
- * ADD custom metabox Reviews
- *
- */
-
- function wikiherbalist_add_custom_metabox() {
-    add_meta_box(
-        'wikiherbalist_revision_metabox', 
-        'Dettagli Revisione', 
-        'wikiherbalist_revision_metabox_callback', 
-        ['post', 'termine'], 
-        'side', 
-        'high'
-    );
-}
-add_action('add_meta_boxes', 'wikiherbalist_add_custom_metabox');
-
-function wikiherbalist_revision_metabox_callback($post) {
-    
-    wp_nonce_field( basename(__FILE__), 'wikiherbalist_revisions_nonce' );
-    $wikiherbalist_stored_meta = get_post_meta($post->ID, '_wikiherbalist_revision_data', true);
-    error_log(print_r($wikiherbalist_stored_meta, true));
-    $members = get_posts(['post_type' => 'members', 'numberposts' => -1]);
-    ?>
-    <div>
-        <label for="member-list">Membri</label>
-        <select name="member" id="member-list">
-            <option value="">Seleziona un Membro</option>
-            <?php foreach($members as $member) { ?>
-                <option value="<?php echo $member->ID; ?>"><?php echo $member->post_title; ?></option>
-            <?php } ?>
-        </select>
-    </div>
-    <div>
-        <label for="revision-date">Data</label>
-        <input type="date" id="revision-date" name="revision-date">
-    </div>
-    <div>
-        <button type="button" id="add-revision">Aggiungi</button>
-    </div>
-    <div id="revisions-list">
-        <h4>Revisioni</h4>
-        <?php
-        if ($wikiherbalist_stored_meta) {
-            foreach ($wikiherbalist_stored_meta as $revision) {
-                $member = get_post($revision->memberId);
-                $date = date("d-m-Y", strtotime($revision->date));
-                echo '<div class="revision-item" data-member-id="' . $member->ID . '" data-date="' . $revision->date . '">';
-                echo '<span>' . $member->post_title . ' ' . $date . '</span>';
-                echo '<button class="remove-revision">X</button>';
-                echo '</div>';
-            }
-        }
-        ?>
-    </div>
-    <?php
-}
-
-function wikiherbalist_save_revision($post_id) {
-    error_log('wikiherbalist_save_revision called');
-    error_log(print_r($_POST, true));
-
-    if (!isset($_POST['wikiherbalist_revisions_nonce'])) {
-        return $post_id;
-    }
-    $nonce = $_POST['wikiherbalist_revisions_nonce'];
-    if (!wp_verify_nonce($nonce, basename(__FILE__))) {
-        return $post_id;
-    }
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return $post_id;
-    }
-
-    $revision_data = array();
-    if (isset($_POST['revisions'])) {
-        $revision_data = json_decode(stripslashes($_POST['revisions']));
-    }
-
-    update_post_meta($post_id, '_wikiherbalist_revision_data', $revision_data);
-}
-add_action('save_post', 'wikiherbalist_save_revision');
-
-
-
-
 
 
 

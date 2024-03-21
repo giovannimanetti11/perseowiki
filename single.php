@@ -121,6 +121,7 @@
         <div class="article-info">
             <div class="post-date">
             <?php
+                global $post;
                 $data_pubblicazione = get_the_date();
                 $data_ultimo_aggiornamento = get_the_modified_date();
                 if ($data_pubblicazione != $data_ultimo_aggiornamento) {
@@ -136,21 +137,7 @@
                     echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
                 }
 
-
-
-
-                $revision_data = get_post_meta(get_the_ID(), '_wikiherbalist_revision_data', true);
-                if ($revision_data) {
-                    echo '<p>Revisionata da ';
-                    $revisions = [];
-                    foreach ($revision_data as $revision) {
-                        $member = get_post($revision->memberId);
-                        $date = date("d-m-Y", strtotime($revision->date));
-                        $revisions[] = $member->post_title . ' il ' . $date;
-                    }
-                    echo implode(', ', $revisions);
-                    echo '</p>';
-                }
+                
             ?>
             </div>
             <?php
@@ -274,9 +261,26 @@ endif;
 
 </main>
 
+<?php
+
+$author_id = get_post_meta(get_the_ID(), "meta-box-author-dropdown", true);
+$displayAuthor = "WHAdmin"; 
+
+if ($author_id) {
+    $author_post = get_post($author_id);
+    if ($author_post) {
+        $displayAuthor = $author_post->post_title;
+    }
+} else {
+    $displayAuthor = get_the_author();
+}
+
+$displayAuthorJs = esc_js($displayAuthor);
+?>
+
 <script>
-  var authorName = "<?php echo get_the_author(); ?>";
-  var displayAuthor = authorName === "WHAdmin" ? "Editors of WikiHerbalist" : authorName;
+  var displayAuthor = "<?php echo $displayAuthorJs; ?>";
+  displayAuthor = displayAuthor === "WHAdmin" ? "Editors of WikiHerbalist" : displayAuthor;
 
   var articleData = {
     author: displayAuthor,
