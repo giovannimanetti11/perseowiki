@@ -371,6 +371,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
+  // Formats author names according to APA 7th edition
+  window.formatAPAAuthors = function(authors) {
+    const authorsArray = authors.split(', ').map((author) => {
+      const parts = author.split(' ');
+      const lastName = parts.pop(); 
+      const initials = parts.map(name => `${name.charAt(0)}.`).join(' ');
+      return `${lastName}, ${initials}`;
+    });
+
+    if (authorsArray.length > 1) {
+      const lastAuthor = authorsArray.pop();
+      return `${authorsArray.join(', ')}, & ${lastAuthor}`;
+    } else {
+      return authorsArray[0]; // No need for '&' for a single author
+    }
+  }
 
   window.generateCitation = function() {
     var author = articleData.author;
@@ -389,36 +405,36 @@ document.addEventListener('DOMContentLoaded', () => {
     var citation = "";
   
     if (citationStyle === "APA") {
-      citation = author + ". (" + publicationDate + "). <em>" + title + "</em>. " + siteName + ". " + url;
+      const formattedAuthors = formatAPAAuthors(author); 
+      citation = `${formattedAuthors} (${formattedPublicationDate}). <em>${title}</em>. ${siteName}. ${url}`;
     } else if (citationStyle === "MLA") {
-      citation = author + ". \"" + title + ".\" <i>" + siteName + "</i>. " + formattedPublicationDate + ". Web. Accessed " + formattedAccessDate + ". " + url + ".";
+      citation = `${author}. "${title}." <i>${siteName}</i>, ${formattedPublicationDate}. Web. Accessed ${formattedAccessDate}. ${url}.`;
     } else if (citationStyle === "Wikipedia") {
-      citation = "&lt;ref&gt;{{Cita web |url=" + url + " |titolo=" + title + " |accesso=" + formattedAccessDate + "}}&lt;/ref&gt;";
+      citation = `&lt;ref&gt;{{Cita web |url=${url} |titolo=${title} |accesso=${formattedAccessDate}}}&lt;/ref&gt;`;
     }
   
     document.getElementById("citation-text").innerHTML = citation;
   }
-  
-
 
   window.copyCitationToClipboard = function() {
-      var citation = document.getElementById("citation-text").textContent;
-      var textarea = document.createElement("textarea");
-      textarea.textContent = citation;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
+    var citation = document.getElementById("citation-text").textContent;
+    var textarea = document.createElement("textarea");
+    textarea.textContent = citation;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
 
-      var copyMessage = document.getElementById("citation-copy-message");
-      copyMessage.style.display = "block";
-      copyMessage.textContent = "Citazione copiata negli appunti!";
-      setTimeout(function () {
-          copyMessage.style.display = "none";
-      }, 2000);
+    var copyMessage = document.getElementById("citation-copy-message");
+    copyMessage.style.display = "block";
+    copyMessage.textContent = "Citazione copiata negli appunti!";
+    setTimeout(function () {
+        copyMessage.style.display = "none";
+    }, 2000);
   }
 
   document.querySelector('.citation-button').addEventListener('click', openCitationPopup);
+
 
   // Close popup when you click outside of it
   document.addEventListener('click', function(event) {
