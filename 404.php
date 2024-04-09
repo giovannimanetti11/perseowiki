@@ -8,22 +8,15 @@ if (isset($_GET['keywords'])) {
     ?>
 
     <main>
-        <div class="homepage-hero">
+    <div class="homepage-hero">
             <div class="search">
                 <input type="search" class="searchBar" placeholder="Cerca in WikiHerbalist..">
-                <i class="fas fa-times" id="clearSearch"></i>
+                <div id="clearSearch" style="display: none;">
+                    <i class="fas fa-times"></i>
+                </div>
                 <i class="fas fa-search" id="iconSearch"></i>
             </div>
             <ul id="searchResults"></ul>
-            <div class="category-menu">
-                <?php wp_nav_menu(array('theme_location' => 'perseowiki-category-menu')); ?>
-                <div class="" id="iconLeftArrow">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-                <div class="" id="iconRightArrow">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </div>
         </div>
         <div class="error404-wrapper">
             <h1 class="error404-title"><?php esc_html_e('404', 'perseowiki'); ?></h1>
