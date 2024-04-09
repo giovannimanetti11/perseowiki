@@ -40,10 +40,6 @@ if (isset($_GET['keywords'])) {
                 <i class="fas fa-search" id="iconSearch"></i>
             </div>
             <ul id="searchResults"></ul>
-            <div class="category-menu">
-                <?php wp_nav_menu( array( 'theme_location' => 'perseowiki-category-menu' ) ); ?>
-
-            </div>
         </div>
 
         <div class="home-content">
