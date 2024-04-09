@@ -372,19 +372,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Formats author names according to APA 7th edition
-  window.formatAPAAuthors = function(authors) {
-    const authorsArray = authors.split(', ').map((author) => {
-      const parts = author.split(' ');
-      const lastName = parts.pop(); 
-      const initials = parts.map(name => `${name.charAt(0)}.`).join(' ');
-      return `${lastName}, ${initials}`;
-    });
 
-    if (authorsArray.length > 1) {
-      const lastAuthor = authorsArray.pop();
-      return `${authorsArray.join(', ')}, & ${lastAuthor}`;
-    } else {
-      return authorsArray[0]; // No need for '&' for a single author
+  window.formatAPAAuthors = function(authors) {
+    if (authors === "Editors of WikiHerbalist" || authors === "WHAdmin") {
+      return authors;
+    }
+    else {
+      const authorsArray = authors.split(', ').map((author) => {
+        const parts = author.split(' ');
+        const lastName = parts.pop(); 
+        const initials = parts.map(name => `${name.charAt(0)}.`).join(' ');
+        return `${lastName}, ${initials}`;
+      });
+
+      if (authorsArray.length > 1) {
+        const lastAuthor = authorsArray.pop();
+        return `${authorsArray.join(', ')}, & ${lastAuthor}`;
+      } else {
+        return authorsArray[0]; // No need for '&' for a single author
+      }
     }
   }
 
