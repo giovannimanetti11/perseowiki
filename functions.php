@@ -501,6 +501,7 @@ add_action( 'init', 'perseowiki_register_blog_categories' );
         'has_archive' => true,
         'menu_position' => 5,
         'menu_icon' => 'dashicons-book',
+        'show_in_rest' => true,
         'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes', 'post-formats' ),
         'rewrite' => array( 'slug' => 'glossario' )
     );
@@ -854,11 +855,14 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
 /*
  * Integrate PubMed API to fetch the publication count based on the scientific name
  */
+function fetch_pubmed_publications_count($scientific_name) {
+    
+    // Include the config.php file to get API key
+    include(get_template_directory() . '/inc/config.php');
 
- function fetch_pubmed_publications_count($scientific_name) {
-    $api_key = 'bb4a4fd9b7035c08fbaf115a3099b7c07408'; // Replace with your actual API key
+    $api_key = $pubmed_api_key;
 
-    // Estrai solo le prime due parole dal nome scientifico
+    // Only extract first two words of scientific name to get binomial name
     $parts = explode(' ', $scientific_name);
     $binomial_name = $parts[0] . ' ' . $parts[1];
 
@@ -873,16 +877,12 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
 
     $response = curl_exec($ch);
     if ($response === false) {
-        error_log('CURL Error: ' . curl_error($ch)); // Log cURL error
         curl_close($ch);
         return 'Nd'; // Return Nd in case of error
-    } else {
-        error_log('Risposta API: ' . $response); // Log API response
     }
     curl_close($ch);
 
     $data = json_decode($response, true);
-    error_log('PubMed API Response: ' . print_r($data, true)); // Log the response for debugging
 
     // Extract and return the publication count from the API response
     $count = isset($data['esearchresult']['count']) ? $data['esearchresult']['count'] : 0;
@@ -1119,6 +1119,7 @@ function get_all_posts_titles_and_links() {
             'excerpt' => get_the_excerpt(),
             'plurale' => get_post_meta(get_the_ID(), '_perseowiki_plurale', true),
             'id' => get_the_ID(),
+            'post_type' => get_post_type(),
         );
     }
     wp_reset_postdata();
