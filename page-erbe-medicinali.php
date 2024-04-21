@@ -32,8 +32,8 @@
                 echo '<div class="letter-title">' . $current_letter . '</div>';
             }
             $nome_scientifico = get_post_meta(get_the_ID(), 'meta-box-nome-scientifico', true);
-            echo '<div class="name-scientific-name"><h3 class="post-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
-            echo '<h4 class="card-scientific-name">(' . $nome_scientifico . ')</h4></div>';
+            echo '<div class="name-scientific-name"><h2 class="post-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
+            echo '<h3 class="card-scientific-name">(' . $nome_scientifico . ')</h3></div>';
         endwhile;
         echo '</div>'; 
         echo '</div>'; 

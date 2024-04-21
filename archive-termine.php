@@ -25,7 +25,7 @@
                 echo '<div class="letter-group">';
                 echo '<div class="letter-title">' . $current_letter . '</div>';
             }
-            echo '<div class="term-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></div>';
+            echo '<h2 class="term-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
         endwhile;
         echo '</div>'; 
         echo '</div>'; 
