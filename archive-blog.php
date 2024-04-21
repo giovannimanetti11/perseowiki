@@ -16,15 +16,20 @@ get_header();
                 <?php $post_counter = 1;
                 while ( have_posts() ) : the_post(); ?>
                     <?php
-                    // Imposta la dimensione dell'immagine in base al contatore di post
+                    // Set the image size based on the post counter
                     $image_size = ( $post_counter <= 3 ) ? 'large' : 'medium';
-                    // Imposta le classi delle colonne per il layout responsivo
+                    // Set column classes for responsive layout
                     $column_classes = 'col-xl-4 col-lg-6 col-md-6 col-sm-12';
 
-                    // Aggiungi una classe personalizzata per i primi 3 post
+                    // Add a custom class for the first 3 posts
                     if ( $post_counter <= 3 ) {
                         $column_classes .= ' latest-post';
                     }
+
+                    // Retrieve the custom author ID from the post meta
+                    $custom_author_id = get_post_meta(get_the_ID(), 'meta-box-author-dropdown', true);
+                    // Get the custom author's name, fallback to default if empty
+                    $custom_author_name = $custom_author_id ? get_the_title($custom_author_id) : 'Editors of WikiHerbalist';
                     ?>
                     <div class="<?php echo $column_classes; ?> blog-card">
                         <a href="<?php the_permalink(); ?>" class="post-link">
@@ -42,7 +47,7 @@ get_header();
                                         <?php the_title(); ?>
                                     </h2>
                                     <div class="entry-date">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i> <?php the_time('j F Y'); ?>
+                                        <i class="fa fa-calendar" aria-hidden="true"></i> <?php the_time('j F Y'); ?> | <?php echo $custom_author_name; ?>
                                     </div>
                                 </div>
 
@@ -58,7 +63,7 @@ get_header();
                 ?>
 
             <?php else : ?>
-                <p><?php _e( 'Nessun articolo trovato.', 'perseowiki' ); ?></p>
+                <p><?php _e( 'No articles found.', 'perseowiki' ); ?></p>
             <?php endif; ?>
         </div>
 
