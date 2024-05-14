@@ -1036,6 +1036,76 @@ function save_custom_meta_box_costituenti($post_id, $post, $update)
 
 add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
 
+
+/*
+ *
+ * ADD custom field WYSIWYG meta box for 'fitochimica'
+ *
+ */
+
+function add_fitochimica_meta_box() {
+    add_meta_box(
+        'fitochimica_meta_box', // Meta box ID
+        'Fitochimica', // Meta box title
+        'fitochimica_meta_box_callback', // Callback function
+        'post', // Screen (post type)
+        'normal', // Context (position)
+        'high' // Priority
+    );
+}
+add_action('add_meta_boxes', 'add_fitochimica_meta_box');
+
+// Display WYSIWYG editor
+function fitochimica_meta_box_callback($post) {
+    wp_nonce_field('fitochimica_meta_box_nonce', 'fitochimica_meta_box_nonce_field');
+    
+    $fitochimica_content = get_post_meta($post->ID, '_fitochimica_content', true);
+    
+    // Display WYSIWYG editor
+    wp_editor($fitochimica_content, 'fitochimica_content', array(
+        'textarea_name' => 'fitochimica_content',
+        'media_buttons' => true,
+        'textarea_rows' => 10,
+        'teeny' => false,
+    ));
+}
+
+// Save WYSIWYG editor content
+function save_fitochimica_meta_box_data($post_id) {
+
+    if (!isset($_POST['fitochimica_meta_box_nonce_field']) || !wp_verify_nonce($_POST['fitochimica_meta_box_nonce_field'], 'fitochimica_meta_box_nonce')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    if (isset($_POST['fitochimica_content'])) {
+        update_post_meta($post_id, '_fitochimica_content', wp_kses_post($_POST['fitochimica_content']));
+    }
+}
+add_action('save_post', 'save_fitochimica_meta_box_data');
+
+// Make field available for GraphQL
+function register_fitochimica_graphql_field() {
+    register_graphql_field('Post', 'fitochimica', [
+        'type' => 'String',
+        'description' => 'Contenuto del campo fitochimica',
+        'resolve' => function($post) {
+            return get_post_meta($post->ID, '_fitochimica_content', true);
+        },
+    ]);
+}
+add_action('graphql_register_types', 'register_fitochimica_graphql_field');
+
+
+
+
 /*
  *
  * ADD custom field "Tossica"
@@ -1442,6 +1512,31 @@ function perseowiki_schema_markup_tag() {
 
 add_action('wp_head', 'perseowiki_schema_markup_tag');
 add_action('wp_head', 'perseowiki_schema_markup_post');
+
+
+// Add Yoast fields to REST API response for posts, pages, and custom post types.
+function add_yoast_meta_to_rest() {
+    $post_types = get_post_types(['public' => true]); 
+    foreach ($post_types as $type) {
+        register_rest_field($type, 'yoast_meta', [
+            'get_callback'    => function ($post) {
+                return [
+                    'title' => get_post_meta($post['id'], '_yoast_wpseo_title', true),
+                    'meta_description' => get_post_meta($post['id'], '_yoast_wpseo_metadesc', true),
+                    'og_title' => get_post_meta($post['id'], '_yoast_wpseo_opengraph-title', true),
+                    'og_description' => get_post_meta($post['id'], '_yoast_wpseo_opengraph-description', true),
+                    'og_image' => get_post_meta($post['id'], '_yoast_wpseo_opengraph-image', true)
+                ];
+            },
+            'update_callback' => null,
+            'schema'          => null,
+        ]);
+    }
+}
+
+add_action('rest_api_init', 'add_yoast_meta_to_rest');
+
+
 
 
 ?>
