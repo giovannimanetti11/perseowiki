@@ -1037,71 +1037,10 @@ function save_custom_meta_box_costituenti($post_id, $post, $update)
 add_action("save_post", "save_custom_meta_box_costituenti", 10, 3);
 
 
-/*
- *
- * ADD custom field WYSIWYG meta box for 'fitochimica'
- *
- */
 
-function add_fitochimica_meta_box() {
-    add_meta_box(
-        'fitochimica_meta_box', // Meta box ID
-        'Fitochimica', // Meta box title
-        'fitochimica_meta_box_callback', // Callback function
-        'post', // Screen (post type)
-        'normal', // Context (position)
-        'high' // Priority
-    );
-}
-add_action('add_meta_boxes', 'add_fitochimica_meta_box');
 
-// Display WYSIWYG editor
-function fitochimica_meta_box_callback($post) {
-    wp_nonce_field('fitochimica_meta_box_nonce', 'fitochimica_meta_box_nonce_field');
-    
-    $fitochimica_content = get_post_meta($post->ID, '_fitochimica_content', true);
-    
-    // Display WYSIWYG editor
-    wp_editor($fitochimica_content, 'fitochimica_content', array(
-        'textarea_name' => 'fitochimica_content',
-        'media_buttons' => true,
-        'textarea_rows' => 10,
-        'teeny' => false,
-    ));
-}
 
-// Save WYSIWYG editor content
-function save_fitochimica_meta_box_data($post_id) {
 
-    if (!isset($_POST['fitochimica_meta_box_nonce_field']) || !wp_verify_nonce($_POST['fitochimica_meta_box_nonce_field'], 'fitochimica_meta_box_nonce')) {
-        return;
-    }
-    
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-    
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-    
-    if (isset($_POST['fitochimica_content'])) {
-        update_post_meta($post_id, '_fitochimica_content', wp_kses_post($_POST['fitochimica_content']));
-    }
-}
-add_action('save_post', 'save_fitochimica_meta_box_data');
-
-// Make field available for GraphQL
-function register_fitochimica_graphql_field() {
-    register_graphql_field('Post', 'fitochimica', [
-        'type' => 'String',
-        'description' => 'Contenuto del campo fitochimica',
-        'resolve' => function($post) {
-            return get_post_meta($post->ID, '_fitochimica_content', true);
-        },
-    ]);
-}
-add_action('graphql_register_types', 'register_fitochimica_graphql_field');
 
 
 
@@ -1535,6 +1474,112 @@ function add_yoast_meta_to_rest() {
 }
 
 add_action('rest_api_init', 'add_yoast_meta_to_rest');
+
+
+function add_revision_metabox() {
+    $screens = ['post', 'glossario', 'blog'];
+    foreach ($screens as $screen) {
+        add_meta_box(
+            'revision_metabox',
+            'Revisione',
+            'revision_metabox_callback',
+            $screen,
+            'side',
+            'high'
+        );
+    }
+}
+add_action('add_meta_boxes', 'add_revision_metabox');
+
+
+/*
+ * ADD REVISION CF
+ */
+
+// Add meta box to all public post types
+add_action('add_meta_boxes', function() {
+    $post_types = get_post_types(['public' => true], 'names');
+    foreach ($post_types as $post_type) {
+        add_meta_box('revision_metabox', 'Revisioni Scheda', 'revision_metabox_callback', $post_type, 'side', 'default');
+    }
+}, 10, 2);
+
+// Callback function for the meta box
+function revision_metabox_callback($post) {
+    wp_nonce_field(basename(__FILE__), 'revision_nonce');
+    $revision_data = get_post_meta($post->ID, '_revision_data', true);
+    $revision_data = $revision_data ? json_decode($revision_data, true) : [];
+
+    echo '<p><strong>Aggiungi una revisione:</strong></p>';
+    echo '<label for="reviewer_id">Seleziona un revisore:</label>';
+    $members = new WP_Query(['post_type' => 'members', 'posts_per_page' => -1]);
+    echo '<select name="reviewer_id" id="reviewer_id">';
+    echo '<option value="">-- Seleziona --</option>';
+    while ($members->have_posts()) : $members->the_post();
+        echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
+    endwhile;
+    wp_reset_postdata();
+    echo '</select>';
+    echo '<br>';
+    echo '<label for="revision_date">Data di revisione:</label>';
+    echo '<input type="date" id="revision_date" name="revision_date" value="" />';
+
+    if (!empty($revision_data)) {
+        echo '<p><strong>Revisioni precedenti:</strong></p>';
+        foreach ($revision_data as $revision) {
+            $reviewer_post = get_post($revision['reviewer_id']);
+            $reviewer_name = $reviewer_post ? $reviewer_post->post_title : 'N/A';
+            echo '<div>Revisore: ' . esc_html($reviewer_name) . ' il: ' . esc_html($revision['date']) . '</div>';
+        }
+    }
+}
+
+// Function to save the meta box data
+function save_revision_metabox_data($post_id) {
+    if (!isset($_POST['revision_nonce']) || !wp_verify_nonce($_POST['revision_nonce'], basename(__FILE__)) ||
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    $revision_data = get_post_meta($post_id, '_revision_data', true);
+    $revision_data = $revision_data ? json_decode($revision_data, true) : [];
+
+    $new_reviewer_id = sanitize_text_field($_POST['reviewer_id']);
+    $new_revision_date = sanitize_text_field($_POST['revision_date']);
+
+    // Check for duplicates
+    foreach ($revision_data as $revision) {
+        if ($revision['reviewer_id'] === $new_reviewer_id && $revision['date'] === $new_revision_date) {
+            return;  // Does not save if there are duplicates
+        }
+    }
+
+    if (!empty($new_reviewer_id) && !empty($new_revision_date)) {
+        $revision_data[] = [
+            'reviewer_id' => $new_reviewer_id,
+            'date' => $new_revision_date
+        ];
+
+        update_post_meta($post_id, '_revision_data', json_encode($revision_data));
+    }
+}
+add_action('save_post', 'save_revision_metabox_data');
+
+// Register revision CF for GraphQL
+add_action('graphql_register_types', function() {
+    $post_types = get_post_types(['public' => true], 'names');
+
+    foreach ($post_types as $post_type) {
+        register_graphql_field($post_type, 'revisionData', [
+            'type' => 'String',
+            'description' => 'Dati delle revisioni per questo tipo di post',
+            'resolve' => function($post, $args, $context, $info) {
+                $revision_data = get_post_meta($post->ID, '_revision_data', true);
+                return $revision_data ? $revision_data : null;
+            }
+        ]);
+    }
+});
 
 
 
