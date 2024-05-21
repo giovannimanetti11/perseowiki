@@ -1,8 +1,8 @@
 # WikiHerbalist WordPress theme
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![last commit](https://img.shields.io/github/last-commit/giovannimanetti11/PerseoNXT)
-![language](https://img.shields.io/github/languages/top/giovannimanetti11/PerseoNXT)
+![last commit](https://img.shields.io/github/last-commit/giovannimanetti11/perseowiki)
+![language](https://img.shields.io/github/languages/top/giovannimanetti11/perseowiki)
 
 ## Author:
 
