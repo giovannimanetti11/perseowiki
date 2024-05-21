@@ -108,6 +108,21 @@
                     $author_post = get_post($author_id);
                     $author_name = $author_post->post_title;
                     echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
+                } else {
+                    echo "<div class='post-author'>Di: Redazione di Wikiherbalist</div>";
+                }
+
+
+
+                $revision_data = get_post_meta(get_the_ID(), '_revision_data', true);
+                $revision_data = $revision_data ? json_decode($revision_data, true) : [];
+                if (!empty($revision_data)) {
+                    foreach ($revision_data as $revision) {
+                        $reviewer_post = get_post($revision['reviewer_id']);
+                        $reviewer_name = $reviewer_post ? $reviewer_post->post_title : 'N/A';
+                        $formatted_date = date_i18n('j F Y', strtotime($revision['date']));
+                        echo '<div>Revisionata da ' . esc_html($reviewer_name) . ' il ' . esc_html($formatted_date) . '</div>';
+                    }
                 }
             ?>
             </div>

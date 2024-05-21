@@ -135,8 +135,9 @@
                     $author_post = get_post($author_id);
                     $author_name = $author_post->post_title;
                     echo "<div class='post-author'>Di: " . esc_html($author_name) . "</div>";
+                } else {
+                    echo "<div class='post-author'>Di: Redazione di Wikiherbalist</div>";
                 }
-
 
 
 
