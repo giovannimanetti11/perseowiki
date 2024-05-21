@@ -29,7 +29,7 @@ get_header();
                     // Retrieve the custom author ID from the post meta
                     $custom_author_id = get_post_meta(get_the_ID(), 'meta-box-author-dropdown', true);
                     // Get the custom author's name, fallback to default if empty
-                    $custom_author_name = $custom_author_id ? get_the_title($custom_author_id) : 'Editors of WikiHerbalist';
+                    $custom_author_name = $custom_author_id ? get_the_title($custom_author_id) : 'Redazione di Wikiherbalist';
                     ?>
                     <div class="<?php echo $column_classes; ?> blog-card">
                         <a href="<?php the_permalink(); ?>" class="post-link">
