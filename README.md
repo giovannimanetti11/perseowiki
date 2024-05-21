@@ -6,7 +6,7 @@
 
 ## Author:
 
-Giovanni Manetti ( [@GioManetti11](http://twitter.com/GioManetti11) / [perseodesign.com](http://perseodesign.com) )
+Giovanni Manetti ( [LinkedIn](https://www.linkedin.com/in/giovannimanetti/) / [perseodesign.com](http://perseodesign.com) )
 
 ## Summary
 
