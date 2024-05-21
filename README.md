@@ -1,7 +1,8 @@
 # WikiHerbalist WordPress theme
-===============================
 
-Version: 0.1.2
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![last commit](https://img.shields.io/github/last-commit/giovannimanetti11/PerseoNXT)
+![language](https://img.shields.io/github/languages/top/giovannimanetti11/PerseoNXT)
 
 ## Author:
 
