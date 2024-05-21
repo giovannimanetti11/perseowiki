@@ -1,11 +1,12 @@
 # WikiHerbalist WordPress theme
-===============================
 
-Version: 0.1.2
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![last commit](https://img.shields.io/github/last-commit/giovannimanetti11/perseowiki)
+![language](https://img.shields.io/github/languages/top/giovannimanetti11/perseowiki)
 
 ## Author:
 
-Giovanni Manetti ( [@GioManetti11](http://twitter.com/GioManetti11) / [perseodesign.com](http://perseodesign.com) )
+Giovanni Manetti ( [LinkedIn](https://www.linkedin.com/in/giovannimanetti/) / [perseodesign.com](http://perseodesign.com) )
 
 ## Summary
 
