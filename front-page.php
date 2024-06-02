@@ -80,8 +80,8 @@ if (isset($_GET['keywords'])) {
                                 <div class="card">
                                     <img class="card-img-top" src="<?php echo $data['image']; ?>" alt="<?php echo $data['alt']; ?>">
                                     <div class="card-body">
-                                        <h3 class="card-title"><?php echo $data['title']; ?></h3>
-                                        <h4 class="card-scientific-name"><?php echo $data['scientific_name']; ?></h4>
+                                        <h2 class="card-title"><?php echo $data['title']; ?></h2>
+                                        <h3 class="card-scientific-name"><?php echo $data['scientific_name']; ?></h3>
                                         <?php if (!empty($data['toxic'])) : ?>
                                             <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
                                         <?php endif; ?>
