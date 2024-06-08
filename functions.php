@@ -851,7 +851,6 @@ add_action("save_post", "save_custom_meta_box", 10, 3);
 
 
 
-
 /*
  * Integrate PubMed API to fetch the publication count based on the scientific name
  */
