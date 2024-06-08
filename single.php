@@ -9,6 +9,8 @@
 
     <article class="post-content" id="post-content">
 
+        
+
         <div class="images-container">
             <div class="post-featured-image">
                 <?php
@@ -39,6 +41,25 @@
 
         <div class="article-title">
             <h1><?php the_title(); ?></h1> 
+            <?php
+            $revision_data = get_post_meta(get_the_ID(), '_revision_data', true);
+            $revision_data = $revision_data ? json_decode($revision_data, true) : [];
+            $formatted_date = '';
+
+            if (!empty($revision_data)) {
+                foreach ($revision_data as $revision) {
+                    $reviewer_post = get_post($revision['reviewer_id']);
+                    $formatted_date = date_i18n('j F Y', strtotime($revision['date']));
+                    break; 
+                }
+            }
+            ?>
+            <?php if (!empty($formatted_date)): ?>
+                <div class="reviewed">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon_verified.svg" class="reviewed_icon" />
+                    <span class="tooltip">Scheda revisionata il <?php echo esc_html($formatted_date); ?></span>
+                </div>
+            <?php endif; ?>
             <span class="voice-icon" data-text="<?php echo esc_attr(get_the_title()); ?>" data-language="it">
                 <i class="fa-solid fa-volume-high"></i>
             </span>
@@ -50,6 +71,8 @@
             <div class="meta-box-nome-scientifico"><?php echo esc_html( $meta_box_value ); ?></div>
         <?php endif; ?>
 
+
+        <div id="sinonimi"></div>
         
 
         <div class="post-buttons">
@@ -139,26 +162,9 @@
                     echo "<div class='post-author'>Di: Redazione di Wikiherbalist</div>";
                 }
 
-
-
-                $revision_data = get_post_meta(get_the_ID(), '_revision_data', true);
-                $revision_data = $revision_data ? json_decode($revision_data, true) : [];
-                if (!empty($revision_data)) {
-                    foreach ($revision_data as $revision) {
-                        $reviewer_post = get_post($revision['reviewer_id']);
-                        $reviewer_name = $reviewer_post ? $reviewer_post->post_title : 'N/A';
-                        $formatted_date = date_i18n('j F Y', strtotime($revision['date']));
-                        echo '<div>Revisionata da ' . esc_html($reviewer_name) . ' il ' . esc_html($formatted_date) . '</div>';
-                    }
-                }
-
-
-
-
-                
             ?>
             </div>
-            <?php
+            <?php 
             $words_per_minute = 200;
             $content = get_post_field( 'post_content', $post->ID );
             $word_count = str_word_count( strip_tags( $content ) );
