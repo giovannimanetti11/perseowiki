@@ -75,20 +75,22 @@ if (isset($_GET['keywords'])) {
             <?php foreach (range('A', 'Z') as $char): ?>
                 <div id="posts-container-<?php echo $char; ?>" class="posts-container" style="display: <?php echo $char === 'A' ? 'block' : 'none'; ?>">
                     <div class="card-deck">
-                        <?php foreach ($all_posts_data[$char] as $data): ?>
-                            <a href="<?php echo $data['link']; ?>" class="card-link">
-                                <div class="card">
-                                    <img class="card-img-top" src="<?php echo $data['image']; ?>" alt="<?php echo $data['alt']; ?>">
-                                    <div class="card-body">
-                                        <h2 class="card-title"><?php echo $data['title']; ?></h2>
-                                        <h3 class="card-scientific-name"><?php echo $data['scientific_name']; ?></h3>
-                                        <?php if (!empty($data['toxic'])) : ?>
-                                            <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
-                                        <?php endif; ?>
+                        <?php if (isset($all_posts_data[$char])): ?>
+                            <?php foreach ($all_posts_data[$char] as $data): ?>
+                                <a href="<?php echo $data['link']; ?>" class="card-link">
+                                    <div class="card">
+                                        <img class="card-img-top" src="<?php echo $data['image']; ?>" alt="<?php echo $data['alt']; ?>">
+                                        <div class="card-body">
+                                            <h2 class="card-title"><?php echo $data['title']; ?></h2>
+                                            <h3 class="card-scientific-name"><?php echo $data['scientific_name']; ?></h3>
+                                            <?php if (!empty($data['toxic'])) : ?>
+                                                <i class="fa-solid fa-skull-crossbones" id="icon-skull" title="Toxic Plant"></i>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
