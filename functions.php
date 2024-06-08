@@ -872,8 +872,6 @@ function fetch_pubmed_publications_count($scientific_name) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-    error_log('URL della richiesta: ' . $url);
-
     $response = curl_exec($ch);
     if ($response === false) {
         curl_close($ch);
@@ -1510,25 +1508,13 @@ function revision_metabox_callback($post) {
     $revision_data = $revision_data ? json_decode($revision_data, true) : [];
 
     echo '<p><strong>Aggiungi una revisione:</strong></p>';
-    echo '<label for="reviewer_id">Seleziona un revisore:</label>';
-    $members = new WP_Query(['post_type' => 'members', 'posts_per_page' => -1]);
-    echo '<select name="reviewer_id" id="reviewer_id">';
-    echo '<option value="">-- Seleziona --</option>';
-    while ($members->have_posts()) : $members->the_post();
-        echo '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
-    endwhile;
-    wp_reset_postdata();
-    echo '</select>';
-    echo '<br>';
     echo '<label for="revision_date">Data di revisione:</label>';
     echo '<input type="date" id="revision_date" name="revision_date" value="" />';
 
     if (!empty($revision_data)) {
         echo '<p><strong>Revisioni precedenti:</strong></p>';
         foreach ($revision_data as $revision) {
-            $reviewer_post = get_post($revision['reviewer_id']);
-            $reviewer_name = $reviewer_post ? $reviewer_post->post_title : 'N/A';
-            echo '<div>Revisore: ' . esc_html($reviewer_name) . ' il: ' . esc_html($revision['date']) . '</div>';
+            echo '<div>Data: ' . esc_html($revision['date']) . '</div>';
         }
     }
 }
@@ -1543,19 +1529,17 @@ function save_revision_metabox_data($post_id) {
     $revision_data = get_post_meta($post_id, '_revision_data', true);
     $revision_data = $revision_data ? json_decode($revision_data, true) : [];
 
-    $new_reviewer_id = sanitize_text_field($_POST['reviewer_id']);
     $new_revision_date = sanitize_text_field($_POST['revision_date']);
 
     // Check for duplicates
     foreach ($revision_data as $revision) {
-        if ($revision['reviewer_id'] === $new_reviewer_id && $revision['date'] === $new_revision_date) {
+        if ($revision['date'] === $new_revision_date) {
             return;  // Does not save if there are duplicates
         }
     }
 
-    if (!empty($new_reviewer_id) && !empty($new_revision_date)) {
+    if (!empty($new_revision_date)) {
         $revision_data[] = [
-            'reviewer_id' => $new_reviewer_id,
             'date' => $new_revision_date
         ];
 
@@ -1579,6 +1563,7 @@ add_action('graphql_register_types', function() {
         ]);
     }
 });
+
 
 
 
