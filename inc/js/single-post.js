@@ -1,5 +1,3 @@
-// Plant classification
-
 window.addEventListener('load', async function() {
   const scientificNameElements = document.querySelectorAll('.meta-box-nome-scientifico');
   scientificNameElements.forEach(element => {
@@ -10,14 +8,39 @@ window.addEventListener('load', async function() {
     }
   });
 
+  async function fetchClassification(speciesName) {
+    try {
+      const response = await fetch(`https://api.gbif.org/v1/species/match?name=${speciesName}`);
+      const data = await response.json();
+      const speciesKey = data.usageKey;
+      if (speciesKey) {
+        await fetchDetails(speciesKey);
+        await fetchSynonyms(speciesKey); 
+      }
+    } catch (error) {
+      console.error('Si è verificato un errore:', error);
+    }
+  }
 
-  function fetchClassification(speciesName) {
-    fetch(`https://api.gbif.org/v1/species/match?name=${speciesName}`)
-        .then(response => response.json())
-        .then(data => {
-            displayClassification(data);
-        })
-        .catch(error => console.error('Si è verificato un errore:', error));
+  async function fetchDetails(speciesKey) {
+    try {
+      const response = await fetch(`https://api.gbif.org/v1/species/${speciesKey}`);
+      const data = await response.json();
+      displayClassification(data);
+      displayBasionym(data);
+    } catch (error) {
+      console.error('Si è verificato un errore:', error);
+    }
+  }
+
+  async function fetchSynonyms(speciesKey) {
+    try {
+      const response = await fetch(`https://api.gbif.org/v1/species/${speciesKey}/synonyms`);
+      const data = await response.json();
+      displaySynonyms(data);
+    } catch (error) {
+      console.error('Si è verificato un errore:', error);
+    }
   }
 
   function displayClassification(classification) {
@@ -49,9 +72,68 @@ window.addEventListener('load', async function() {
   
     classificationContainer.innerHTML = html;
   }
-  
 
+  function displayBasionym(data) {
+    const sinonimiContainer = document.querySelector('#sinonimi');
+    const basionym = data.basionym ? data.basionym : null;
+    
+    let html = '';
+
+    if (basionym) {
+        html += `<div class="basionimo"><p>Basionimo: <em>${basionym}</em></p></div>`;
+    }
+
+    sinonimiContainer.innerHTML = html;
+  }
+
+  function displaySynonyms(data) {
+    const sinonimiContainer = document.querySelector('#sinonimi');
+    const synonyms = data.results ? data.results : [];
+    
+    let html = sinonimiContainer.innerHTML;
+
+    if (synonyms.length > 0) {
+        const synonymsList = synonyms.map(syn => `<li><em>${syn.scientificName}</em></li>`).join('');
+        html += `
+          <div class="sinonimi">
+            <div class="sinonimi-toggle"><span class="sinonimi-text">Sinonimi</span> <span class="toggle-synonyms">&#9660;</span></div>
+            <ul class="synonyms-list hidden">${synonymsList}</ul>
+          </div>`;
+    } else {
+        html += `<div class="sinonimi"></div>`;
+    }
+
+    sinonimiContainer.innerHTML = html;
+
+    const toggleElement = sinonimiContainer.querySelector('.sinonimi-toggle');
+    toggleElement.addEventListener('click', function() {
+        const synonymsList = sinonimiContainer.querySelector('.synonyms-list');
+        synonymsList.classList.toggle('hidden');
+        synonymsList.style.maxHeight = synonymsList.classList.contains('hidden') ? '0' : `${synonymsList.scrollHeight}px`;
+        const arrow = toggleElement.querySelector('.toggle-synonyms');
+        arrow.innerHTML = synonymsList.classList.contains('hidden') ? '&#9660;' : '&#9650;';
+    });
+  }
+
+  // Close the list when clicking outside
+  document.addEventListener('click', function(event) {
+    const sinonimiContainer = document.querySelector('#sinonimi');
+    const synonymsList = sinonimiContainer.querySelector('.synonyms-list');
+    const toggleButton = sinonimiContainer.querySelector('.toggle-synonyms');
+    const sinonimiText = sinonimiContainer.querySelector('.sinonimi-text');
+    
+    if (synonymsList && !synonymsList.classList.contains('hidden') && !sinonimiContainer.contains(event.target)) {
+      synonymsList.classList.add('hidden');
+      synonymsList.style.maxHeight = '0';
+      toggleButton.innerHTML = '&#9660;';
+      sinonimiText.style.textDecoration = 'none';
+    }
+  });
 });
+
+
+
+
 
 
 // Manage hover and clicks on additional images
