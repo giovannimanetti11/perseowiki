@@ -170,7 +170,9 @@
   *
   */
 
-  .voice-icon, .post-reading-time, #menu-icon {
+
+
+  .voice-icon, .post-reading-time, #menu-icon, .reviewed svg, .sinonimi {
     display: none;
   }
 
